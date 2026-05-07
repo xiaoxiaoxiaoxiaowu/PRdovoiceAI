@@ -19,19 +19,33 @@ pip install fastapi uvicorn requests pydantic
 
 ### 2. 配置 API Key
 
-编辑 `server/config.json`：
+```powershell
+# 从模板创建配置文件
+copy server\config.example.json server\config.json
+```
+
+打开 `server/config.json`，填入你的 API Key：
 
 ```json
 {
-  "api_key": "你的火山引擎API密钥",
+  "api_key": "YOUR_API_KEY_HERE",
   "output_dir": "D:/voice_cache"
 }
 ```
 
-- `api_key`：火山引擎新版控制台的 TTS API Key
-- `output_dir`：音频缓存目录，需与 PR 插件设置页中的「共享文件夹」一致
+| 字段 | 说明 |
+|------|------|
+| `api_key` | 火山引擎 TTS API Key，从 [火山引擎控制台](https://console.volcengine.com/speech/new) 获取 |
+| `output_dir` | 音频缓存目录，需与 PR 插件设置页中的「共享文件夹」一致 |
 
-> 首次启动后端时若 `config.json` 不存在，会自动生成模板，填好密钥后重启即可。
+#### 如何获取 API Key
+
+1. 打开 [火山引擎语音技术控制台](https://console.volcengine.com/speech/new)
+2. 注册/登录火山引擎账号
+3. 在「语音技术」→「应用管理」中创建应用，记录 **AppID** 和 **Token**
+4. 在「语音技术」→「API密钥」中生成 API Key
+
+> `config.json` 已加入 `.gitignore`，不会被提交到 Git 仓库。
 
 ### 3. 启动后端
 
@@ -169,7 +183,8 @@ VoiceLab_PR/
     ├── tts_server.py        # FastAPI 后端
     ├── tts_engine.py        # TTS 引擎（火山 API）
     ├── voice_library.json   # 音色数据库
-    └── config.json          # API Key + 输出目录配置
+    ├── config.example.json  # 配置文件模板（不含真实密钥）
+    └── config.json          # API Key + 输出目录配置（不纳入版本控制）
 ```
 
 ## 许可
