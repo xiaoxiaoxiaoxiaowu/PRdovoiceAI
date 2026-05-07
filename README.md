@@ -2,6 +2,10 @@
 
 Premiere Pro CEP 面板，调用火山引擎豆包语音合成大模型，在 PR 时间线上直接生成并导入 AI 配音。
 
+## 声明
+
+本项目代码主要由 AI 辅助生成，可能存在非最优实现或令人困惑的逻辑。创作者仅因自身需求而创建此 Premiere Pro 配音工具，欢迎 PR 和 Issue，但请保持预期合理。
+
 ## 环境要求
 
 - **Premiere Pro** 2026 (26.x) / 2024 (24.x)
@@ -169,6 +173,7 @@ Window → Extensions → **VoiceLab**
 
 ```
 VoiceLab_PR/
+├── LICENSE                  # MIT 开源协议
 ├── .debug                   # CEP 调试配置
 ├── CSXS/
 │   └── manifest.xml         # CEP 扩展清单
@@ -189,4 +194,4 @@ VoiceLab_PR/
 
 ## 许可
 
-内部使用，不对外分发。
+本项目基于 [MIT License](LICENSE) 开源。
