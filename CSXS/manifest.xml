@@ -2,7 +2,7 @@
 <ExtensionManifest Version="8.0"
                    ExtensionBundleId="com.voicelab.pr"
                    ExtensionBundleVersion="1.0.0"
-                   ExtensionBundleName="VoiceLab">
+                   ExtensionBundleName="PRdovoiceAI">
 
   <ExtensionList>
     <Extension Id="com.voicelab.pr.panel" Version="1.0.0"/>
@@ -32,7 +32,7 @@
         </Lifecycle>
         <UI>
           <Type>Panel</Type>
-          <Menu>VoiceLab</Menu>
+          <Menu>PRdovoiceAI</Menu>
           <Geometry>
             <Size>
               <Width>420</Width>

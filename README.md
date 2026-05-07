@@ -1,4 +1,4 @@
-# VoiceLab PR — 语音合成插件
+# PRdovoiceAI — 语音合成插件
 
 Premiere Pro CEP 面板，调用火山引擎豆包语音合成大模型，在 PR 时间线上直接生成并导入 AI 配音。
 
@@ -54,7 +54,7 @@ copy server\config.example.json server\config.json
 ### 3. 启动后端
 
 ```powershell
-cd D:\VoiceLab_PR\server
+cd D:\PRdovoiceAI_PR\server
 uvicorn tts_server:app --host 0.0.0.0 --port 9527
 ```
 
@@ -62,17 +62,17 @@ uvicorn tts_server:app --host 0.0.0.0 --port 9527
 
 ### 4. 安装插件到 PR
 
-将 `VoiceLab_PR` 整个文件夹放到：
+将 `PRdovoiceAI_PR` 整个文件夹放到：
 
 ```
-C:\Program Files (x86)\Common Files\Adobe\CEP\extensions\VoiceLab_PR
+C:\Program Files (x86)\Common Files\Adobe\CEP\extensions\PRdovoiceAI_PR
 ```
 
-> 目录结构必须为 `VoiceLab_PR/CSXS/manifest.xml`，否则 CEP 无法加载。
+> 目录结构必须为 `PRdovoiceAI_PR/CSXS/manifest.xml`，否则 CEP 无法加载。
 
 ### 5. 打开 Premiere Pro
 
-Window → Extensions → **VoiceLab**
+Window → Extensions → **PRdovoiceAI**
 
 ## 使用说明
 
@@ -172,7 +172,7 @@ Window → Extensions → **VoiceLab**
 ## 项目结构
 
 ```
-VoiceLab_PR/
+PRdovoiceAI_PR/
 ├── LICENSE                  # MIT 开源协议
 ├── .debug                   # CEP 调试配置
 ├── CSXS/
