@@ -1,0 +1,809 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-05-07",
+  "emotions_cn": ["neutral","happy","sad","angry","fearful","surprised","hate","excited","coldness","depressed","lovey-dovey","shy","comfort","tension","tender","storytelling","radio","magnetic","advertising","vocal-fry","asmr","news","entertainment","dialect"],
+  "emotions_en": ["neutral","happy","angry","sad","excited","chat","asmr","warm","affectionate","authoritative"],
+  "expressions": {
+    "crying": "请用哭泣的语气说话，声音颤抖，带有哽咽和断断续续的感觉，呼吸声要重",
+    "gasping": "请用喘不上气的感觉说话，断断续续，呼吸急促，像是刚跑完步",
+    "whispering": "请用极轻声的耳语说话，像在说秘密，声音轻到几乎听不见",
+    "shouting": "请用声嘶力竭的呐喊语气，情绪崩溃，声音沙哑而用力",
+    "cold": "请用冷漠、不带任何感情的声线说话，语气冰冷疏离",
+    "fearful_expr": "请用恐惧、发抖的声音说话，声音颤抖，充满害怕"
+  },
+  "voices": [
+    {
+      "id": "shuangkuaisisi_2",
+      "name": "爽快思思 2.0",
+      "voice_type": "zh_female_shuangkuaisisi_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "vv_2",
+      "name": "Vivi 2.0",
+      "voice_type": "zh_female_vv_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文/日文/印尼/墨西哥西语",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "xiaohe_2",
+      "name": "小何 2.0",
+      "voice_type": "zh_female_xiaohe_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "yunzhou_2",
+      "name": "云舟 2.0",
+      "voice_type": "zh_male_m191_uranus_bigtts",
+      "version": "2.0",
+      "gender": "male",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "xiaotian_2",
+      "name": "小天 2.0",
+      "voice_type": "zh_male_taocheng_uranus_bigtts",
+      "version": "2.0",
+      "gender": "male",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "liufei_2",
+      "name": "刘飞 2.0",
+      "voice_type": "zh_male_liufei_uranus_bigtts",
+      "version": "2.0",
+      "gender": "male",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "sophie_2",
+      "name": "魅力苏菲 2.0",
+      "voice_type": "zh_female_sophie_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "qingxinnvsheng_2",
+      "name": "清新女声 2.0",
+      "voice_type": "zh_female_qingxinnvsheng_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "cancan_2",
+      "name": "知性灿灿 2.0",
+      "voice_type": "zh_female_cancan_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "角色扮演",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "sajiaoxuemei_2",
+      "name": "撒娇学妹 2.0",
+      "voice_type": "zh_female_sajiaoxuemei_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "角色扮演",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "tianmeixiaoyuan_2",
+      "name": "甜美小源 2.0",
+      "voice_type": "zh_female_tianmeixiaoyuan_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "tianmeitaozi_2",
+      "name": "甜美桃子 2.0",
+      "voice_type": "zh_female_tianmeitaozi_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "peiqi_2",
+      "name": "佩奇猪 2.0",
+      "voice_type": "zh_female_peiqi_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "视频配音",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "linjianvhai_2",
+      "name": "邻家女孩 2.0",
+      "voice_type": "zh_female_linjianvhai_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "shaonianzixin_2",
+      "name": "少年梓辛 2.0",
+      "voice_type": "zh_male_shaonianzixin_uranus_bigtts",
+      "version": "2.0",
+      "gender": "male",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "sunwukong_2",
+      "name": "猴哥 2.0",
+      "voice_type": "zh_male_sunwukong_uranus_bigtts",
+      "version": "2.0",
+      "gender": "male",
+      "language": "中文",
+      "scene": "视频配音",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "tina_2",
+      "name": "Tina老师 2.0",
+      "voice_type": "zh_female_yingyujiaoxue_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文/英式英语",
+      "scene": "教育场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "kefunvsheng_2",
+      "name": "暖阳女声 2.0",
+      "voice_type": "zh_female_kefunvsheng_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "客服场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "xiaoxue_2",
+      "name": "儿童绘本 2.0",
+      "voice_type": "zh_female_xiaoxue_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "有声阅读",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "dayi_2",
+      "name": "大壹 2.0",
+      "voice_type": "zh_male_dayi_uranus_bigtts",
+      "version": "2.0",
+      "gender": "male",
+      "language": "中文",
+      "scene": "视频配音",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "mizai_2",
+      "name": "黑猫侦探社咪仔 2.0",
+      "voice_type": "zh_female_mizai_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "视频配音",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "jitangnv_2",
+      "name": "鸡汤女 2.0",
+      "voice_type": "zh_female_jitangnv_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "视频配音",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "meilinvyou_2",
+      "name": "魅力女友 2.0",
+      "voice_type": "zh_female_meilinvyou_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "liuchangnv_2",
+      "name": "流畅女声 2.0",
+      "voice_type": "zh_female_liuchangnv_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "视频配音",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "ruyayichen_2",
+      "name": "儒雅逸辰 2.0",
+      "voice_type": "zh_male_ruyayichen_uranus_bigtts",
+      "version": "2.0",
+      "gender": "male",
+      "language": "中文",
+      "scene": "视频配音",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "wenroumama_2",
+      "name": "温柔妈妈 2.0",
+      "voice_type": "zh_female_wenroumama_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "gaolengyujie_2",
+      "name": "高冷御姐 2.0",
+      "voice_type": "zh_female_gaolengyujie_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "linjiananhai_2",
+      "name": "邻家男孩 2.0",
+      "voice_type": "zh_male_linjiananhai_uranus_bigtts",
+      "version": "2.0",
+      "gender": "male",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "qiaopinv_2",
+      "name": "俏皮女声 2.0",
+      "voice_type": "zh_female_qiaopinv_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "通用场景",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","surprised"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "shuangkuaisisi_1",
+      "name": "爽快思思 1.0",
+      "voice_type": "zh_female_shuangkuaisisi_moon_bigtts",
+      "version": "1.0",
+      "gender": "female",
+      "language": "中文/美式英语/日语/西语",
+      "scene": "通用场景",
+      "has_20_counterpart": "shuangkuaisisi_2",
+      "capabilities": {
+        "emotions": ["neutral"],
+        "emotion_scale": false,
+        "context_texts": false,
+        "voice_instruction": false,
+        "voice_tag": false,
+        "reference_text": false,
+        "asmr": false,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "shuangkuaisisi_1_emo",
+      "name": "爽快思思 1.0 (多情感)",
+      "voice_type": "zh_female_shuangkuaisisi_emo_v2_mars_bigtts",
+      "version": "1.0",
+      "gender": "female",
+      "language": "中文/英式英语",
+      "scene": "多情感",
+      "has_20_counterpart": "shuangkuaisisi_2",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","surprised","excited","coldness"],
+        "emotion_scale": false,
+        "emotion_via_tags": true,
+        "context_texts": false,
+        "voice_instruction": false,
+        "voice_tag": false,
+        "reference_text": false,
+        "asmr": false,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "gaolengyujie_1_emo",
+      "name": "高冷御姐 1.0 (多情感)",
+      "voice_type": "zh_female_gaolengyujie_emo_v2_mars_bigtts",
+      "version": "1.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "多情感",
+      "has_20_counterpart": "gaolengyujie_2",
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","surprised","fearful","hate","excited","coldness"],
+        "emotion_via_tags": true,
+        "emotion_scale": false,
+        "context_texts": false,
+        "voice_instruction": false,
+        "voice_tag": false,
+        "reference_text": false,
+        "asmr": false,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "aojiaobazong_1_emo",
+      "name": "傲娇霸总 1.0 (多情感)",
+      "voice_type": "zh_male_aojiaobazong_emo_v2_mars_bigtts",
+      "version": "1.0",
+      "gender": "male",
+      "language": "中文",
+      "scene": "多情感",
+      "has_20_counterpart": null,
+      "capabilities": {
+        "emotions": ["neutral","happy","angry","hate"],
+        "emotion_via_tags": true,
+        "emotion_scale": false,
+        "context_texts": false,
+        "voice_instruction": false,
+        "voice_tag": false,
+        "reference_text": false,
+        "asmr": false,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "lengkugege_1_emo",
+      "name": "冷酷哥哥 1.0 (多情感)",
+      "voice_type": "zh_male_lengkugege_emo_v2_mars_bigtts",
+      "version": "1.0",
+      "gender": "male",
+      "language": "中文",
+      "scene": "多情感",
+      "has_20_counterpart": null,
+      "capabilities": {
+        "emotions": ["neutral","happy","sad","angry","fearful","hate","coldness","depressed"],
+        "emotion_via_tags": true,
+        "emotion_scale": false,
+        "context_texts": false,
+        "voice_instruction": false,
+        "voice_tag": false,
+        "reference_text": false,
+        "asmr": false,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "beijingxiaoye_1_emo",
+      "name": "北京小爷 1.0 (多情感)",
+      "voice_type": "zh_male_beijingxiaoye_emo_v2_mars_bigtts",
+      "version": "1.0",
+      "gender": "male",
+      "language": "中文",
+      "scene": "多情感",
+      "has_20_counterpart": null,
+      "capabilities": {
+        "emotions": ["neutral","angry","surprised","fearful","excited","coldness"],
+        "emotion_via_tags": true,
+        "emotion_scale": false,
+        "context_texts": false,
+        "voice_instruction": false,
+        "voice_tag": false,
+        "reference_text": false,
+        "asmr": false,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "linjianvhai_1",
+      "name": "邻家女孩 1.0",
+      "voice_type": "zh_female_linjianvhai_moon_bigtts",
+      "version": "1.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "通用场景",
+      "has_20_counterpart": "linjianvhai_2",
+      "capabilities": {
+        "emotions": ["neutral"],
+        "emotion_scale": false,
+        "context_texts": false,
+        "voice_instruction": false,
+        "voice_tag": false,
+        "reference_text": false,
+        "asmr": false,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "gaolengyujie_1",
+      "name": "高冷御姐 1.0",
+      "voice_type": "zh_female_gaolengyujie_moon_bigtts",
+      "version": "1.0",
+      "gender": "female",
+      "language": "中文",
+      "scene": "通用场景",
+      "has_20_counterpart": "gaolengyujie_2",
+      "capabilities": {
+        "emotions": ["neutral"],
+        "emotion_scale": false,
+        "context_texts": false,
+        "voice_instruction": false,
+        "voice_tag": false,
+        "reference_text": false,
+        "asmr": false,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "tim_2",
+      "name": "Tim",
+      "voice_type": "en_male_tim_uranus_bigtts",
+      "version": "2.0",
+      "gender": "male",
+      "language": "美式英语",
+      "scene": "多语种",
+      "capabilities": {
+        "emotions": ["neutral","happy","angry","sad","excited","chat","asmr","warm","affectionate","authoritative"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    },
+    {
+      "id": "dacey_2",
+      "name": "Dacey",
+      "voice_type": "en_female_dacey_uranus_bigtts",
+      "version": "2.0",
+      "gender": "female",
+      "language": "美式英语",
+      "scene": "多语种",
+      "capabilities": {
+        "emotions": ["neutral","happy","angry","sad","excited","chat","asmr","warm","affectionate","authoritative"],
+        "emotion_scale": true,
+        "context_texts": true,
+        "voice_instruction": true,
+        "voice_tag": true,
+        "reference_text": true,
+        "asmr": true,
+        "speech_rate_range": [-50, 100],
+        "silence_duration_range": [0, 30000]
+      }
+    }
+  ]
+}

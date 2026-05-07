@@ -1,0 +1,177 @@
+# VoiceLab PR — 语音合成插件
+
+Premiere Pro CEP 面板，调用火山引擎豆包语音合成大模型，在 PR 时间线上直接生成并导入 AI 配音。
+
+## 环境要求
+
+- **Premiere Pro** 2026 (26.x) / 2024 (24.x)
+- **Python** 3.10+
+- **pip** 依赖：`fastapi` `uvicorn` `requests` `pydantic`
+- **火山引擎 API Key**（[控制台获取](https://console.volcengine.com/speech/new)）
+
+## 快速开始
+
+### 1. 安装 Python 依赖
+
+```powershell
+pip install fastapi uvicorn requests pydantic
+```
+
+### 2. 配置 API Key
+
+编辑 `server/config.json`：
+
+```json
+{
+  "api_key": "你的火山引擎API密钥",
+  "output_dir": "D:/voice_cache"
+}
+```
+
+- `api_key`：火山引擎新版控制台的 TTS API Key
+- `output_dir`：音频缓存目录，需与 PR 插件设置页中的「共享文件夹」一致
+
+> 首次启动后端时若 `config.json` 不存在，会自动生成模板，填好密钥后重启即可。
+
+### 3. 启动后端
+
+```powershell
+cd D:\VoiceLab_PR\server
+uvicorn tts_server:app --host 0.0.0.0 --port 9527
+```
+
+看到 `Uvicorn running on http://0.0.0.0:9527` 表示后端就绪。
+
+### 4. 安装插件到 PR
+
+将 `VoiceLab_PR` 整个文件夹放到：
+
+```
+C:\Program Files (x86)\Common Files\Adobe\CEP\extensions\VoiceLab_PR
+```
+
+> 目录结构必须为 `VoiceLab_PR/CSXS/manifest.xml`，否则 CEP 无法加载。
+
+### 5. 打开 Premiere Pro
+
+Window → Extensions → **VoiceLab**
+
+## 使用说明
+
+### 连接后端
+
+面板顶部输入 IP `127.0.0.1` 和端口 `9527`，点击 **连接**。
+
+连接成功后显示音色数量，音色库列表自动加载。
+
+### 添加剪辑
+
+点击 **+ 添加一句话** 创建一个新剪辑。每个剪辑包含：
+
+| 控件 | 说明 |
+|------|------|
+| 音色 | 从音色库中选择，切换后控件自动适配版本 |
+| 文本 | 需要合成的文本内容 |
+| `[#指令]` | 仅 **2.0** 音色。插入自然语言情感指令，如 `[#用悲伤的语气说]` |
+| `{{2.0}}` | 仅 **2.0** 音色。插入 JSON additions（context_texts） |
+| `{{1.0}}` | 仅 **1.0** 音色。插入 JSON audio_params（emotion + scale） |
+| 情感 | 多情感音色可选；仅 neutral 的音色不显示此栏 |
+| 强度 | 仅 **2.0** 音色。情感强度 1~5 |
+| 特殊表达 | 仅支持 context_texts 的音色。预设哭泣/喘息/耳语等 |
+| 语速 | -50（0.5x）~ 100（2.0x） |
+| 尾停 | 句尾静音时长 0~30000ms |
+
+### 1.0 与 2.0 音色的区别
+
+| 能力 | 1.0 | 2.0 |
+|------|:--:|:--:|
+| 基础情感 | ✅ | ✅ |
+| 情感强度 1~5 | ❌ | ✅ |
+| `[#指令]` 自然语言指令 | ❌ | ✅ |
+| 特殊表达（哭泣/喘息等） | ❌ | ✅ |
+| 语速调节 | ✅ | ✅ |
+| 尾停控制 | ✅ | ✅ |
+| 情感注入方式 | `audio_params.emotion` | `audio_params.emotion` + `emotion_scale` |
+
+> 面板会根据所选音色的 `version` 和 `capabilities` 自动显隐对应控件。
+
+### 生成音频
+
+- **🎬 生成全部**：生成所有待生成剪辑
+- **▶ 生成选中**：只生成勾选了 checkbox 的剪辑
+- **🔄 重新生成**：重新生成单个剪辑
+
+### 导入 PR 时间线
+
+生成完成的剪辑点击 **📥 导入PR时间线**，音频会自动插入到当前序列的音频轨上。
+
+> 需要当前有激活的序列，且序列中有至少一条音频轨。
+
+### 项目保存 / 打开
+
+- **保存**：将当前所有剪辑（文本、音色、情感、语速等）存为 `.voicelab` 文件
+- **打开**：恢复之前保存的项目，所有剪辑状态重置为"待生成"
+- **新建**：清空当前项目
+
+### 设置
+
+| 设置项 | 说明 |
+|--------|------|
+| 共享文件夹 | 后端音频输出目录，需与 `config.json` 中 `output_dir` 一致 |
+| 导入到播放头位置 | 勾选后从 CTI 位置开始插入；不勾选从时间线起点开始 |
+| 默认音色 / 情感 / 语速 / 尾停 | 新建剪辑时的默认值 |
+
+### 从 SRT/TXT 导入
+
+点击 **从SRT/TXT导入**，选择 SRT 字幕或 TXT 文本文件，自动按行/段落拆分为多个剪辑。
+
+## 故障排查
+
+### 面板不出现
+
+1. 确认目录结构为 `CSXS/manifest.xml`
+2. 确认 `manifest.xml` 中 Host Version 为 `"14.0"`，RequiredRuntime 为 `"12.0"`
+3. 完全退出 PR 后重新启动
+
+### 连接失败
+
+- 确认后端已启动：浏览器访问 `http://127.0.0.1:9527/health`
+- 检查端口是否被占用
+
+### 生成失败
+
+- 检查 `config.json` 中的 `api_key` 是否正确
+- 检查火山引擎控制台是否有余额
+- 查看后端终端输出的错误信息
+
+### 导入时间线无反应
+
+- 确认有激活的序列
+- 确认序列中有音频轨
+- 确认 `D:/voice_cache` 中有生成的 `.mp3` 文件
+- 打开 Chrome 访问 `http://localhost:8088` 查看 CEP 控制台错误
+
+## 项目结构
+
+```
+VoiceLab_PR/
+├── .debug                   # CEP 调试配置
+├── CSXS/
+│   └── manifest.xml         # CEP 扩展清单
+├── client/
+│   ├── index.html           # 面板 UI
+│   ├── main.js              # 面板逻辑
+│   ├── style.css            # 样式
+│   └── CSInterface.js       # CEP 桥接库
+├── host/
+│   └── host.jsx             # ExtendScript（PR 文件操作）
+└── server/
+    ├── tts_server.py        # FastAPI 后端
+    ├── tts_engine.py        # TTS 引擎（火山 API）
+    ├── voice_library.json   # 音色数据库
+    └── config.json          # API Key + 输出目录配置
+```
+
+## 许可
+
+内部使用，不对外分发。
