@@ -1,5 +1,5 @@
 """
-VoiceLab FastAPI 后端
+PRdovoiceAI FastAPI 后端
 启动: uvicorn tts_server:app --host 0.0.0.0 --port 9527
 """
 import json
@@ -20,8 +20,8 @@ if not CONFIG_PATH.exists():
                    ensure_ascii=False, indent=2),
         encoding="utf-8"
     )
-    print(f"[VoiceLab] 已生成配置文件: {CONFIG_PATH}")
-    print(f"[VoiceLab] 请编辑此文件填入 api_key 后重启服务")
+    print(f"[PRdovoiceAI] 已生成配置文件: {CONFIG_PATH}")
+    print(f"[PRdovoiceAI] 请编辑此文件填入 api_key 后重启服务")
     sys.exit(1)
 
 with open(CONFIG_PATH, encoding="utf-8") as f:
@@ -32,14 +32,14 @@ OUTPUT_DIR = Path(_cfg.get("output_dir", "D:/voice_cache"))
 # =====================================================
 
 if not API_KEY or "请填写" in API_KEY:
-    print("[VoiceLab] 请在 config.json 中填写正确的 api_key")
+    print("[PRdovoiceAI] 请在 config.json 中填写正确的 api_key")
     sys.exit(1)
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 LIB_PATH = Path(__file__).parent / "voice_library.json"
 engine = TTSEngine(api_key=API_KEY, library_path=LIB_PATH)
 
-app = FastAPI(title="VoiceLab TTS Backend", version="1.0.0")
+app = FastAPI(title="PRdovoiceAI TTS Backend", version="1.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 class SynthesizeRequest(BaseModel):
