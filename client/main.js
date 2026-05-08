@@ -545,7 +545,7 @@ async function importSRT() {
   input.onchange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const text = await file.text();
+    const text = (await file.text()).replace(/\r\n/g, "\n");
     const blocks = text.split(/\n\n+/).filter(b => b.trim());
     const defaultVoice = document.getElementById("set-default-voice").value || voiceLibrary[0]?.id;
     for (const block of blocks) {
