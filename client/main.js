@@ -1,8 +1,8 @@
 // ==================== 配置 ====================
-// 🔧 改这里: 和后端 tts_server.py 里的 OUTPUT_DIR 保持一致
-const AUDIO_OUTPUT_DIR = "D:/voice_cache";
+let AUDIO_OUTPUT_DIR = "D:/voice_cache";
 
 // ==================== 全局状态 ====================
+var csInterface = new CSInterface();
 let backendUrl = "http://127.0.0.1:9527";
 let voiceLibrary = [];
 let clips = [];
@@ -20,7 +20,10 @@ async function connect() {
   statusEl.className = "status-connecting";
 
   try {
-    const resp = await fetch(`${backendUrl}/health`, { signal: AbortSignal.timeout(5000) });
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 5000);
+    const resp = await fetch(`${backendUrl}/health`, { signal: ctrl.signal });
+    clearTimeout(timer);
     const data = await resp.json();
     statusEl.textContent = `● 已连接 | v${data.version} | ${data.voice_count} 音色`;
     statusEl.className = "status-online";
@@ -77,8 +80,8 @@ function renderVoiceList() {
         <div>情感: ${(v.capabilities.emotions || ['neutral']).join(' ')}</div>
         <div>
           ${v.capabilities.context_texts ? '✅ 指令遵循 ' : ''}
+          ${v.capabilities.voice_instruction ? '✅ [#指令] ' : ''}
           ${v.capabilities.asmr ? '✅ ASMR ' : ''}
-          ${v.version === '2.0' ? '✅ [#语音指令] ✅ 【标签】' : ''}
         </div>
         <div>语速: ${v.capabilities.speech_rate_range?.[0] || -50} ~ ${v.capabilities.speech_rate_range?.[1] || 100}</div>
       </div>
@@ -145,9 +148,8 @@ function renderClipList() {
     return `
       <div class="clip-item ${clip.status} ${selectedClips.has(clip.id) ? 'selected' : ''}">
         <div class="clip-header" onclick="toggleClip('${clip.id}')">
-          <input type="checkbox" class="clip-checkbox"
-                 ${selectedClips.has(clip.id) ? 'checked' : ''}
-                 onclick="event.stopPropagation(); toggleSelectClip('${clip.id}')">
+          <input type="checkbox" class="clip-checkbox" data-clip-id="${clip.id}"
+                 ${selectedClips.has(clip.id) ? 'checked' : ''}>
           <span class="clip-id">#${clip.id}</span>
           <span class="clip-preview">${clip.text.substring(0, 40)}${clip.text.length > 40 ? '...' : ''}</span>
           <span class="clip-status-icon">${statusIcon(clip.status)}</span>
@@ -167,16 +169,15 @@ function renderClipList() {
           </div>
 
           <div class="clip-tools">
-            <button class="btn btn-xs btn-insert-instruction" data-clip-id="${clip.id}"
-                    ${version !== '2.0' ? 'disabled' : ''}>[#指令]</button>
-            <button class="btn btn-xs btn-insert-tag" data-clip-id="${clip.id}"
-                    ${version !== '2.0' ? 'disabled' : ''}>【标签】</button>
-            <button class="btn btn-xs btn-insert-json20" data-clip-id="${clip.id}"
-                    ${version !== '2.0' ? 'disabled' : ''}>{{2.0}}</button>
-            <button class="btn btn-xs btn-insert-json10" data-clip-id="${clip.id}"
-                    ${version !== '1.0' ? 'disabled' : ''}>{{1.0}}</button>
+            ${version === '2.0' && voice?.capabilities?.voice_instruction ? `
+            <button class="btn btn-xs btn-insert-instruction" data-clip-id="${clip.id}">[#指令]</button>` : ''}
+            ${version === '2.0' ? `
+            <button class="btn btn-xs btn-insert-json20" data-clip-id="${clip.id}">{{2.0}}</button>` : ''}
+            ${version === '1.0' ? `
+            <button class="btn btn-xs btn-insert-json10" data-clip-id="${clip.id}">{{1.0}}</button>` : ''}
           </div>
 
+          ${emotions.length > 1 ? `
           <div class="clip-field">
             <label>情感:</label>
             <select class="clip-emotion" data-clip-id="${clip.id}">
@@ -189,6 +190,7 @@ function renderClipList() {
               <span class="scale-val">${clip.emotion_scale}</span>
             ` : ''}
           </div>
+          ` : ''}
 
           ${hasContextTexts ? `
             <div class="clip-field">
@@ -261,6 +263,13 @@ function toggleSelectClip(clipId) {
 }
 
 function bindClipEvents() {
+  document.querySelectorAll(".clip-checkbox").forEach(cb => {
+    cb.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleSelectClip(cb.dataset.clipId);
+    });
+  });
+
   document.querySelectorAll(".clip-voice-select").forEach(sel => {
     sel.addEventListener("change", () => {
       const clip = clips.find(c => c.id === sel.dataset.clipId);
@@ -320,9 +329,6 @@ function bindClipEvents() {
   document.querySelectorAll(".btn-insert-instruction").forEach(btn => {
     btn.addEventListener("click", () => insertInstruction(btn.dataset.clipId));
   });
-  document.querySelectorAll(".btn-insert-tag").forEach(btn => {
-    btn.addEventListener("click", () => insertTag(btn.dataset.clipId));
-  });
   document.querySelectorAll(".btn-insert-json20").forEach(btn => {
     btn.addEventListener("click", () => insertJson20(btn.dataset.clipId));
   });
@@ -352,19 +358,6 @@ function insertInstruction(clipId) {
     if (ta) {
       const pos = ta.selectionStart;
       ta.value = ta.value.substring(0, pos) + `[#${instruction}]` + ta.value.substring(pos);
-      const clip = clips.find(c => c.id === clipId);
-      if (clip) clip.text = ta.value;
-    }
-  }
-}
-
-function insertTag(clipId) {
-  const tag = prompt("输入语音标签 (不含括号):", "怒目圆睁，冲着你大声怒吼");
-  if (tag) {
-    const ta = document.querySelector(`.clip-text[data-clip-id="${clipId}"]`);
-    if (ta) {
-      const pos = ta.selectionStart;
-      ta.value = ta.value.substring(0, pos) + `【${tag}】` + ta.value.substring(pos);
       const clip = clips.find(c => c.id === clipId);
       if (clip) clip.text = ta.value;
     }
@@ -493,8 +486,9 @@ async function previewClip(clipId) {
   }
 }
 
-// ==================== PR 导入（共享目录版） ====================
+// ==================== PR 导入 ====================
 async function importToPR() {
+  AUDIO_OUTPUT_DIR = document.getElementById("set-output-dir").value || "D:/voice_cache";
   const doneClips = clips.filter(c => c.status === "done");
   if (doneClips.length === 0) {
     alert("没有已生成的音频可导入");
@@ -504,8 +498,6 @@ async function importToPR() {
   const importAtPlayhead = document.getElementById("set-import-at-playhead")?.checked ?? true;
   const autoFade = document.getElementById("set-auto-fade")?.checked ?? true;
 
-  // 🔧 共享目录方案: 后端把 mp3 直接存到 AUDIO_OUTPUT_DIR
-  //    这里只需要构造本地路径列表，传给 ExtendScript
   const items = doneClips.map(c => ({
     id: c.id,
     path: `${AUDIO_OUTPUT_DIR}/${c.id}.mp3`.replace(/\\/g, "\\\\"),
@@ -517,14 +509,18 @@ async function importToPR() {
     csInterface.evalScript(
       `importAudioToTimeline('${jsonStr.replace(/'/g, "\\'")}', ${importAtPlayhead}, ${autoFade})`,
       (result) => {
+        console.log("PR 返回:", result);
         try {
           const parsed = JSON.parse(result);
           const ok = parsed.filter(r => r.inserted).length;
           const errs = parsed.filter(r => r.error);
+          const timings = parsed.filter(r => r.at_sec != null)
+            .map(r => `${r.id} @${r.at_sec}s`)
+            .join("\n");
           if (errs.length > 0) {
-            alert(`⚠ ${ok}/${parsed.length} 导入成功\n失败: ${errs.map(e => e.id + ": " + e.error).join(", ")}`);
+            alert(`⚠ ${ok}/${parsed.length} 导入成功\n失败: ${errs.map(e => e.id + ": " + e.error).join(", ")}\n\n顺序:\n${timings}`);
           } else {
-            alert(`✅ 已导入 ${ok} 条音频到 PR 时间线`);
+            alert(`✅ 已导入 ${ok} 条\n\n顺序:\n${timings}`);
           }
         } catch (e) {
           console.log("PR 返回:", result);
@@ -545,7 +541,7 @@ async function importSRT() {
   input.onchange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const text = (await file.text()).replace(/\r\n/g, "\n");
+    const text = await file.text();
     const blocks = text.split(/\n\n+/).filter(b => b.trim());
     const defaultVoice = document.getElementById("set-default-voice").value || voiceLibrary[0]?.id;
     for (const block of blocks) {
@@ -561,6 +557,66 @@ async function importSRT() {
   input.click();
 }
 
+// ==================== 项目存取 ====================
+function saveProject() {
+  const data = {
+    clipCounter: clipCounter,
+    clips: clips.map(c => ({
+      id: c.id,
+      text: c.text,
+      voice_id: c.voice_id,
+      emotion: c.emotion,
+      emotion_scale: c.emotion_scale,
+      expression: c.expression,
+      speech_rate: c.speech_rate,
+      silence_duration: c.silence_duration,
+      _collapsed: c._collapsed,
+      status: "pending",
+    })),
+  };
+  const jsonStr = JSON.stringify(data);
+  csInterface.evalScript(`saveProjectFile('${jsonStr.replace(/'/g, "\\'")}')`, (result) => {
+    if (result && result.startsWith("OK:")) {
+      const name = result.substring(3).split(/[\\/]/).pop();
+      document.getElementById("project-name").textContent = name;
+    } else if (result !== "CANCELLED") {
+      console.log("保存失败:", result);
+    }
+  });
+}
+
+function openProject() {
+  csInterface.evalScript("loadProjectFile()", (result) => {
+    if (!result || result === "CANCELLED") return;
+    try {
+      const data = JSON.parse(result);
+      clips = (data.clips || []).map(c => ({
+        ...c,
+        status: c.status || "pending",
+        audio_url: null,
+        duration_ms: null,
+        file_size: null,
+      }));
+      clipCounter = data.clipCounter || clips.length + 1;
+      selectedClips.clear();
+      renderClipList();
+      document.getElementById("project-name").textContent = "已加载项目";
+    } catch (e) {
+      alert("项目文件格式错误: " + e.message);
+    }
+  });
+}
+
+function newProject() {
+  if (clips.length === 0 || confirm("确定要新建项目？当前内容将丢失。")) {
+    clips = [];
+    clipCounter = 1;
+    selectedClips.clear();
+    renderClipList();
+    document.getElementById("project-name").textContent = "未命名项目";
+  }
+}
+
 // ==================== 设置事件 ====================
 document.getElementById("set-default-rate").addEventListener("input", function() {
   document.getElementById("rate-val").textContent = this.value;
@@ -568,6 +624,9 @@ document.getElementById("set-default-rate").addEventListener("input", function()
 
 // ==================== 主事件绑定 ====================
 document.getElementById("btn-connect").addEventListener("click", connect);
+document.getElementById("btn-new-project").addEventListener("click", newProject);
+document.getElementById("btn-save-project").addEventListener("click", saveProject);
+document.getElementById("btn-load-project").addEventListener("click", openProject);
 document.getElementById("btn-add-clip").addEventListener("click", () => addClip());
 document.getElementById("btn-import-srt").addEventListener("click", importSRT);
 document.getElementById("btn-generate-all").addEventListener("click", generateAll);
@@ -597,13 +656,19 @@ try {
     const state = JSON.parse(saved);
     document.getElementById("ip-input").value = state.ip || "127.0.0.1";
     document.getElementById("port-input").value = state.port || "9527";
+    if (state.output_dir) {
+      AUDIO_OUTPUT_DIR = state.output_dir;
+      document.getElementById("set-output-dir").value = state.output_dir;
+    }
     setTimeout(connect, 300);
   }
 } catch (e) {}
 
 window.addEventListener("beforeunload", () => {
+  AUDIO_OUTPUT_DIR = document.getElementById("set-output-dir").value || "D:/voice_cache";
   localStorage.setItem("voicelab_state", JSON.stringify({
     ip: document.getElementById("ip-input").value,
     port: document.getElementById("port-input").value,
+    output_dir: AUDIO_OUTPUT_DIR,
   }));
 });
