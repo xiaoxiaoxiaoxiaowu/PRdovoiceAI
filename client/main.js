@@ -533,7 +533,7 @@ async function importToPR() {
   }
 }
 
-// ==================== 字幕导入 ====================
+// ==================== 文本导入 ====================
 async function importSRT() {
   const input = document.createElement("input");
   input.type = "file";
@@ -541,15 +541,25 @@ async function importSRT() {
   input.onchange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const text = await file.text();
+    let text = await file.text();
+    // Normalize line endings: CRLF / CR → LF
+    text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
     const blocks = text.split(/\n\n+/).filter(b => b.trim());
     const defaultVoice = document.getElementById("set-default-voice").value || voiceLibrary[0]?.id;
     for (const block of blocks) {
       const lines = block.trim().split("\n");
-      if (lines.length < 2) continue;
-      let textLine = lines[lines.length - 1];
+      if (lines.length < 1) continue;
+      // Skip SRT timecode lines, extract text
+      let textLine;
       if (lines.length >= 3) {
+        // SRT format: number / timecode / text
         textLine = lines.slice(2).join(" ").replace(/\d{2}:\d{2}:\d{2}[.,]\d{3} --> \d{2}:\d{2}:\d{2}[.,]\d{3}/, "").trim();
+      } else if (lines.length === 2) {
+        // Numbered TXT: number / text — skip number line
+        textLine = /^\d+$/.test(lines[0]) ? lines[1] : lines.join(" ");
+      } else {
+        // Single line: just text
+        textLine = lines[0];
       }
       if (textLine) addClip(textLine, defaultVoice);
     }
