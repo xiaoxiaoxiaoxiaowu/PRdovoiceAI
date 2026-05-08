@@ -41,6 +41,7 @@ async function loadVoices() {
     voiceLibrary = data.voices;
     renderVoiceList();
     updateDefaultVoiceSelect();
+    renderClipList();
   } catch (e) {
     console.error("加载音色失败:", e);
   }
