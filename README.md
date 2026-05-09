@@ -10,12 +10,19 @@ Premiere Pro CEP 面板，调用火山引擎豆包语音合成大模型，在 PR
 
 ## 环境要求
 
-- **Premiere Pro** 2026 (26.x) / 2024 (24.x)
-- **Python** 3.10+
+- **Premiere Pro** 2026 (26.0.1)
+- **Python** 3.10+（已经添加了好了环境变量）
 - **pip** 依赖：`fastapi` `uvicorn` `requests` `pydantic`
-- **火山引擎 API Key**（[控制台获取](https://console.volcengine.com/speech/new)）
+- **火山引擎 API Key**（[控制台获取](https://console.volcengine.com/speech/new/setting/apikeys)）
 
-## 快速开始
+## 食用指南
+
+### 1.下载项目
+
+下载项目，以方便之后的操作
+```powershell
+git clone https://github.com/xiaoxiaoxiaoxiaowu/PRdovoiceAI.git
+```
 
 ### 1. 安装 Python 依赖
 
@@ -25,16 +32,19 @@ pip install fastapi uvicorn requests pydantic
 
 ### 2. 配置 API Key
 
-```powershell
-# 从模板创建配置文件
-copy server\config.example.json server\config.json
-```
+获取 API Key
 
-打开 `server/config.json`，填入你的 API Key：
+1. 打开 [火山引擎语音技术控制台](https://console.volcengine.com/speech/new)
+2. 注册/登录火山引擎账号
+3. 在「语音技术」→「应用管理」中创建应用，记录 **AppID** 和 **Token**
+4. 在「语音技术」→「API密钥」中生成 API Key
+
+打开 `你的项目文件文件夹/server/config.json`，填入你的 API Key：
+
 
 ```json
 {
-  "api_key": "YOUR_API_KEY_HERE",
+  "api_key": "YOUR_API_KEY_HERE",  ←在YOUR_API_KEY_HERE中替换为你在控制台获得的API Key
   "output_dir": "D:/voice_cache"
 }
 ```
@@ -44,19 +54,18 @@ copy server\config.example.json server\config.json
 | `api_key` | 火山引擎 TTS API Key，从 [火山引擎控制台](https://console.volcengine.com/speech/new) 获取 |
 | `output_dir` | 音频缓存目录，需与 PR 插件设置页中的「共享文件夹」一致 |
 
-#### 如何获取 API Key
-
-1. 打开 [火山引擎语音技术控制台](https://console.volcengine.com/speech/new)
-2. 注册/登录火山引擎账号
-3. 在「语音技术」→「应用管理」中创建应用，记录 **AppID** 和 **Token**
-4. 在「语音技术」→「API密钥」中生成 API Key
-
-> `config.json` 已加入 `.gitignore`，不会被提交到 Git 仓库。
 
 ### 3. 启动后端
+#### Windows11
 
+在你的项目文件夹中找到 `server` 文件夹，打开之后右键-"在终端中打开"输入：
 ```powershell
-cd D:\PRdovoiceAI_PR\server
+uvicorn tts_server:app --host 0.0.0.0 --port 9527
+```
+
+#### Windows 10
+在你的项目文件夹中找到 `server` 文件夹，在这个界面中 `Alt + D`，输入cmd之后回车，之后在cmd窗口中输入：
+```powershell
 uvicorn tts_server:app --host 0.0.0.0 --port 9527
 ```
 
@@ -64,7 +73,7 @@ uvicorn tts_server:app --host 0.0.0.0 --port 9527
 
 ### 4. 安装插件到 PR
 
-将 `PRdovoiceAI_PR` 整个文件夹放到：
+将除了的项目文件夹中 `server` 文件夹以外的部分都文件夹放到：
 
 ```
 C:\Program Files (x86)\Common Files\Adobe\CEP\extensions\PRdovoiceAI_PR
@@ -74,7 +83,7 @@ C:\Program Files (x86)\Common Files\Adobe\CEP\extensions\PRdovoiceAI_PR
 
 ### 5. 打开 Premiere Pro
 
-Window → Extensions → **PRdovoiceAI**
+Window（窗口） → Extensions（扩展） → **PRdovoiceAI**
 
 ## 使用说明
 
