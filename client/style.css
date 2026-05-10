@@ -146,7 +146,7 @@ textarea { resize: vertical; min-height: 36px; }
 .clip-tools { display: flex; gap: 4px; margin-bottom: 6px; flex-wrap: wrap; }
 .clip-actions-row { display: flex; gap: 4px; margin: 8px 0 4px; }
 .clip-status { font-size: 11px; color: var(--text-secondary); padding: 4px 0; }
-.scale-val, .rate-val {
+.scale-val, .rate-val, .loudness-val {
   font-size: 11px; color: var(--accent); min-width: 20px; text-align: center;
 }
 

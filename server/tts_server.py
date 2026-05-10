@@ -50,6 +50,11 @@ class SynthesizeRequest(BaseModel):
     emotion_scale: int = 4
     speech_rate: int = 0
     silence_duration: int = 0
+    loudness_rate: int = 0
+    bit_rate: int | None = None
+    model: str | None = None
+    enable_subtitle: bool = False
+    cot_text: str | None = None
     expression: str | None = None
 
 @app.get("/health")
@@ -74,7 +79,9 @@ def synthesize(req: SynthesizeRequest):
             text=req.text, voice_id=req.voice_id,
             emotion=req.emotion, emotion_scale=req.emotion_scale,
             speech_rate=req.speech_rate, silence_duration=req.silence_duration,
-            expression=req.expression,
+            loudness_rate=req.loudness_rate, bit_rate=req.bit_rate,
+            model=req.model, enable_subtitle=req.enable_subtitle,
+            cot_text=req.cot_text, expression=req.expression,
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -88,6 +95,9 @@ def synthesize(req: SynthesizeRequest):
         "download_url": f"/audio/{fname}",
         "duration_ms": None,
         "size": result["size"],
+        "logid": result.get("logid", ""),
+        "subtitles": result.get("subtitles"),
+        "usage": result.get("usage"),
     }
 
 @app.get("/audio/{filename}")

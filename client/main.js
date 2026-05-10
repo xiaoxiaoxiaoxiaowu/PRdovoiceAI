@@ -127,10 +127,17 @@ function addClip(initialText = "", initialVoice = null, initialEmotion = "neutra
     expression: "none",
     speech_rate: defaultRate,
     silence_duration: defaultSilence,
+    loudness_rate: 0,
+    bit_rate: null,
+    model: null,
+    enable_subtitle: false,
+    cot_text: null,
     status: "pending",
     audio_url: null,
     duration_ms: null,
     file_size: null,
+    subtitles: null,
+    usage: null,
   };
   clips.push(clip);
   clipCounter++;
@@ -178,6 +185,23 @@ function renderClipList() {
             <button class="btn btn-xs btn-insert-json10" data-clip-id="${clip.id}">{{1.0}}</button>` : ''}
           </div>
 
+          <div class="clip-field">
+            <label>模型:</label>
+            <select class="clip-model" data-clip-id="${clip.id}">
+              <option value="" ${!clip.model ? 'selected' : ''}>默认</option>
+              <option value="seed-tts-2.0-expressive" ${clip.model === 'seed-tts-2.0-expressive' ? 'selected' : ''}>2.0 表现力增强</option>
+              <option value="seed-tts-2.0-standard" ${clip.model === 'seed-tts-2.0-standard' ? 'selected' : ''}>2.0 标准稳定</option>
+              <option value="seed-tts-1.1" ${clip.model === 'seed-tts-1.1' ? 'selected' : ''}>1.0 增强版</option>
+            </select>
+          </div>
+
+          <div class="clip-field">
+            <label>CoT:</label>
+            <input type="text" class="clip-cot" data-clip-id="${clip.id}"
+                   value="${clip.cot_text || ''}" placeholder="思维链引导文本 (仅expressive模型)"
+                   style="width:100%">
+          </div>
+
           ${emotions.length > 1 ? `
           <div class="clip-field">
             <label>情感:</label>
@@ -221,6 +245,18 @@ function renderClipList() {
                    value="${clip.silence_duration}" min="0" max="30000" style="width:80px">
           </div>
 
+          <div class="clip-field">
+            <label>音量:</label>
+            <input type="range" class="clip-loudness" data-clip-id="${clip.id}"
+                   min="-50" max="100" value="${clip.loudness_rate}">
+            <span class="loudness-val">${clip.loudness_rate}</span>
+          </div>
+
+          <div class="clip-field">
+            <label><input type="checkbox" class="clip-subtitle" data-clip-id="${clip.id}"
+                   ${clip.enable_subtitle ? 'checked' : ''}> 字幕</label>
+          </div>
+
           <div class="clip-actions-row">
             <button class="btn btn-sm btn-preview" data-clip-id="${clip.id}"
                     ${clip.status !== 'done' ? 'disabled' : ''}>▶ 试听</button>
@@ -230,7 +266,7 @@ function renderClipList() {
           </div>
 
           <div class="clip-status">
-            ${clip.status === 'done' ? `✅ 已生成 | ${clip.duration_ms ? (clip.duration_ms/1000).toFixed(1) + 's' : ''} | ${clip.file_size ? formatBytes(clip.file_size) : ''}` :
+            ${clip.status === 'done' ? `✅ 已生成 | ${clip.duration_ms ? (clip.duration_ms/1000).toFixed(1) + 's' : ''} | ${clip.file_size ? formatBytes(clip.file_size) : ''}${clip.usage ? ' | 用量:' + clip.usage + '字' : ''}${clip.subtitles ? ' | 📝字幕' : ''}` :
               clip.status === 'error' ? `❌ 合成失败` :
               clip.status === 'generating' ? `⏳ 生成中...` : `⏳ 待生成`}
           </div>
@@ -324,6 +360,34 @@ function bindClipEvents() {
     inp.addEventListener("change", () => {
       const clip = clips.find(c => c.id === inp.dataset.clipId);
       if (clip) clip.silence_duration = parseInt(inp.value) || 0;
+    });
+  });
+
+  document.querySelectorAll(".clip-loudness").forEach(inp => {
+    inp.addEventListener("input", () => {
+      const clip = clips.find(c => c.id === inp.dataset.clipId);
+      if (clip) { clip.loudness_rate = parseInt(inp.value); inp.nextElementSibling.textContent = inp.value; }
+    });
+  });
+
+  document.querySelectorAll(".clip-subtitle").forEach(cb => {
+    cb.addEventListener("change", () => {
+      const clip = clips.find(c => c.id === cb.dataset.clipId);
+      if (clip) clip.enable_subtitle = cb.checked;
+    });
+  });
+
+  document.querySelectorAll(".clip-model").forEach(sel => {
+    sel.addEventListener("change", () => {
+      const clip = clips.find(c => c.id === sel.dataset.clipId);
+      if (clip) clip.model = sel.value || null;
+    });
+  });
+
+  document.querySelectorAll(".clip-cot").forEach(inp => {
+    inp.addEventListener("input", () => {
+      const clip = clips.find(c => c.id === inp.dataset.clipId);
+      if (clip) clip.cot_text = inp.value || null;
     });
   });
 
@@ -451,6 +515,11 @@ async function generateClip(clip) {
     emotion_scale: clip.emotion_scale,
     speech_rate: clip.speech_rate,
     silence_duration: clip.silence_duration,
+    loudness_rate: clip.loudness_rate || 0,
+    bit_rate: clip.bit_rate || null,
+    model: clip.model || null,
+    enable_subtitle: clip.enable_subtitle || false,
+    cot_text: clip.cot_text || null,
     expression: clip.expression !== "none" ? clip.expression : null,
   };
 
@@ -466,6 +535,8 @@ async function generateClip(clip) {
       clip.audio_url = result.download_url;
       clip.duration_ms = result.duration_ms;
       clip.file_size = result.size;
+      clip.subtitles = result.subtitles || null;
+      clip.usage = result.usage || null;
     } else {
       clip.status = "error";
     }
@@ -581,6 +652,11 @@ function saveProject() {
       expression: c.expression,
       speech_rate: c.speech_rate,
       silence_duration: c.silence_duration,
+      loudness_rate: c.loudness_rate || 0,
+      bit_rate: c.bit_rate || null,
+      model: c.model || null,
+      enable_subtitle: c.enable_subtitle || false,
+      cot_text: c.cot_text || null,
       _collapsed: c._collapsed,
       status: "pending",
     })),

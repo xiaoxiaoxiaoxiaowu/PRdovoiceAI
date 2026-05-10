@@ -1,8 +1,11 @@
 """
-PRdovoiceAI TTS Engine — 最终修正版
+PRdovoiceAI TTS Engine — 完整 API 对齐版
+Aligns with Volcengine OpenSpeech API v3 (2026.05)
+Docs: https://www.volcengine.com/docs/6561/1598757
 """
 import json
 import re
+import uuid
 import base64
 import requests
 from pathlib import Path
@@ -29,14 +32,28 @@ class TTSEngine:
         self.voices = {v["id"]: v for v in lib["voices"]}
         self.expressions = lib.get("expressions", {})
 
+    # ============ 资源/模型映射 ============
+
+    def _resource_id(self, version: str) -> str:
+        return "seed-tts-2.0" if version == "2.0" else "seed-tts-1.0"
+
+    def _model(self, version: str, caps: dict) -> str | None:
+        """
+        根据音色版本和能力推荐模型。
+        v2.0 → seed-tts-2.0-expressive（更强表现力 / 支持 QA+Cot）
+        v1.0 → seed-tts-1.1（音质提升 + 延迟优化）
+        """
+        if version == "2.0":
+            return "seed-tts-2.0-expressive"
+        elif version == "1.0":
+            return "seed-tts-1.1"
+        return None
+
     def get_voice(self, voice_id: str) -> dict:
         v = self.voices.get(voice_id)
         if not v:
             raise ValueError(f"音色 '{voice_id}' 不存在")
         return v
-
-    def _resource_id(self, version: str) -> str:
-        return "seed-tts-2.0" if version == "2.0" else "seed-tts-1.0"
 
     # ============ 2.0: 提取 [#指令] / 【标签】/ {{"additions":...}} → context_texts ============
     def _parse_20_instructions(self, text: str) -> tuple[str, list[str]]:
@@ -100,11 +117,16 @@ class TTSEngine:
         """预防性清理：移除面板可能误插入的 {{...}} 标记，防止被 TTS 念出来"""
         return re.sub(r'\s+', ' ', RE_JSON_TAG.sub('', text)).strip()
 
-    # ============ 核心 ============
+    # ============ 核心合成接口 ============
     def synthesize(
         self, text: str, voice_id: str, *,
         emotion: str = "neutral", emotion_scale: int = 4,
         speech_rate: int = 0, silence_duration: int = 0,
+        loudness_rate: int = 0,
+        bit_rate: int | None = None,
+        model: str | None = None,
+        enable_subtitle: bool = False,
+        cot_text: str | None = None,
         expression: str | None = None,
         format: str = "mp3", sample_rate: int = 24000,
     ) -> dict:
@@ -121,6 +143,8 @@ class TTSEngine:
             segments = self._split_20_segments(text)
             if len(segments) > 1 or (segments and segments[0].get("context_texts")):
                 all_audio = []
+                all_subtitles = []
+                total_usage = 0
                 for seg in segments:
                     if not seg["text"]:
                         continue
@@ -129,23 +153,35 @@ class TTSEngine:
                         voice_type=voice["voice_type"],
                         resource_id="seed-tts-2.0",
                         caps=caps,
+                        model=model or self._model(version, caps),
                         emotion=emotion,
                         emotion_scale=emotion_scale,
                         speech_rate=speech_rate,
                         silence_duration=silence_duration,
+                        loudness_rate=loudness_rate,
+                        bit_rate=bit_rate,
+                        enable_subtitle=enable_subtitle,
+                        cot_text=cot_text if seg == segments[0] else None,
                         expression=expression,
                         context_texts=seg.get("context_texts", []),
                         fmt=format,
                         sample_rate=sample_rate,
                     )
                     all_audio.append(result["audio_bytes"])
+                    if result.get("subtitles"):
+                        all_subtitles.extend(result["subtitles"])
+                    if result.get("usage", 0) > 0:
+                        total_usage += result["usage"]
                 full_audio = b"".join(all_audio)
-                return {
+                out = {
                     "audio_bytes": full_audio,
                     "audio_base64": base64.b64encode(full_audio).decode(),
                     "logid": "(segmented)",
                     "size": len(full_audio),
+                    "subtitles": all_subtitles if all_subtitles else None,
+                    "usage": total_usage if total_usage > 0 else None,
                 }
+                return out
 
         # 单段
         context_texts = []
@@ -157,19 +193,28 @@ class TTSEngine:
             voice_type=voice["voice_type"],
             resource_id=self._resource_id(version),
             caps=caps,
+            model=model or self._model(version, caps),
             emotion=emotion,
             emotion_scale=emotion_scale,
             speech_rate=speech_rate,
             silence_duration=silence_duration,
+            loudness_rate=loudness_rate,
+            bit_rate=bit_rate,
+            enable_subtitle=enable_subtitle,
+            cot_text=cot_text,
             expression=expression,
             context_texts=context_texts,
             fmt=format,
             sample_rate=sample_rate,
         )
 
+    # ============ 底层 API 调用（对齐最新文档）============
     def _call_api(
         self, text: str, voice_type: str, resource_id: str, caps: dict,
+        model: str | None,
         emotion: str, emotion_scale: int, speech_rate: int, silence_duration: int,
+        loudness_rate: int, bit_rate: int | None, enable_subtitle: bool,
+        cot_text: str | None,
         expression: str | None, context_texts: list[str],
         fmt: str, sample_rate: int,
     ) -> dict:
@@ -182,34 +227,64 @@ class TTSEngine:
             },
         }
 
+        # --- model（对齐文档：默认不传 = seed-tts-2.0-standard）---
+        if model:
+            payload["req_params"]["model"] = model
+
         ap = payload["req_params"]["audio_params"]
         additions_dict = {}
 
+        # --- 语速 ---
         if speech_rate != 0:
             ap["speech_rate"] = speech_rate
 
-        # silence_duration → additions (official spec: req_params.additions.silence_duration)
-        if silence_duration > 0:
-            additions_dict["silence_duration"] = silence_duration
+        # --- 音量 ---
+        if loudness_rate != 0:
+            ap["loudness_rate"] = loudness_rate
 
+        # --- 比特率 ---
+        if bit_rate is not None and bit_rate > 0:
+            ap["bit_rate"] = bit_rate
+            additions_dict["disable_default_bit_rate"] = True
+
+        # --- 情感 ---
         if emotion and emotion != "neutral":
             ap["emotion"] = emotion
             if caps.get("emotion_scale", False):
                 ap["emotion_scale"] = emotion_scale
 
+        # --- 特殊表达 → context_texts ---
         if expression and expression in self.expressions:
             if caps.get("context_texts"):
                 context_texts = list(context_texts) + [self.expressions[expression]]
 
+        # --- 字幕/时间戳 ---
+        if enable_subtitle:
+            ap["enable_subtitle"] = True
+
+        # --- context_texts → additions ---
         if context_texts and caps.get("context_texts"):
             additions_dict["context_texts"] = context_texts
 
+        # --- silence_duration → additions ---
+        if silence_duration > 0:
+            additions_dict["silence_duration"] = silence_duration
+
+        # --- additions ---
         if additions_dict:
             payload["req_params"]["additions"] = json.dumps(additions_dict, ensure_ascii=False)
 
+        # --- CoT (Chain of Thought) — 仅 expressive 模型支持 ---
+        if cot_text and model == "seed-tts-2.0-expressive":
+            payload["req_params"]["cot"] = {"text": cot_text}
+
+        # --- 请求头 ---
+        request_id = str(uuid.uuid4())
         headers = {
             "X-Api-Key": self.api_key,
             "X-Api-Resource-Id": resource_id,
+            "X-Api-Request-Id": request_id,
+            "X-Control-Require-Usage-Tokens-Return": "*",
             "Content-Type": "application/json",
         }
 
@@ -219,6 +294,9 @@ class TTSEngine:
         logid = resp.headers.get("X-Tt-Logid", "")
 
         audio_chunks = []
+        subtitles = []
+        usage = 0
+
         for line in resp.iter_lines(decode_unicode=True):
             if not line:
                 continue
@@ -226,23 +304,42 @@ class TTSEngine:
                 chunk = json.loads(line)
             except json.JSONDecodeError:
                 continue
+
             code = chunk.get("code", -1)
+
+            # --- 合成结束（成功）---
             if code == 20000000:
+                if "usage" in chunk:
+                    usage = chunk["usage"].get("text_words", 0)
                 break
+
+            # --- 错误 ---
             if code != 0:
                 raise RuntimeError(
                     f"TTS 错误 [code={code}]: {chunk.get('message','')} | logid={logid}"
                 )
+
+            # --- 音频数据 ---
             if data := chunk.get("data"):
                 audio_chunks.append(base64.b64decode(data))
+
+            # --- 字幕/时间戳 ---
+            if sentence := chunk.get("sentence"):
+                subtitles.append(sentence)
 
         if not audio_chunks:
             raise RuntimeError(f"未收到音频数据 | logid={logid}")
 
         full = b"".join(audio_chunks)
-        return {
+        result = {
             "audio_bytes": full,
             "audio_base64": base64.b64encode(full).decode(),
             "logid": logid,
             "size": len(full),
         }
+        if subtitles:
+            result["subtitles"] = subtitles
+        if usage > 0:
+            result["usage"] = usage
+
+        return result
