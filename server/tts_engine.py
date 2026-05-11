@@ -334,10 +334,26 @@ class TTSEngine:
             "Content-Type": "application/json",
         }
 
+        # ============ LOG: 完整请求 ============
+        print(f"\n{'='*60}")
+        print(f"[API REQUEST] POST {self.base_url}")
+        print(f"  logid(pre): {request_id}")
+        print(f"  resource_id: {resource_id}")
+        print(f"  model: {model}")
+        safe_headers = {k: (v[:8] + '***' if k == 'X-Api-Key' and len(v) > 8 else v) for k, v in headers.items()}
+        print(f"  headers: {json.dumps(safe_headers, ensure_ascii=False)}")
+        print(f"  body: {json.dumps(payload, ensure_ascii=False)}")
+        print(f"{'='*60}")
+        # ========================================
+
         resp = self._session.post(
             self.base_url, headers=headers, json=payload, stream=True, timeout=60
         )
         logid = resp.headers.get("X-Tt-Logid", "")
+
+        # ============ LOG: 完整响应 ============
+        print(f"\n[API RESPONSE] status={resp.status_code} logid={logid}")
+        # ======================================
 
         audio_chunks = []
         subtitles = []
@@ -351,7 +367,11 @@ class TTSEngine:
             except json.JSONDecodeError:
                 continue
 
+            # ============ LOG: 每帧响应 ============
             code = chunk.get("code", -1)
+            if code == 20000000 or code != 0:
+                print(f"  frame: {json.dumps(chunk, ensure_ascii=False)}")
+            # ====================================
 
             # --- 合成结束（成功）---
             if code == 20000000:
@@ -377,6 +397,12 @@ class TTSEngine:
             raise RuntimeError(f"未收到音频数据 | logid={logid}")
 
         full = b"".join(audio_chunks)
+
+        # ============ LOG: 结果摘要 ============
+        print(f"[API RESULT] audio_bytes={len(full)} usage={usage} subtitles={len(subtitles)}")
+        print(f"{'='*60}\n")
+        # ======================================
+
         result = {
             "audio_bytes": full,
             "audio_base64": base64.b64encode(full).decode(),
