@@ -278,6 +278,10 @@ function renderClipList() {
   container.innerHTML = clips.map((clip, idx) => {
     const voice = voiceLibrary.find(v => v.id === clip.voice_id);
     const version = voice?.version || "2.0";
+    const category = voice?.category || version;
+    const is20 = category === "2.0";
+    const is10Multi = category === "1.0多感情";
+    const hasEmotion = is20 || is10Multi;
     const emotions = voice?.capabilities?.emotions || ["neutral"];
     const hasContextTexts = voice?.capabilities?.context_texts || false;
     const isCollapsed = clip._collapsed !== false;
@@ -305,21 +309,19 @@ function renderClipList() {
           </div>
 
           <div class="clip-tools">
-            ${version === '2.0' && voice?.capabilities?.voice_instruction ? `
+            ${voice?.capabilities?.voice_instruction ? `
             <button class="btn btn-xs btn-insert-instruction" data-clip-id="${clip.id}">[#指令]</button>` : ''}
-            ${version === '2.0' ? `
+            ${is20 ? `
             <button class="btn btn-xs btn-insert-json20" data-clip-id="${clip.id}">{{2.0}}</button>` : ''}
-            ${version === '1.0' ? `
-            <button class="btn btn-xs btn-insert-json10" data-clip-id="${clip.id}">{{1.0}}</button>` : ''}
           </div>
 
+          ${is20 ? `
           <div class="clip-field">
             <label>模型:</label>
             <select class="clip-model" data-clip-id="${clip.id}">
               <option value="" ${!clip.model ? 'selected' : ''}>默认</option>
               <option value="seed-tts-2.0-expressive" ${clip.model === 'seed-tts-2.0-expressive' ? 'selected' : ''}>2.0 表现力增强</option>
               <option value="seed-tts-2.0-standard" ${clip.model === 'seed-tts-2.0-standard' ? 'selected' : ''}>2.0 标准稳定</option>
-              <option value="seed-tts-1.1" ${clip.model === 'seed-tts-1.1' ? 'selected' : ''}>1.0 增强版</option>
             </select>
           </div>
 
@@ -329,14 +331,15 @@ function renderClipList() {
                    value="${clip.cot_text || ''}" placeholder="思维链引导文本 (仅expressive模型)"
                    style="width:100%">
           </div>
+          ` : ''}
 
-          ${emotions.length > 1 ? `
+          ${hasEmotion ? `
           <div class="clip-field">
             <label>情感:</label>
             <select class="clip-emotion" data-clip-id="${clip.id}">
               ${emotions.map(e => `<option value="${e}" ${e === clip.emotion ? 'selected' : ''}>${e}</option>`).join("")}
             </select>
-            ${version === '2.0' ? `
+            ${is20 ? `
               <label>强度:</label>
               <input type="range" class="clip-emotion-scale" data-clip-id="${clip.id}"
                      min="1" max="5" value="${clip.emotion_scale}">
