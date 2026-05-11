@@ -29,13 +29,18 @@ class TTSEngine:
         lib_path = library_path or LIB_PATH
         with open(lib_path, encoding="utf-8") as f:
             lib = json.load(f)
-        self.voices = {v["id"]: v for v in lib["voices"]}
+        self.voices = {}
+        for v in lib["voices"]:
+            v["category"] = self.detect_category(v)
+            self.voices[v["id"]] = v
         self.expressions = lib.get("expressions", {})
 
     # ============ 资源/模型映射 ============
 
     def _resource_id(self, version: str) -> str:
-        return "seed-tts-2.0" if version == "2.0" else "seed-tts-1.0"
+        if version == "2.0":
+            return "seed-tts-2.0"
+        return "seed-tts-1.0"
 
     def _model(self, version: str, caps: dict) -> str | None:
         """
@@ -48,6 +53,43 @@ class TTSEngine:
         elif version == "1.0":
             return "seed-tts-1.1"
         return None
+
+    @staticmethod
+    def detect_category(voice: dict) -> str:
+        """
+        从 voice_type 后缀自动检测音色分类。
+        - _uranus_bigtts / saturn_ → 2.0
+        - _mars_bigtts / _moon_bigtts / _conversation_wvae_bigtts → 1.0
+        - ICL_ → 声音复刻，按 capabilities 判断
+
+        1.0 中根据 emotions 数量进一步分：
+        - emotions 数量 > 1 → 1.0多感情
+        - emotions 数量 <= 1 → 1.0
+        """
+        vt = voice.get("voice_type", "")
+        caps = voice.get("capabilities", {})
+
+        # 2.0: uranus 后缀 或 saturn_ 前缀
+        if vt.endswith("_uranus_bigtts") or vt.startswith("saturn_"):
+            return "2.0"
+
+        # 1.0: mars / moon / conversation_wvae 后缀
+        if vt.endswith(("_mars_bigtts", "_moon_bigtts", "_conversation_wvae_bigtts")):
+            emotions = caps.get("emotions", ["neutral"])
+            # 多感情判定：emotions 列表 > 1 个值
+            if len(emotions) > 1:
+                return "1.0多感情"
+            return "1.0"
+
+        # ICL 声音复刻：有 context_texts 能力 = 2.0 等价，否则 = 1.0多感情
+        if vt.startswith("ICL_") or vt.endswith("_tob"):
+            if caps.get("context_texts"):
+                return "2.0"
+            emotions = caps.get("emotions", ["neutral"])
+            return "1.0多感情" if len(emotions) > 1 else "1.0"
+
+        # 兜底：按 version 字段
+        return voice.get("version", "2.0")
 
     def get_voice(self, voice_id: str) -> dict:
         v = self.voices.get(voice_id)

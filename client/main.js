@@ -66,7 +66,7 @@ function renderVoiceList() {
   const search = document.getElementById("voice-search").value.toLowerCase();
 
   let filtered = voiceLibrary.filter(v => {
-    if (versionFilter !== "all" && v.version !== versionFilter) return false;
+    if (versionFilter !== "all" && v.category !== versionFilter && v.version !== versionFilter) return false;
     if (genderFilter !== "all" && v.gender !== genderFilter) return false;
     if (capFilter !== "all") {
       const caps = v.capabilities;
@@ -81,10 +81,9 @@ function renderVoiceList() {
   container.innerHTML = filtered.map(v => `
     <div class="voice-card ${v.version === '2.0' ? 'v20' : 'v10'}">
       <div class="voice-card-header">
-        <span class="voice-name">${v.name}</span>
+        <span class="voice-name">${escapeHtml(v.name)}</span>
         <span class="voice-badge gender">${v.gender === 'female' ? '女' : '男'}</span>
-        <span class="voice-badge version">${v.version}</span>
-        ${v.version === '2.0' ? '<span class="voice-badge recommend">⭐推荐</span>' : ''}
+        <span class="voice-badge version">${v.category || v.version}</span>
       </div>
       <div class="voice-card-meta">
         <div>voice_type: <code>${v.voice_type}</code></div>
@@ -141,7 +140,7 @@ function renderPanelVoiceList() {
   const currentVoiceId = clip ? clip.voice_id : null;
 
   let filtered = voiceLibrary.filter(v => {
-    if (versionFilter !== "all" && v.version !== versionFilter) return false;
+    if (versionFilter !== "all" && v.category !== versionFilter && v.version !== versionFilter) return false;
     if (genderFilter !== "all" && v.gender !== genderFilter) return false;
     if (capFilter !== "all") {
       const caps = v.capabilities;
@@ -159,7 +158,7 @@ function renderPanelVoiceList() {
       <div class="voice-card-header">
         <span class="voice-name">${escapeHtml(v.name)}</span>
         <span class="voice-badge gender">${v.gender === 'female' ? '女' : '男'}</span>
-        <span class="voice-badge version">${v.version}</span>
+        <span class="voice-badge version">${v.category || v.version}</span>
       </div>
     </div>
   `).join("");
