@@ -1,31 +1,13 @@
 {
-  "version": "1.0.0",
-  "last_updated": "2026-05-07",
+  "version": "2.0.0",
+  "last_updated": "2026-05-11",
   "emotions_cn": [
     "neutral",
     "happy",
     "sad",
     "angry",
     "fearful",
-    "surprised",
-    "hate",
-    "excited",
-    "coldness",
-    "depressed",
-    "lovey-dovey",
-    "shy",
-    "comfort",
-    "tension",
-    "tender",
-    "storytelling",
-    "radio",
-    "magnetic",
-    "advertising",
-    "vocal-fry",
-    "asmr",
-    "news",
-    "entertainment",
-    "dialect"
+    "surprised"
   ],
   "emotions_en": [
     "neutral",
@@ -33,11 +15,7 @@
     "angry",
     "sad",
     "excited",
-    "chat",
-    "asmr",
-    "warm",
-    "affectionate",
-    "authoritative"
+    "chat"
   ],
   "expressions": {
     "crying": "请用哭泣的语气说话，声音颤抖，带有哽咽和断断续续的感觉，呼吸声要重",
@@ -79,7 +57,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "vv_2",
@@ -112,7 +91,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "xiaohe_2",
@@ -145,7 +125,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "yunzhou_2",
@@ -178,7 +159,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "xiaotian_2",
@@ -211,7 +193,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "liufei_2",
@@ -244,7 +227,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "sophie_2",
@@ -277,7 +261,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "qingxinnvsheng_2",
@@ -310,7 +295,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "cancan_2",
@@ -343,7 +329,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "sajiaoxuemei_2",
@@ -376,7 +363,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "tianmeixiaoyuan_2",
@@ -409,7 +397,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "tianmeitaozi_2",
@@ -442,7 +431,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "peiqi_2",
@@ -475,7 +465,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "linjianvhai_2",
@@ -508,7 +499,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "shaonianzixin_2",
@@ -541,7 +533,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "sunwukong_2",
@@ -574,7 +567,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "tina_2",
@@ -607,7 +601,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "kefunvsheng_2",
@@ -640,7 +635,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "xiaoxue_2",
@@ -673,7 +669,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "dayi_2",
@@ -706,7 +703,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "mizai_2",
@@ -739,7 +737,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "jitangnv_2",
@@ -772,7 +771,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "meilinvyou_2",
@@ -805,7 +805,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "liuchangnv_2",
@@ -838,7 +839,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "ruyayichen_2",
@@ -871,7 +873,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "wenroumama_2",
@@ -904,7 +907,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "gaolengyujie_2",
@@ -937,7 +941,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "linjiananhai_2",
@@ -970,7 +975,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "qiaopinv_2",
@@ -1003,7 +1009,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "shuangkuaisisi_1",
@@ -1032,7 +1039,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "shuangkuaisisi_1_emo",
@@ -1061,7 +1069,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "gaolengyujie_1_emo",
@@ -1090,7 +1099,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "aojiaobazong_1_emo",
@@ -1119,7 +1129,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lengkugege_1_emo",
@@ -1148,7 +1159,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "beijingxiaoye_1_emo",
@@ -1177,7 +1189,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "linjianvhai_1",
@@ -1206,7 +1219,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "gaolengyujie_1",
@@ -1219,7 +1233,11 @@
       "has_20_counterpart": "gaolengyujie_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -1235,7 +1253,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "tim_2",
@@ -1268,7 +1287,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "dacey_2",
@@ -1301,7 +1321,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "stokie_2",
@@ -1334,7 +1355,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "jieshuoxiaoming_2",
@@ -1367,7 +1389,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "tvbnv_2",
@@ -1400,7 +1423,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "yizhipiannan_2",
@@ -1433,7 +1457,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "zhishuaiyingzi_2",
@@ -1466,7 +1491,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "silang_2",
@@ -1499,7 +1525,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "ruyaqingnian_2",
@@ -1532,7 +1559,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "qingcang_2",
@@ -1565,7 +1593,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "xionger_2",
@@ -1598,7 +1627,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "yingtaowanzi_2",
@@ -1631,7 +1661,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "wennuanahu_2",
@@ -1664,7 +1695,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "naiqimengwa_2",
@@ -1697,7 +1729,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "popo_2",
@@ -1730,7 +1763,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "aojiaobazong_2",
@@ -1763,7 +1797,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "lanyinmianbao_2",
@@ -1796,7 +1831,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "fanjuanqingnian_2",
@@ -1829,7 +1865,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "wenroushunv_2",
@@ -1862,7 +1899,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "gufengshaoyu_2",
@@ -1895,7 +1933,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "huolixiaoge_2",
@@ -1928,7 +1967,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "baqiqingshu_2",
@@ -1961,7 +2001,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "xuanyijieshuo_2",
@@ -1994,7 +2035,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "mengyatou_2",
@@ -2027,7 +2069,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "tiexinnvsheng_2",
@@ -2060,7 +2103,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "jitangmei_2",
@@ -2093,7 +2137,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "cixingjieshuonan_2",
@@ -2126,7 +2171,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "liangsangmengzai_2",
@@ -2159,7 +2205,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "kailangjiejie_2",
@@ -2192,7 +2239,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "gaolengchenwen_2",
@@ -2225,7 +2273,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "shenyeboke_2",
@@ -2258,7 +2307,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "lubanqihao_2",
@@ -2291,7 +2341,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "jiaochuannv_2",
@@ -2324,7 +2375,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "linxiao_2",
@@ -2357,7 +2409,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "lingling_2",
@@ -2390,7 +2443,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "chunribu_2",
@@ -2423,7 +2477,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "tangseng_2",
@@ -2456,7 +2511,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "zhuangzhou_2",
@@ -2489,7 +2545,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "kailangdidi_2",
@@ -2522,7 +2579,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "zhubajie_2",
@@ -2555,7 +2613,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "ganmaodianyin_2",
@@ -2588,7 +2647,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "chanmeinv_2",
@@ -2621,7 +2681,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "nvleishen_2",
@@ -2654,7 +2715,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "qinqienv_2",
@@ -2687,7 +2749,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "kuailexiaodong_2",
@@ -2720,7 +2783,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "kailangxuezhang_2",
@@ -2753,7 +2817,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "youyoujunzi_2",
@@ -2786,7 +2851,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "wenjingmaomao_2",
@@ -2819,7 +2885,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "zhixingnv_2",
@@ -2852,7 +2919,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "qingshuangnanda_2",
@@ -2885,7 +2953,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "yuanboxiaoshu_2",
@@ -2918,7 +2987,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "yangguangqingnian_2",
@@ -2951,7 +3021,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "qingchezizi_2",
@@ -2984,7 +3055,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "tianmeiyueyue_2",
@@ -3017,7 +3089,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "xinlingjitang_2",
@@ -3050,7 +3123,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "wenrouxiaoge_2",
@@ -3083,7 +3157,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "roumeinvyou_2",
@@ -3116,7 +3191,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "dongfanghaoran_2",
@@ -3149,7 +3225,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "wenrouxiaoya_2",
@@ -3182,7 +3259,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "tiancaitongsheng_2",
@@ -3215,7 +3293,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "wuzetian_2",
@@ -3248,7 +3327,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "gujie_2",
@@ -3281,7 +3361,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "guanggaojieshuo_2",
@@ -3314,7 +3395,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "shaoergushi_2",
@@ -3347,7 +3429,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "tiaopigongzhu_2",
@@ -3380,7 +3463,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "keainvsheng_2",
@@ -3413,7 +3497,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "shuanglangshaonian_2",
@@ -3446,7 +3531,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "tiancaitongzhuo_2",
@@ -3479,7 +3565,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "cancan_2_saturn",
@@ -3512,7 +3599,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "qingyingduoduo_2",
@@ -3545,7 +3633,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "wenwanshanshan_2",
@@ -3578,7 +3667,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "reqingaina_2",
@@ -3611,7 +3701,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "qingxinmumu_2",
@@ -3644,7 +3735,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "2.0"
     },
     {
       "id": "tianxinxiaomei_1_emo",
@@ -3673,7 +3765,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "guangzhoudege_1_emo",
@@ -3702,7 +3795,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "jingqiangkanye_1_emo",
@@ -3731,7 +3825,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "linjuayi_1_emo",
@@ -3760,7 +3855,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "yourougongzi_1_emo",
@@ -3789,7 +3885,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "ruyayichen_1_emo",
@@ -3818,7 +3915,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "junlangnanyou_1_emo",
@@ -3847,7 +3945,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "roumeinvyou_1_emo",
@@ -3876,7 +3975,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "yangguangqingnian_1_emo",
@@ -3905,7 +4005,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "meilinvyou_1_emo",
@@ -3934,7 +4035,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "candice_1_emo",
@@ -3963,7 +4065,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "serena_1_emo",
@@ -3992,7 +4095,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "glen_1_emo",
@@ -4021,7 +4125,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "sylus_1_emo",
@@ -4050,7 +4155,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "corey_1_emo",
@@ -4079,7 +4185,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "nadia_1_emo",
@@ -4108,7 +4215,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "shenyeboke_1_emo",
@@ -4137,7 +4245,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tina_1",
@@ -4166,7 +4275,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wenrounvshen_1",
@@ -4195,7 +4305,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "vv_1",
@@ -4224,7 +4335,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qinqienvsheng_1",
@@ -4253,7 +4365,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "jilingxiaohuo_1",
@@ -4282,7 +4395,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "yuanqitianmei_1",
@@ -4311,7 +4425,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zhixinjiejie_1",
@@ -4340,7 +4455,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "yangguangachen_1",
@@ -4369,7 +4485,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "kuailexiaodong_1",
@@ -4382,14 +4499,18 @@
       "has_20_counterpart": "kuailexiaodong_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -4398,7 +4519,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "lengkugege_1",
@@ -4427,7 +4549,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "chunchenvsheng_1",
@@ -4456,7 +4579,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "chuliannvyou_1",
@@ -4485,7 +4609,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tiexinguimi_1",
@@ -4514,7 +4639,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wenroubaiyueguang_1",
@@ -4543,7 +4669,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "yangyang_1",
@@ -4572,7 +4699,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "kailangxuezhang_1",
@@ -4592,7 +4720,7 @@
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -4601,7 +4729,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "sophie_1",
@@ -4614,14 +4743,18 @@
       "has_20_counterpart": "sophie_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -4630,7 +4763,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "tiexinmeimei_1",
@@ -4659,7 +4793,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tianmeitaozi_1",
@@ -4688,7 +4823,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qingxinnvsheng_1",
@@ -4717,7 +4853,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zhixingnvsheng_1",
@@ -4746,7 +4883,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qingshuangnanda_1",
@@ -4775,7 +4913,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "linjianvhai_1_moon",
@@ -4804,7 +4943,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "yuanboxiaoshu_1",
@@ -4833,7 +4973,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "yangguangqingnian_1",
@@ -4862,7 +5003,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tianmeixiaoyuan_1",
@@ -4891,7 +5033,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qingchezizi_1",
@@ -4920,7 +5063,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "jieshuoxiaoming_1",
@@ -4949,7 +5093,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "kailangjiejie_1",
@@ -4978,7 +5123,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "linjiananhai_1",
@@ -5007,7 +5153,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tianmeiyueyue_1",
@@ -5036,7 +5183,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xinlingjitang_1",
@@ -5065,7 +5213,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zhixingwenwan_1",
@@ -5094,7 +5243,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "nuanxintitie_1",
@@ -5123,7 +5273,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "kailangqingkuai_1",
@@ -5152,7 +5303,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "huoposhuanglang_1",
@@ -5181,7 +5333,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "shuaizhenxiaohuo_1",
@@ -5210,7 +5363,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wenrouxiaoge_1",
@@ -5239,7 +5393,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "cancan_1",
@@ -5268,7 +5423,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "shuangkuaisisi_1_moon",
@@ -5297,7 +5453,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wennuanahu_1",
@@ -5326,7 +5483,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "shaonianzixin_1",
@@ -5355,7 +5513,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wenrouwenya_1",
@@ -5384,7 +5543,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "hupunan_1",
@@ -5413,7 +5573,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lubanqihao_1",
@@ -5442,7 +5603,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "linxiao_1",
@@ -5471,7 +5633,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lingling_1",
@@ -5500,7 +5663,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "chunribu_1",
@@ -5529,7 +5693,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tangseng_1",
@@ -5558,7 +5723,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zhuangzhou_1",
@@ -5587,7 +5753,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zhubajie_1",
@@ -5616,7 +5783,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "ganmaodianyin_1",
@@ -5645,7 +5813,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zhishuaiyingzi_1",
@@ -5674,7 +5843,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "nvleishen_1",
@@ -5703,7 +5873,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "yueyunv_1",
@@ -5732,7 +5903,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "yuzhouzixuan_1",
@@ -5761,7 +5933,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "daimengchuanmei_1",
@@ -5790,7 +5963,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "guangxiyuanzhou_1",
@@ -5819,7 +5993,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "shuangjiegunxiaoge_1",
@@ -5848,7 +6023,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wanwanxiaohe_1",
@@ -5877,7 +6053,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wanqudashu_1",
@@ -5906,7 +6083,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "guangzhoudege_1",
@@ -5935,7 +6113,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "haoyuxiaoge_1",
@@ -5964,7 +6143,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "beijingxiaoye_1_moon",
@@ -5993,7 +6173,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "jingqiangkanye_1",
@@ -6022,7 +6203,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "meituojieer_1",
@@ -6051,7 +6233,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "chunzhenshaonv_1",
@@ -6080,7 +6263,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "naiqixiaosheng_1",
@@ -6109,7 +6293,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "jinglingxiangdao_1",
@@ -6138,7 +6323,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "menyoupingxiaoge_1",
@@ -6167,7 +6353,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "anrenqinzhu_1",
@@ -6196,7 +6383,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "badaozongcai_1",
@@ -6225,7 +6413,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wumeikeren_1",
@@ -6254,7 +6443,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xiemeiyujie_1",
@@ -6283,7 +6473,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xiaozhangxiaoge_1",
@@ -6312,7 +6503,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "younidashu_1",
@@ -6341,7 +6533,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "guaogongzi_1",
@@ -6370,7 +6563,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "huzishushu_1",
@@ -6399,7 +6593,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xingganmeihuo_1",
@@ -6428,7 +6623,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "bingruogongzi_1",
@@ -6457,7 +6653,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xiemeinvwang_1",
@@ -6486,7 +6683,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "aomanqingnian_1",
@@ -6515,7 +6713,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "cujingnansheng_1",
@@ -6544,7 +6743,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "shuanglangshaonian_1_icl",
@@ -6573,7 +6773,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "sajiananyou_1",
@@ -6602,7 +6803,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wenrounanyou_1",
@@ -6631,7 +6833,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wenshunshaonian_1",
@@ -6660,7 +6863,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "nianrennanyou_1",
@@ -6689,7 +6893,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "sajianansheng_1",
@@ -6718,7 +6923,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "huoponanyou_1",
@@ -6747,7 +6953,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tianxinanyou_1",
@@ -6776,7 +6983,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "huoliqingnian_1",
@@ -6805,7 +7013,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "kailangqingnian_1",
@@ -6834,7 +7043,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lengmoxiongzhang_1",
@@ -6863,7 +7073,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tiancaitongzhuo_1_icl",
@@ -6892,7 +7103,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "pianpiangongzi_1",
@@ -6921,7 +7133,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "mengdongqingnian_1",
@@ -6950,7 +7163,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lenglianxiongzhang_1",
@@ -6979,7 +7193,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "bingjiaoshaonian_1",
@@ -7008,7 +7223,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "bingjiananyou_1",
@@ -7037,7 +7253,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "bingruoshaonian_1",
@@ -7066,7 +7283,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "yiqishaonian_1",
@@ -7095,7 +7313,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "ganjingshaonian_1",
@@ -7124,7 +7343,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lengmonanyou_1",
@@ -7153,7 +7373,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "jingyingqingnian_1",
@@ -7182,7 +7403,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "rexueshaonian_1",
@@ -7211,7 +7433,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qingshuangshaonian_1",
@@ -7240,7 +7463,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zhongerqingnian_1",
@@ -7269,7 +7493,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lingyunqingnian_1",
@@ -7298,7 +7523,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zifuqingnian_1",
@@ -7327,7 +7553,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "bujiqingnian_1_icl",
@@ -7356,7 +7583,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "ruyajunzi_1",
@@ -7385,7 +7613,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "diyinchenyu_1",
@@ -7414,7 +7643,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lenglianxueba_1",
@@ -7443,7 +7673,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "ruyazongcai_1",
@@ -7472,7 +7703,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "shenchenzongcai_1",
@@ -7501,7 +7733,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xiaohouye_1",
@@ -7530,7 +7763,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "gugaogongzi_1",
@@ -7559,7 +7793,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zhangjianjunzi_1",
@@ -7588,7 +7823,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wenrunxuezhe_1",
@@ -7617,7 +7853,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qinqieqingnian_1",
@@ -7646,7 +7883,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wenrouxuezhang_1",
@@ -7675,7 +7913,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "gaolengzongcai_1",
@@ -7704,7 +7943,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lengjungaozhi_1",
@@ -7733,7 +7973,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "chanruoshaoye_1",
@@ -7762,7 +8003,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zixinqingnian_1",
@@ -7791,7 +8033,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qingseqingnian_1",
@@ -7820,7 +8063,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xuebatongzhuo_1",
@@ -7849,7 +8093,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lengaozongcai_1",
@@ -7878,7 +8123,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "yuanqishaonian_1",
@@ -7907,7 +8153,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "satuoqingnian_1",
@@ -7936,7 +8183,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zhishuaiqingnian_1",
@@ -7965,7 +8213,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "siwenqingnian_1",
@@ -7994,7 +8243,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "junyigongzi_1",
@@ -8023,7 +8273,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zhangjianxiake_1",
@@ -8052,7 +8303,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "jiaji_zhineng_1",
@@ -8081,7 +8333,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "naiqimengwa_1",
@@ -8110,7 +8363,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "popo_1",
@@ -8139,7 +8393,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "gaolengyujie_1_moon",
@@ -8152,7 +8407,11 @@
       "has_20_counterpart": "gaolengyujie_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -8168,7 +8427,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "aojiaobazong_1",
@@ -8181,7 +8441,11 @@
       "has_20_counterpart": "aojiaobazong_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -8197,7 +8461,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "meilinvyou_1_moon",
@@ -8210,7 +8475,11 @@
       "has_20_counterpart": "meilinvyou_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -8226,7 +8495,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "shenyeboke_1_moon",
@@ -8239,7 +8509,11 @@
       "has_20_counterpart": "shenyeboke_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -8255,7 +8529,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "roumeinvyou_1_moon",
@@ -8268,7 +8543,11 @@
       "has_20_counterpart": "roumeinvyou_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -8284,7 +8563,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "sajiaoxuemei_1_moon",
@@ -8297,7 +8577,11 @@
       "has_20_counterpart": "sajiaoxuemei_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -8313,7 +8597,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "bingruoshaonv_1",
@@ -8342,7 +8627,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "huoponvhai_1",
@@ -8371,7 +8657,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "dongfanghaoran_1",
@@ -8384,7 +8671,11 @@
       "has_20_counterpart": "dongfanghaoran_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -8400,7 +8691,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "lvchaxiaoge_1",
@@ -8429,7 +8721,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "jiaoruoluoli_1",
@@ -8458,7 +8751,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lengdanshuli_1",
@@ -8487,7 +8781,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "hanhoudunshi_1",
@@ -8516,7 +8811,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "huopodiaoman_1",
@@ -8545,7 +8841,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "guzhibingjiao_1",
@@ -8574,7 +8871,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "sajianianren_1",
@@ -8603,7 +8901,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "aomanjiaosheng_1",
@@ -8632,7 +8931,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xiaosasuixing_1",
@@ -8661,7 +8961,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "guiyishenmi_1",
@@ -8690,7 +8991,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "ruyacaijun_1",
@@ -8719,7 +9021,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zhengzhiqingnian_1",
@@ -8748,7 +9051,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "jiaohannvwang_1",
@@ -8777,7 +9081,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "bingjiaomengmei_1",
@@ -8806,7 +9111,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qingsenaigou_1",
@@ -8835,7 +9141,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "chunzhenxuedi_1",
@@ -8864,7 +9171,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "youroubangzhu_1",
@@ -8893,7 +9201,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "yourougongzi_1_icl",
@@ -8922,7 +9231,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tiaopigongzhu_1_icl",
@@ -8951,7 +9261,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tiexinnanyou_1",
@@ -8980,7 +9291,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "shaonianjiangjun_1",
@@ -9009,7 +9321,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "bingjiaogege_1",
@@ -9038,7 +9351,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xuebanantongzhuo_1",
@@ -9067,7 +9381,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "youmoshushu_1",
@@ -9096,7 +9411,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "jiaxiaozi_1",
@@ -9125,7 +9441,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wenrounantongzhuo_1",
@@ -9154,7 +9471,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "youmodaye_1",
@@ -9183,7 +9501,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zhenbiandiyu_1",
@@ -9212,7 +9531,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "shenmifashi_1",
@@ -9241,7 +9561,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "jiaochuannv_1",
@@ -9254,7 +9575,11 @@
       "has_20_counterpart": "jiaochuannv_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -9270,7 +9595,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "kailangdidi_1",
@@ -9283,7 +9609,11 @@
       "has_20_counterpart": "kailangdidi_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -9299,7 +9629,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "chanmeinv_1",
@@ -9312,7 +9643,11 @@
       "has_20_counterpart": "chanmeinv_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -9328,7 +9663,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "lengjunshangsi_1",
@@ -9357,7 +9693,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "guayanxiaoge_1",
@@ -9386,7 +9723,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qinglangwenrun_1",
@@ -9415,7 +9753,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xiaosasuixing_1_v1",
@@ -9444,7 +9783,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qinglengjingui_1",
@@ -9473,7 +9813,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "chenwenyuya_1",
@@ -9502,7 +9843,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qingyisugan_1",
@@ -9531,7 +9873,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wenrouneilian_1",
@@ -9560,7 +9903,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "dichengquanquan_1",
@@ -9589,7 +9933,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lanyincaohunshi_1",
@@ -9618,7 +9963,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qinglenggaoya_1",
@@ -9647,7 +9993,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tianmeijiaoqiao_1",
@@ -9676,7 +10023,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "rouguhunshi_1",
@@ -9705,7 +10053,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tianmeihuopo_1",
@@ -9734,7 +10083,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "chengshuwenrou_1",
@@ -9763,7 +10113,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tiexinguimi_v1",
@@ -9792,7 +10143,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wenroubaiyueguang_v1",
@@ -9821,7 +10173,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "gaolengchenwen_1",
@@ -9841,7 +10194,7 @@
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -9850,7 +10203,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "cujingnanyou_1_icl",
@@ -9879,7 +10233,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "fengfashaonian_1",
@@ -9908,7 +10263,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "cixingnansang_1",
@@ -9937,7 +10293,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "chengshuzongcai_1",
@@ -9966,7 +10323,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "aojiaojingying_1",
@@ -9995,7 +10353,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "aojiaogongzi_1",
@@ -10024,7 +10383,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "badaoshaoye_1",
@@ -10053,7 +10413,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "fuheigongzi_1",
@@ -10082,7 +10443,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "nuanxinxuejie_1",
@@ -10111,7 +10473,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "keainvsheng_1_icl",
@@ -10140,7 +10503,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "chengshujiejie_1",
@@ -10169,7 +10533,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "bingjiaojiejie_1",
@@ -10198,7 +10563,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wumeiyujie_1",
@@ -10227,7 +10593,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "aojiaonvyou_1",
@@ -10256,7 +10623,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tiexinnvyou_1",
@@ -10285,7 +10653,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xingganyujie_1",
@@ -10314,7 +10683,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "bingjiaodidi_1",
@@ -10343,7 +10713,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "aomanshaoye_1",
@@ -10372,7 +10743,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "aiqilingren_1",
@@ -10401,7 +10773,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "bingjiaobailian_1",
@@ -10430,7 +10803,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lauren_1",
@@ -10459,7 +10833,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "energeticmaleii_1",
@@ -10488,7 +10863,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "gothamhero_1",
@@ -10517,7 +10893,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "flirtyfemale_1",
@@ -10546,7 +10923,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "peacefulfemale_1",
@@ -10575,7 +10953,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "nara_1",
@@ -10604,7 +10983,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "bruce_1",
@@ -10633,7 +11013,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "michael_1",
@@ -10662,7 +11043,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "cartoonchef_1",
@@ -10691,7 +11073,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lucas_1",
@@ -10704,14 +11087,18 @@
       "has_20_counterpart": null,
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -10720,7 +11107,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "sophie_en_1",
@@ -10733,14 +11121,18 @@
       "has_20_counterpart": null,
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -10749,7 +11141,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "daisy_1",
@@ -10762,14 +11155,18 @@
       "has_20_counterpart": null,
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -10778,7 +11175,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "owen_1",
@@ -10791,14 +11189,18 @@
       "has_20_counterpart": null,
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -10807,7 +11209,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "luna_1",
@@ -10827,7 +11230,7 @@
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -10836,7 +11239,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "michael_icl_1",
@@ -10865,7 +11269,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "charlie_1",
@@ -10894,7 +11299,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "bigboogie_1",
@@ -10923,7 +11329,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "frostyman_1",
@@ -10952,7 +11359,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "thegrinch_1",
@@ -10981,7 +11389,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "zayne_1",
@@ -11010,7 +11419,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "jigsaw_1",
@@ -11039,7 +11449,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "chucky_1",
@@ -11068,7 +11479,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "clownman_1",
@@ -11097,7 +11509,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "kevinmccallister_1",
@@ -11126,7 +11539,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xavier_1",
@@ -11155,7 +11569,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "noah_1",
@@ -11184,7 +11599,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "adam_1",
@@ -11213,7 +11629,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "amanda_1",
@@ -11242,7 +11659,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "jackson_1",
@@ -11271,7 +11689,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "delicategirl_1",
@@ -11300,7 +11719,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "dave_1",
@@ -11329,7 +11749,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "hades_1",
@@ -11358,7 +11779,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "onez_1",
@@ -11387,7 +11809,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "emily_1",
@@ -11416,7 +11839,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "daniel_1",
@@ -11429,14 +11853,18 @@
       "has_20_counterpart": null,
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -11445,7 +11873,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "alastor_1",
@@ -11474,7 +11903,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "smith_1",
@@ -11503,7 +11933,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "anna_1",
@@ -11532,7 +11963,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "ethan_1",
@@ -11561,7 +11993,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "sarah_1",
@@ -11590,7 +12023,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "dryw_1",
@@ -11619,7 +12053,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "diana_1",
@@ -11639,7 +12074,7 @@
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -11648,7 +12083,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lucia_1",
@@ -11668,7 +12104,7 @@
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -11677,7 +12113,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "sofia_1",
@@ -11697,7 +12134,7 @@
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -11706,7 +12143,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "daniel_es_1",
@@ -11726,7 +12164,7 @@
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -11735,7 +12173,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "hikaru_1",
@@ -11764,7 +12203,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "satomi_1",
@@ -11784,7 +12224,7 @@
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -11793,7 +12233,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "masao_1",
@@ -11813,7 +12254,7 @@
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -11822,7 +12263,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tsuki_1",
@@ -11842,7 +12284,7 @@
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -11851,7 +12293,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "akemi_1",
@@ -11880,7 +12323,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "kazune_1",
@@ -11909,7 +12353,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "haruko_1",
@@ -11938,7 +12383,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "hiroshi_1",
@@ -11967,7 +12413,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lixingyuanzi_1",
@@ -11996,7 +12443,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qingtiantaotao_1",
@@ -12025,7 +12473,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qingxixiaoxue_1",
@@ -12054,7 +12503,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qingtianmeimei_1",
@@ -12083,7 +12533,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "kailangtingting_1",
@@ -12112,7 +12563,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qingxinmumu_1",
@@ -12141,7 +12593,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "shuanglangxiaoyang_1",
@@ -12170,7 +12623,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qingxinbobo_1",
@@ -12199,7 +12653,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wenwanshanshan_1",
@@ -12228,7 +12683,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tianmeixiaoyu_1",
@@ -12257,7 +12713,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "reqingaina_1",
@@ -12286,7 +12743,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "tianmeixiaoju_1",
@@ -12315,7 +12773,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "chenwenmingzai_1",
@@ -12344,7 +12803,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qinqiexiaozhuo_1",
@@ -12373,7 +12833,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "lingdongxinxin_1",
@@ -12402,7 +12863,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "guaiqiaokeer_1",
@@ -12431,7 +12893,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "nuanxinqianqian_1",
@@ -12460,7 +12923,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "ruanmengtuanzi_1",
@@ -12489,7 +12953,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "yangguangyangyang_1",
@@ -12518,7 +12983,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "ruanmengtangtang_1",
@@ -12547,7 +13013,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xiuliqianqian_1",
@@ -12576,7 +13043,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "kaixinxiaohong_1",
@@ -12605,7 +13073,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "qingyingduoduo_1",
@@ -12634,7 +13103,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "kefunvsheng_1",
@@ -12647,7 +13117,11 @@
       "has_20_counterpart": "kefunvsheng_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -12663,7 +13137,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "youyoujunzi_1",
@@ -12676,14 +13151,18 @@
       "has_20_counterpart": "youyoujunzi_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -12692,7 +13171,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "wenjingmaomao_1",
@@ -12705,14 +13185,18 @@
       "has_20_counterpart": "wenjingmaomao_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
         "voice_instruction": false,
         "voice_tag": false,
         "reference_text": false,
-        "asmr": false,
+        "asmr": true,
         "speech_rate_range": [
           -50,
           100
@@ -12721,7 +13205,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "qingxinshaonv_1",
@@ -12750,7 +13235,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "chunhoudiyin_1",
@@ -12779,7 +13265,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "paoxiaoxiaoge_1",
@@ -12808,7 +13295,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "heainainai_1",
@@ -12837,7 +13325,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "linjuayi_1_icl",
@@ -12866,7 +13355,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wenrouxiaoya_1",
@@ -12879,7 +13369,11 @@
       "has_20_counterpart": "wenrouxiaoya_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -12895,7 +13389,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "tiancaitongsheng_1",
@@ -12908,7 +13403,11 @@
       "has_20_counterpart": "tiancaitongsheng_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -12924,7 +13423,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "sunwukong_1",
@@ -12937,7 +13437,11 @@
       "has_20_counterpart": "sunwukong_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -12953,7 +13457,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "xionger_1",
@@ -12966,7 +13471,11 @@
       "has_20_counterpart": "xionger_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -12982,7 +13491,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "peiqi_1",
@@ -12995,7 +13505,11 @@
       "has_20_counterpart": "peiqi_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13011,7 +13525,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "wuzetian_1",
@@ -13024,7 +13539,11 @@
       "has_20_counterpart": "wuzetian_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13040,7 +13559,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "gujie_1",
@@ -13053,7 +13573,11 @@
       "has_20_counterpart": "gujie_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13069,7 +13593,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "yingtaowanzi_1",
@@ -13082,7 +13607,11 @@
       "has_20_counterpart": "yingtaowanzi_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13098,7 +13627,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "guanggaojieshuo_1",
@@ -13111,7 +13641,11 @@
       "has_20_counterpart": "guanggaojieshuo_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13127,7 +13661,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "shaoergushi_1",
@@ -13140,7 +13675,11 @@
       "has_20_counterpart": "shaoergushi_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13156,7 +13695,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "silang_1",
@@ -13169,7 +13709,11 @@
       "has_20_counterpart": "silang_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13185,7 +13729,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "qiaopinv_1",
@@ -13198,7 +13743,11 @@
       "has_20_counterpart": "qiaopinv_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13214,7 +13763,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "lanyinmianbao_1",
@@ -13227,7 +13777,11 @@
       "has_20_counterpart": "lanyinmianbao_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13243,7 +13797,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "liangsangmengzai_1",
@@ -13256,7 +13811,11 @@
       "has_20_counterpart": "liangsangmengzai_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13272,7 +13831,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "cixingjieshuonan_1",
@@ -13285,7 +13845,11 @@
       "has_20_counterpart": "cixingjieshuonan_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13301,7 +13865,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "jitangmei_1",
@@ -13314,7 +13879,11 @@
       "has_20_counterpart": "jitangmei_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13330,7 +13899,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "tiexinnvsheng_1",
@@ -13343,7 +13913,11 @@
       "has_20_counterpart": "tiexinnvsheng_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13359,7 +13933,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "mengyatou_1",
@@ -13372,7 +13947,11 @@
       "has_20_counterpart": "mengyatou_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13388,7 +13967,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "neiliancaijun_1",
@@ -13417,7 +13997,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "wennuanshaonian_1",
@@ -13446,7 +14027,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "ruyagongzi_1",
@@ -13475,7 +14057,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0"
     },
     {
       "id": "xuanyijieshuo_1",
@@ -13488,7 +14071,11 @@
       "has_20_counterpart": "xuanyijieshuo_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13504,7 +14091,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "ruyaqingnian_1",
@@ -13517,7 +14105,11 @@
       "has_20_counterpart": "ruyaqingnian_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13533,7 +14125,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "baqiqingshu_1",
@@ -13546,7 +14139,11 @@
       "has_20_counterpart": "baqiqingshu_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13562,7 +14159,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "qingcang_1",
@@ -13575,7 +14173,11 @@
       "has_20_counterpart": "qingcang_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13591,7 +14193,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "huolixiaoge_1",
@@ -13604,7 +14207,11 @@
       "has_20_counterpart": "huolixiaoge_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13620,7 +14227,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "gufengshaoyu_1",
@@ -13633,7 +14241,11 @@
       "has_20_counterpart": "gufengshaoyu_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13649,7 +14261,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "wenroushunv_1",
@@ -13662,7 +14275,11 @@
       "has_20_counterpart": "wenroushunv_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13678,7 +14295,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     },
     {
       "id": "fanjuanqingnian_1",
@@ -13691,7 +14309,11 @@
       "has_20_counterpart": "fanjuanqingnian_2",
       "capabilities": {
         "emotions": [
-          "neutral"
+          "neutral",
+          "happy",
+          "sad",
+          "angry",
+          "fearful"
         ],
         "emotion_scale": false,
         "context_texts": false,
@@ -13707,7 +14329,8 @@
           0,
           30000
         ]
-      }
+      },
+      "category": "1.0多感情"
     }
   ]
 }
