@@ -199,6 +199,7 @@ class TTSEngine:
                         voice_type=voice["voice_type"],
                         resource_id="seed-tts-2.0",
                         caps=caps,
+                        category=voice.get("category", ""),
                         model=model or self._model(version, caps),
                         emotion=emotion,
                         emotion_scale=emotion_scale,
@@ -239,6 +240,7 @@ class TTSEngine:
             voice_type=voice["voice_type"],
             resource_id=self._resource_id(version),
             caps=caps,
+            category=voice.get("category", ""),
             model=model or self._model(version, caps),
             emotion=emotion,
             emotion_scale=emotion_scale,
@@ -293,8 +295,8 @@ class TTSEngine:
             ap["bit_rate"] = bit_rate
             additions_dict["disable_default_bit_rate"] = True
 
-        # --- 情感 ---
-        if emotion and emotion != "neutral":
+        # --- 情感（仅 1.0/1.0多感情；2.0 走 context_texts） ---
+        if emotion and emotion != "neutral" and category != "2.0":
             ap["emotion"] = emotion
             if caps.get("emotion_scale", False):
                 ap["emotion_scale"] = emotion_scale
@@ -340,7 +342,7 @@ class TTSEngine:
         print(f"  logid(pre): {request_id}")
         print(f"  resource_id: {resource_id}")
         print(f"  model: {model}")
-        safe_headers = {k: (v[:8] + '***' if k == 'X-Api-Key' and len(v) > 8 else v) for k, v in headers.items()}
+        safe_headers = {k: (f"***({len(v)}chars)" if k == 'X-Api-Key' else v) for k, v in headers.items()}
         print(f"  headers: {json.dumps(safe_headers, ensure_ascii=False)}")
         print(f"  body: {json.dumps(payload, ensure_ascii=False)}")
         print(f"{'='*60}")
