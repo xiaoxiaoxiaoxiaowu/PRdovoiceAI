@@ -109,15 +109,13 @@ MULTI_EMOTION_VOICE_TYPES = {
     "zh_female_yuanqinvyou_moon_bigtts",       # 撒娇学妹 2.0
     "zh_male_dongfanghaoran_moon_bigtts",      # 东方浩然 2.0
     "zh_female_wenrouxiaoya_moon_bigtts",      # 温柔小雅 2.0
-    "zh_male_youyoujunzi_moon_bigtts",         # 悠悠君子 2.0
-    "zh_female_maomao_conversation_wvae_bigtts", # 文静毛毛 2.0
+    # conversation_wvae_bigtts — 官方标注有情感变化
     "zh_male_M100_conversation_wvae_bigtts",   # 悠悠君子 2.0 (conv)
+    "zh_female_maomao_conversation_wvae_bigtts", # 文静毛毛 2.0 (conv)
     "zh_female_sophie_conversation_wvae_bigtts", # Sophie
     "zh_male_xudong_conversation_wvae_bigtts", # Daniel
-    "zh_female_sarah_new_conversation_wvae_bigtts", # Luna
     "en_female_dacey_conversation_wvae_bigtts", # Daisy
     "en_male_charlie_conversation_wvae_bigtts", # Owen
-    "zh_female_gaolengyujie_moon_bigtts",      # (dup, safe)
 }
 
 
