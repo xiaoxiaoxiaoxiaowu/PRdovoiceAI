@@ -1,6 +1,7 @@
 // ==================== 配置 ====================
 let AUDIO_OUTPUT_DIR = "D:/voice_cache";
 let activePanelClipId = null;
+let isBatchMode = false;
 
 // ==================== 安全：HTML 转义 ====================
 function escapeHtml(str) {
@@ -124,6 +125,7 @@ function openVoicePanel(clipId) {
 }
 
 function closeVoicePanel() {
+  isBatchMode = false;
   activePanelClipId = null;
   document.getElementById("overlay").classList.add("hidden");
   document.getElementById("voice-panel").classList.add("hidden");
@@ -164,13 +166,23 @@ function renderPanelVoiceList() {
 }
 
 function selectPanelVoice(voiceId) {
-  const clip = clips.find(c => c.id === activePanelClipId);
-  if (!clip) return;
-  clip.voice_id = voiceId;
-  const voice = voiceLibrary.find(v => v.id === voiceId);
-  if (voice && !voice.capabilities.emotions.includes(clip.emotion)) {
-    clip.emotion = voice.capabilities.emotions[0] || "neutral";
+  if (isBatchMode) {
+    selectedClips.forEach(cid => {
+      const clip = clips.find(c => c.id === cid);
+      if (clip) clip.voice_id = voiceId;
+    });
+    isBatchMode = false;
+  } else {
+    const clip = clips.find(c => c.id === activePanelClipId);
+    if (!clip) return;
+    clip.voice_id = voiceId;
+    const voice = voiceLibrary.find(v => v.id === voiceId);
+    if (voice && !voice.capabilities.emotions.includes(clip.emotion)) {
+      clip.emotion = voice.capabilities.emotions[0] || "neutral";
+    }
   }
+  document.getElementById("voice-panel-title").textContent = "选择音色";
+  activePanelClipId = null;
   closeVoicePanel();
   renderClipList();
 }
@@ -208,8 +220,7 @@ toggleSelectClip = function(clipId) {
 
 document.getElementById("btn-batch-voice").addEventListener("click", () => {
   if (selectedClips.size === 0) return;
-  // 批量模式下，打开面板替换所有选中剪辑的音色
-  const firstId = [...selectedClips][0];
+  isBatchMode = true;
   activePanelClipId = "__batch__";
   document.getElementById("overlay").classList.remove("hidden");
   document.getElementById("voice-panel").classList.remove("hidden");
@@ -219,19 +230,6 @@ document.getElementById("btn-batch-voice").addEventListener("click", () => {
   document.getElementById("panel-filter-gender").value = "all";
   document.getElementById("panel-filter-capability").value = "all";
   renderPanelVoiceList();
-  // 覆盖 selectPanelVoice 行为：批量替换
-  const _origSelect = selectPanelVoice;
-  selectPanelVoice = function(voiceId) {
-    selectedClips.forEach(cid => {
-      const clip = clips.find(c => c.id === cid);
-      if (clip) clip.voice_id = voiceId;
-    });
-    document.getElementById("voice-panel-title").textContent = "选择音色";
-    selectPanelVoice = _origSelect; // 恢复原行为
-    activePanelClipId = null;
-    closeVoicePanel();
-    renderClipList();
-  };
 });
 
 function updateDefaultVoiceSelect() {

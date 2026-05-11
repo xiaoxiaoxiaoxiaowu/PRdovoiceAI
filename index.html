@@ -125,6 +125,46 @@
     </section>
 
   </div>
+
+  <!-- 遮罩层 -->
+  <div id="overlay" class="hidden" onclick="closeVoicePanel()"></div>
+
+  <!-- 侧边音色选择面板 -->
+  <div id="voice-panel" class="hidden">
+    <div id="voice-panel-header">
+      <span id="voice-panel-title">选择音色</span>
+      <button id="btn-close-panel" class="btn btn-sm" onclick="closeVoicePanel()">✕</button>
+    </div>
+    <div id="voice-panel-search">
+      <input id="panel-voice-search" type="text" placeholder="🔍 搜索 457 个音色...">
+    </div>
+    <div id="voice-panel-filters">
+      <select id="panel-filter-version">
+        <option value="all">全部版本</option>
+        <option value="2.0">2.0</option>
+        <option value="1.0">1.0</option>
+      </select>
+      <select id="panel-filter-gender">
+        <option value="all">全部性别</option>
+        <option value="female">女声</option>
+        <option value="male">男声</option>
+      </select>
+      <select id="panel-filter-capability">
+        <option value="all">全部能力</option>
+        <option value="emotion">情感变化</option>
+        <option value="context_texts">指令遵循</option>
+        <option value="asmr">ASMR</option>
+      </select>
+    </div>
+    <div id="voice-panel-list"></div>
+  </div>
+
+  <!-- 浮动批量操作按钮 -->
+  <div id="batch-float" class="hidden">
+    <button id="btn-batch-voice" class="btn btn-primary">修改音色</button>
+    <span id="batch-count">0 个已选</span>
+  </div>
+
   <script src="client/CSInterface.js"></script>
   <script src="client/main.js"></script>
 </body>
