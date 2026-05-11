@@ -1,5 +1,6 @@
 // ==================== 配置 ====================
 let AUDIO_OUTPUT_DIR = "D:/voice_cache";
+let activePanelClipId = null;
 
 // ==================== 安全：HTML 转义 ====================
 function escapeHtml(str) {
@@ -110,6 +111,129 @@ document.getElementById("filter-gender").addEventListener("change", renderVoiceL
 document.getElementById("filter-capability").addEventListener("change", renderVoiceList);
 document.getElementById("voice-search").addEventListener("input", renderVoiceList);
 
+// ==================== 侧边音色面板 ====================
+function openVoicePanel(clipId) {
+  activePanelClipId = clipId;
+  document.getElementById("overlay").classList.remove("hidden");
+  document.getElementById("voice-panel").classList.remove("hidden");
+  document.getElementById("panel-voice-search").value = "";
+  document.getElementById("panel-filter-version").value = "all";
+  document.getElementById("panel-filter-gender").value = "all";
+  document.getElementById("panel-filter-capability").value = "all";
+  renderPanelVoiceList();
+}
+
+function closeVoicePanel() {
+  activePanelClipId = null;
+  document.getElementById("overlay").classList.add("hidden");
+  document.getElementById("voice-panel").classList.add("hidden");
+}
+
+function renderPanelVoiceList() {
+  const container = document.getElementById("voice-panel-list");
+  const versionFilter = document.getElementById("panel-filter-version").value;
+  const genderFilter = document.getElementById("panel-filter-gender").value;
+  const capFilter = document.getElementById("panel-filter-capability").value;
+  const search = document.getElementById("panel-voice-search").value.toLowerCase();
+  const clip = clips.find(c => c.id === activePanelClipId);
+  const currentVoiceId = clip ? clip.voice_id : null;
+
+  let filtered = voiceLibrary.filter(v => {
+    if (versionFilter !== "all" && v.version !== versionFilter) return false;
+    if (genderFilter !== "all" && v.gender !== genderFilter) return false;
+    if (capFilter !== "all") {
+      const caps = v.capabilities;
+      if (capFilter === "emotion" && (!caps.emotions || caps.emotions.length <= 1)) return false;
+      if (capFilter === "context_texts" && !caps.context_texts) return false;
+      if (capFilter === "asmr" && !caps.asmr) return false;
+    }
+    if (search && !v.name.toLowerCase().includes(search) && !v.voice_type.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  container.innerHTML = filtered.map(v => `
+    <div class="voice-card ${v.version === '2.0' ? 'v20' : 'v10'} ${v.id === currentVoiceId ? 'selected' : ''}"
+         onclick="selectPanelVoice('${v.id}')">
+      <div class="voice-card-header">
+        <span class="voice-name">${escapeHtml(v.name)}</span>
+        <span class="voice-badge gender">${v.gender === 'female' ? '女' : '男'}</span>
+        <span class="voice-badge version">${v.version}</span>
+      </div>
+    </div>
+  `).join("");
+}
+
+function selectPanelVoice(voiceId) {
+  const clip = clips.find(c => c.id === activePanelClipId);
+  if (!clip) return;
+  clip.voice_id = voiceId;
+  const voice = voiceLibrary.find(v => v.id === voiceId);
+  if (voice && !voice.capabilities.emotions.includes(clip.emotion)) {
+    clip.emotion = voice.capabilities.emotions[0] || "neutral";
+  }
+  closeVoicePanel();
+  renderClipList();
+}
+
+// 面板内过滤器事件
+document.getElementById("panel-voice-search").addEventListener("input", renderPanelVoiceList);
+document.getElementById("panel-filter-version").addEventListener("change", renderPanelVoiceList);
+document.getElementById("panel-filter-gender").addEventListener("change", renderPanelVoiceList);
+document.getElementById("panel-filter-capability").addEventListener("change", renderPanelVoiceList);
+
+// Esc 关闭面板
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && activePanelClipId) { closeVoicePanel(); }
+});
+
+// ==================== 浮动批量操作 ====================
+function updateBatchFloat() {
+  const btn = document.getElementById("batch-float");
+  const span = document.getElementById("batch-count");
+  const count = selectedClips.size;
+  if (count > 0) {
+    btn.classList.remove("hidden");
+    span.textContent = `${count} 个已选`;
+  } else {
+    btn.classList.add("hidden");
+  }
+}
+
+// 覆盖原有 toggleSelectClip，接入更新浮动按钮
+const _origToggleSelect = toggleSelectClip;
+toggleSelectClip = function(clipId) {
+  _origToggleSelect(clipId);
+  updateBatchFloat();
+};
+
+document.getElementById("btn-batch-voice").addEventListener("click", () => {
+  if (selectedClips.size === 0) return;
+  // 批量模式下，打开面板替换所有选中剪辑的音色
+  const firstId = [...selectedClips][0];
+  activePanelClipId = "__batch__";
+  document.getElementById("overlay").classList.remove("hidden");
+  document.getElementById("voice-panel").classList.remove("hidden");
+  document.getElementById("voice-panel-title").textContent = `批量修改音色 (${selectedClips.size} 个)`;
+  document.getElementById("panel-voice-search").value = "";
+  document.getElementById("panel-filter-version").value = "all";
+  document.getElementById("panel-filter-gender").value = "all";
+  document.getElementById("panel-filter-capability").value = "all";
+  renderPanelVoiceList();
+  // 覆盖 selectPanelVoice 行为：批量替换
+  const _origSelect = selectPanelVoice;
+  selectPanelVoice = function(voiceId) {
+    selectedClips.forEach(cid => {
+      const clip = clips.find(c => c.id === cid);
+      if (clip) clip.voice_id = voiceId;
+    });
+    document.getElementById("voice-panel-title").textContent = "选择音色";
+    selectPanelVoice = _origSelect; // 恢复原行为
+    activePanelClipId = null;
+    closeVoicePanel();
+    renderClipList();
+  };
+});
+
 function updateDefaultVoiceSelect() {
   const sel = document.getElementById("set-default-voice");
   sel.innerHTML = voiceLibrary.map(v =>
@@ -174,9 +298,8 @@ function renderClipList() {
         <div class="clip-body" style="display:${isCollapsed ? 'none' : 'block'}">
           <div class="clip-field">
             <label>音色:</label>
-            <select class="clip-voice-select" data-clip-id="${clip.id}">
-              ${voiceLibrary.map(v => `<option value="${v.id}" ${v.id === clip.voice_id ? 'selected' : ''}>${v.name}</option>`).join("")}
-            </select>
+            <span class="clip-voice-name" onclick="openVoicePanel('${clip.id}')"
+                  title="点击切换音色">${escapeHtml(voice?.name || '未选择')}</span>
           </div>
 
           <div class="clip-field">
@@ -315,19 +438,7 @@ function bindClipEvents() {
     });
   });
 
-  document.querySelectorAll(".clip-voice-select").forEach(sel => {
-    sel.addEventListener("change", () => {
-      const clip = clips.find(c => c.id === sel.dataset.clipId);
-      if (clip) {
-        clip.voice_id = sel.value;
-        const voice = voiceLibrary.find(v => v.id === clip.voice_id);
-        if (voice && !voice.capabilities.emotions.includes(clip.emotion)) {
-          clip.emotion = voice.capabilities.emotions[0] || "neutral";
-        }
-        renderClipList();
-      }
-    });
-  });
+  // 音色名点击 → 侧边面板（已通过 onclick 绑定，无需额外处理）
 
   document.querySelectorAll(".clip-text").forEach(ta => {
     ta.addEventListener("input", () => {
