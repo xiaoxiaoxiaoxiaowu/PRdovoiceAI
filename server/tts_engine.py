@@ -31,7 +31,8 @@ class TTSEngine:
             lib = json.load(f)
         self.voices = {}
         for v in lib["voices"]:
-            v["category"] = self.detect_category(v)
+            if "category" not in v:
+                v["category"] = self.detect_category(v)
             self.voices[v["id"]] = v
         self.expressions = lib.get("expressions", {})
 
@@ -81,9 +82,12 @@ class TTSEngine:
                 return "1.0多感情"
             return "1.0"
 
-        # ICL 声音复刻：有 context_texts 能力 = 2.0 等价，否则 = 1.0多感情
+        # ICL 声音复刻：有 context_texts 但底层走 seed-tts-1.0 → 1.0多感情
         if vt.startswith("ICL_") or vt.endswith("_tob"):
             if caps.get("context_texts"):
+                # version 字段由 rebuild_voices.py 标记，1.0 的 ICL 归多感情
+                if voice.get("version") == "1.0":
+                    return "1.0多感情"
                 return "2.0"
             emotions = caps.get("emotions", ["neutral"])
             return "1.0多感情" if len(emotions) > 1 else "1.0"
