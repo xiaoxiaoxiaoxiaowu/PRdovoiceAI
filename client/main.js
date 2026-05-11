@@ -1,6 +1,14 @@
 // ==================== 配置 ====================
 let AUDIO_OUTPUT_DIR = "D:/voice_cache";
 
+// ==================== 安全：HTML 转义 ====================
+function escapeHtml(str) {
+  if (!str) return "";
+  const div = document.createElement("div");
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
 // ==================== 全局状态 ====================
 var csInterface = new CSInterface();
 let backendUrl = "http://127.0.0.1:9527";
@@ -159,7 +167,7 @@ function renderClipList() {
           <input type="checkbox" class="clip-checkbox" data-clip-id="${clip.id}"
                  ${selectedClips.has(clip.id) ? 'checked' : ''}>
           <span class="clip-id">#${clip.id}</span>
-          <span class="clip-preview">${clip.text.substring(0, 40)}${clip.text.length > 40 ? '...' : ''}</span>
+          <span class="clip-preview">${escapeHtml(clip.text.substring(0, 40))}${clip.text.length > 40 ? '...' : ''}</span>
           <span class="clip-status-icon">${statusIcon(clip.status)}</span>
           <span class="clip-toggle">${isCollapsed ? '▶' : '▼'}</span>
         </div>
@@ -173,7 +181,7 @@ function renderClipList() {
 
           <div class="clip-field">
             <label>文本:</label>
-            <textarea class="clip-text" data-clip-id="${clip.id}" rows="2">${clip.text}</textarea>
+            <textarea class="clip-text" data-clip-id="${clip.id}" rows="2">${escapeHtml(clip.text)}</textarea>
           </div>
 
           <div class="clip-tools">
@@ -476,6 +484,8 @@ function deleteClip(clipId) {
 async function generateAll() {
   if (generating) return;
   generating = true;
+  // 重置卡死在 generating 状态的剪辑，防止永久跳过
+  clips.forEach(c => { if (c.status === "generating") c.status = "pending"; });
   const pending = clips.filter(c => c.status !== "done");
   const total = pending.length;
   let completed = 0;

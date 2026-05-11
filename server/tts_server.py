@@ -8,7 +8,7 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from tts_engine import TTSEngine
 
 # ==================== 配置文件加载 ====================
@@ -44,13 +44,13 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], all
 
 class SynthesizeRequest(BaseModel):
     id: str
-    text: str
+    text: str = Field(..., min_length=1, max_length=5000, description="合成文本 1~5000 字")
     voice_id: str
-    emotion: str = "neutral"
-    emotion_scale: int = 4
-    speech_rate: int = 0
-    silence_duration: int = 0
-    loudness_rate: int = 0
+    emotion: str = Field("neutral", max_length=50)
+    emotion_scale: int = Field(4, ge=1, le=5, description="情感强度 1~5")
+    speech_rate: int = Field(0, ge=-50, le=100, description="语速 -50~100")
+    silence_duration: int = Field(0, ge=0, le=30000, description="尾停 0~30000ms")
+    loudness_rate: int = Field(0, ge=-50, le=100, description="音量 -50~100")
     bit_rate: int | None = None
     model: str | None = None
     enable_subtitle: bool = False
