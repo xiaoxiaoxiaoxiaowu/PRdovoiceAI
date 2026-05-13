@@ -1,0 +1,30 @@
+{
+  "id": "com.voicelab.pr",
+  "name": "PRdovoiceAI",
+  "version": "1.0.1",
+  "main": "index.html",
+  "manifestVersion": 5,
+  "host": {
+    "app": "PPRO",
+    "minVersion": "26.0.0"
+  },
+  "scriptPath": "host.js",
+  "requiredPermissions": {
+    "webview": {
+      "allow": "yes",
+      "enableMessageBridge": "localAndRemote",
+      "allowLocalRendering": "yes",
+      "domains": ["*"]
+    }
+  },
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "mainPanel",
+      "label": "PRdovoiceAI",
+      "minimumSize": { "width": 420, "height": 700 },
+      "maximumSize": { "width": 2000, "height": 2000 },
+      "preferredDockedSize": { "width": 420, "height": 700 }
+    }
+  ]
+}
