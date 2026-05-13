@@ -700,7 +700,7 @@ async function importToPR() {
     const numA = parseInt(a.id.replace(/^clip_/, '')) || 0;
     const numB = parseInt(b.id.replace(/^clip_/, '')) || 0;
     return numA - numB;
-  });
+});
 
   const importAtPlayhead = document.getElementById("set-import-at-playhead")?.checked ?? true;
   const autoFade = document.getElementById("set-auto-fade")?.checked ?? true;
@@ -712,6 +712,9 @@ async function importToPR() {
     path: `${dir}/${c.id}.mp3`,
     duration_ms: c.duration_ms || 0,
   }));
+
+  // 🔁 将计就计：后端插入逻辑是倒序的，我们先反序，最终得到正序
+  items.reverse();
 
   if (typeof csInterface !== "undefined") {
     const jsonStr = JSON.stringify(items);
