@@ -48,8 +48,8 @@
 
 1. 打开 [火山引擎语音技术控制台](https://console.volcengine.com/speech/new)
 2. 注册/登录火山引擎账号
-3. 在「语音技术」→「应用管理」中创建应用（记下 **AppID** 和 **Token** 备用）
-4. 在「语音技术」→「API密钥」中生成 API Key
+3. 在「API Key管理」→「创建API Key」中创建应用
+4. 在「API Key管理」→「你刚刚创建的API Key」→「旁边的小眼睛」→「复制你的API Key」（注意这个密钥要保护好，暴露之后可能会被滥用）
 
 ### 2. 下载项目
 
