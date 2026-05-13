@@ -1,5 +1,15 @@
 // ==================== 配置 ====================
 let AUDIO_OUTPUT_DIR = "D:/voice_cache";
+let activePanelClipId = null;
+let isBatchMode = false;
+
+// ==================== 安全：HTML 转义 ====================
+function escapeHtml(str) {
+  if (!str) return "";
+  const div = document.createElement("div");
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
 
 // ==================== 全局状态 ====================
 var csInterface = new CSInterface();
@@ -41,6 +51,7 @@ async function loadVoices() {
     voiceLibrary = data.voices;
     renderVoiceList();
     updateDefaultVoiceSelect();
+    renderClipList();
   } catch (e) {
     console.error("加载音色失败:", e);
   }
@@ -55,7 +66,7 @@ function renderVoiceList() {
   const search = document.getElementById("voice-search").value.toLowerCase();
 
   let filtered = voiceLibrary.filter(v => {
-    if (versionFilter !== "all" && v.version !== versionFilter) return false;
+    if (versionFilter !== "all" && v.category !== versionFilter && v.version !== versionFilter) return false;
     if (genderFilter !== "all" && v.gender !== genderFilter) return false;
     if (capFilter !== "all") {
       const caps = v.capabilities;
@@ -70,10 +81,9 @@ function renderVoiceList() {
   container.innerHTML = filtered.map(v => `
     <div class="voice-card ${v.version === '2.0' ? 'v20' : 'v10'}">
       <div class="voice-card-header">
-        <span class="voice-name">${v.name}</span>
+        <span class="voice-name">${escapeHtml(v.name)}</span>
         <span class="voice-badge gender">${v.gender === 'female' ? '女' : '男'}</span>
-        <span class="voice-badge version">${v.version}</span>
-        ${v.version === '2.0' ? '<span class="voice-badge recommend">⭐推荐</span>' : ''}
+        <span class="voice-badge version">${v.category || v.version}</span>
       </div>
       <div class="voice-card-meta">
         <div>voice_type: <code>${v.voice_type}</code></div>
@@ -101,6 +111,134 @@ document.getElementById("filter-gender").addEventListener("change", renderVoiceL
 document.getElementById("filter-capability").addEventListener("change", renderVoiceList);
 document.getElementById("voice-search").addEventListener("input", renderVoiceList);
 
+// ==================== 侧边音色面板 ====================
+function openVoicePanel(clipId) {
+  if (!voiceLibrary.length) {
+    alert("请先连接后端并加载音色库");
+    return;
+  }
+  // 单独修改模式：不是批量
+  isBatchMode = false;
+  activePanelClipId = clipId;
+  document.getElementById("overlay").classList.remove("hidden");
+  document.getElementById("voice-panel").classList.remove("hidden");
+  document.getElementById("voice-panel-title").textContent = "选择音色";
+  document.getElementById("panel-voice-search").value = "";
+  document.getElementById("panel-filter-version").value = "all";
+  document.getElementById("panel-filter-gender").value = "all";
+  document.getElementById("panel-filter-capability").value = "all";
+  renderPanelVoiceList();
+}
+
+function closeVoicePanel() {
+  isBatchMode = false;
+  activePanelClipId = null;
+  document.getElementById("overlay").classList.add("hidden");
+  document.getElementById("voice-panel").classList.add("hidden");
+}
+
+function renderPanelVoiceList() {
+  const container = document.getElementById("voice-panel-list");
+  const versionFilter = document.getElementById("panel-filter-version").value;
+  const genderFilter = document.getElementById("panel-filter-gender").value;
+  const capFilter = document.getElementById("panel-filter-capability").value;
+  const search = document.getElementById("panel-voice-search").value.toLowerCase();
+  const clip = clips.find(c => c.id === activePanelClipId);
+  const currentVoiceId = clip ? clip.voice_id : null;
+
+  let filtered = voiceLibrary.filter(v => {
+    if (versionFilter !== "all" && v.category !== versionFilter && v.version !== versionFilter) return false;
+    if (genderFilter !== "all" && v.gender !== genderFilter) return false;
+    if (capFilter !== "all") {
+      const caps = v.capabilities;
+      if (capFilter === "emotion" && (!caps.emotions || caps.emotions.length <= 1)) return false;
+      if (capFilter === "context_texts" && !caps.context_texts) return false;
+      if (capFilter === "asmr" && !caps.asmr) return false;
+    }
+    if (search && !v.name.toLowerCase().includes(search) && !v.voice_type.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  container.innerHTML = filtered.map(v => `
+    <div class="voice-card ${v.version === '2.0' ? 'v20' : 'v10'} ${v.id === currentVoiceId ? 'selected' : ''}"
+         onclick="selectPanelVoice('${v.id}')">
+      <div class="voice-card-header">
+        <span class="voice-name">${escapeHtml(v.name)}</span>
+        <span class="voice-badge gender">${v.gender === 'female' ? '女' : '男'}</span>
+        <span class="voice-badge version">${v.category || v.version}</span>
+      </div>
+    </div>
+  `).join("");
+}
+
+function selectPanelVoice(voiceId) {
+  if (isBatchMode) {
+    selectedClips.forEach(cid => {
+      const clip = clips.find(c => c.id === cid);
+      if (clip) clip.voice_id = voiceId;
+    });
+    isBatchMode = false;
+  } else {
+    const clip = clips.find(c => c.id === activePanelClipId);
+    if (!clip) return;
+    clip.voice_id = voiceId;
+    const voice = voiceLibrary.find(v => v.id === voiceId);
+    if (voice && !voice.capabilities.emotions.includes(clip.emotion)) {
+      clip.emotion = voice.capabilities.emotions[0] || "neutral";
+    }
+  }
+  document.getElementById("voice-panel-title").textContent = "选择音色";
+  activePanelClipId = null;
+  closeVoicePanel();
+  renderClipList();
+}
+
+// 面板内过滤器事件
+document.getElementById("panel-voice-search").addEventListener("input", renderPanelVoiceList);
+document.getElementById("panel-filter-version").addEventListener("change", renderPanelVoiceList);
+document.getElementById("panel-filter-gender").addEventListener("change", renderPanelVoiceList);
+document.getElementById("panel-filter-capability").addEventListener("change", renderPanelVoiceList);
+
+// Esc 关闭面板
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && activePanelClipId) { closeVoicePanel(); }
+});
+
+// ==================== 浮动批量操作 ====================
+function updateBatchFloat() {
+  const btn = document.getElementById("batch-float");
+  const span = document.getElementById("batch-count");
+  const count = selectedClips.size;
+  if (count > 0) {
+    btn.classList.remove("hidden");
+    span.textContent = `${count} 个已选`;
+  } else {
+    btn.classList.add("hidden");
+  }
+}
+
+// 覆盖原有 toggleSelectClip，接入更新浮动按钮
+const _origToggleSelect = toggleSelectClip;
+toggleSelectClip = function(clipId) {
+  _origToggleSelect(clipId);
+  updateBatchFloat();
+};
+
+document.body.addEventListener("click", function(event) {
+  if (!event.target.matches("#btn-batch-voice")) return;
+  if (selectedClips.size === 0) return;
+  isBatchMode = true;
+  activePanelClipId = "__batch__";
+  document.getElementById("overlay").classList.remove("hidden");
+  document.getElementById("voice-panel").classList.remove("hidden");
+  document.getElementById("voice-panel-title").textContent = `批量修改音色 (${selectedClips.size} 个)`;
+  document.getElementById("panel-voice-search").value = "";
+  document.getElementById("panel-filter-version").value = "all";
+  document.getElementById("panel-filter-gender").value = "all";
+  document.getElementById("panel-filter-capability").value = "all";
+  renderPanelVoiceList();
+});
+
 function updateDefaultVoiceSelect() {
   const sel = document.getElementById("set-default-voice");
   sel.innerHTML = voiceLibrary.map(v =>
@@ -126,10 +264,17 @@ function addClip(initialText = "", initialVoice = null, initialEmotion = "neutra
     expression: "none",
     speech_rate: defaultRate,
     silence_duration: defaultSilence,
+    loudness_rate: 0,
+    bit_rate: null,
+    model: null,
+    enable_subtitle: false,
+    cot_text: null,
     status: "pending",
     audio_url: null,
     duration_ms: null,
     file_size: null,
+    subtitles: null,
+    usage: null,
   };
   clips.push(clip);
   clipCounter++;
@@ -141,6 +286,10 @@ function renderClipList() {
   container.innerHTML = clips.map((clip, idx) => {
     const voice = voiceLibrary.find(v => v.id === clip.voice_id);
     const version = voice?.version || "2.0";
+    const category = voice?.category || version;
+    const is20 = category === "2.0";
+    const is10Multi = category === "1.0多感情";
+    const hasEmotion = is20 || is10Multi;
     const emotions = voice?.capabilities?.emotions || ["neutral"];
     const hasContextTexts = voice?.capabilities?.context_texts || false;
     const isCollapsed = clip._collapsed !== false;
@@ -151,39 +300,54 @@ function renderClipList() {
           <input type="checkbox" class="clip-checkbox" data-clip-id="${clip.id}"
                  ${selectedClips.has(clip.id) ? 'checked' : ''}>
           <span class="clip-id">#${clip.id}</span>
-          <span class="clip-preview">${clip.text.substring(0, 40)}${clip.text.length > 40 ? '...' : ''}</span>
+          <span class="clip-preview">${escapeHtml(clip.text.substring(0, 40))}${clip.text.length > 40 ? '...' : ''}</span>
           <span class="clip-status-icon">${statusIcon(clip.status)}</span>
           <span class="clip-toggle">${isCollapsed ? '▶' : '▼'}</span>
         </div>
         <div class="clip-body" style="display:${isCollapsed ? 'none' : 'block'}">
           <div class="clip-field">
             <label>音色:</label>
-            <select class="clip-voice-select" data-clip-id="${clip.id}">
-              ${voiceLibrary.map(v => `<option value="${v.id}" ${v.id === clip.voice_id ? 'selected' : ''}>${v.name}</option>`).join("")}
-            </select>
+            <span class="clip-voice-name" onclick="openVoicePanel('${clip.id}')"
+                  title="点击切换音色">${escapeHtml(voice?.name || '未选择')}</span>
           </div>
 
           <div class="clip-field">
             <label>文本:</label>
-            <textarea class="clip-text" data-clip-id="${clip.id}" rows="2">${clip.text}</textarea>
+            <textarea class="clip-text" data-clip-id="${clip.id}" rows="2">${escapeHtml(clip.text)}</textarea>
           </div>
 
           <div class="clip-tools">
-            ${version === '2.0' && voice?.capabilities?.voice_instruction ? `
+            ${voice?.capabilities?.voice_instruction ? `
             <button class="btn btn-xs btn-insert-instruction" data-clip-id="${clip.id}">[#指令]</button>` : ''}
-            ${version === '2.0' ? `
+            ${is20 ? `
             <button class="btn btn-xs btn-insert-json20" data-clip-id="${clip.id}">{{2.0}}</button>` : ''}
-            ${version === '1.0' ? `
-            <button class="btn btn-xs btn-insert-json10" data-clip-id="${clip.id}">{{1.0}}</button>` : ''}
           </div>
 
-          ${emotions.length > 1 ? `
+          ${is20 ? `
+          <div class="clip-field">
+            <label>模型:</label>
+            <select class="clip-model" data-clip-id="${clip.id}">
+              <option value="" ${!clip.model ? 'selected' : ''}>默认</option>
+              <option value="seed-tts-2.0-expressive" ${clip.model === 'seed-tts-2.0-expressive' ? 'selected' : ''}>2.0 表现力增强</option>
+              <option value="seed-tts-2.0-standard" ${clip.model === 'seed-tts-2.0-standard' ? 'selected' : ''}>2.0 标准稳定</option>
+            </select>
+          </div>
+
+          <div class="clip-field">
+            <label>CoT:</label>
+            <input type="text" class="clip-cot" data-clip-id="${clip.id}"
+                   value="${clip.cot_text || ''}" placeholder="思维链引导文本 (仅expressive模型)"
+                   style="width:100%">
+          </div>
+          ` : ''}
+
+          ${hasEmotion ? `
           <div class="clip-field">
             <label>情感:</label>
             <select class="clip-emotion" data-clip-id="${clip.id}">
               ${emotions.map(e => `<option value="${e}" ${e === clip.emotion ? 'selected' : ''}>${e}</option>`).join("")}
             </select>
-            ${version === '2.0' ? `
+            ${is20 ? `
               <label>强度:</label>
               <input type="range" class="clip-emotion-scale" data-clip-id="${clip.id}"
                      min="1" max="5" value="${clip.emotion_scale}">
@@ -220,6 +384,18 @@ function renderClipList() {
                    value="${clip.silence_duration}" min="0" max="30000" style="width:80px">
           </div>
 
+          <div class="clip-field">
+            <label>音量:</label>
+            <input type="range" class="clip-loudness" data-clip-id="${clip.id}"
+                   min="-50" max="100" value="${clip.loudness_rate}">
+            <span class="loudness-val">${clip.loudness_rate}</span>
+          </div>
+
+          <div class="clip-field">
+            <label><input type="checkbox" class="clip-subtitle" data-clip-id="${clip.id}"
+                   ${clip.enable_subtitle ? 'checked' : ''}> 字幕</label>
+          </div>
+
           <div class="clip-actions-row">
             <button class="btn btn-sm btn-preview" data-clip-id="${clip.id}"
                     ${clip.status !== 'done' ? 'disabled' : ''}>▶ 试听</button>
@@ -229,7 +405,7 @@ function renderClipList() {
           </div>
 
           <div class="clip-status">
-            ${clip.status === 'done' ? `✅ 已生成 | ${clip.duration_ms ? (clip.duration_ms/1000).toFixed(1) + 's' : ''} | ${clip.file_size ? formatBytes(clip.file_size) : ''}` :
+            ${clip.status === 'done' ? `✅ 已生成 | ${clip.duration_ms ? (clip.duration_ms/1000).toFixed(1) + 's' : ''} | ${clip.file_size ? formatBytes(clip.file_size) : ''}${clip.usage ? ' | 用量:' + clip.usage + '字' : ''}${clip.subtitles ? ' | 📝字幕' : ''}` :
               clip.status === 'error' ? `❌ 合成失败` :
               clip.status === 'generating' ? `⏳ 生成中...` : `⏳ 待生成`}
           </div>
@@ -270,19 +446,7 @@ function bindClipEvents() {
     });
   });
 
-  document.querySelectorAll(".clip-voice-select").forEach(sel => {
-    sel.addEventListener("change", () => {
-      const clip = clips.find(c => c.id === sel.dataset.clipId);
-      if (clip) {
-        clip.voice_id = sel.value;
-        const voice = voiceLibrary.find(v => v.id === clip.voice_id);
-        if (voice && !voice.capabilities.emotions.includes(clip.emotion)) {
-          clip.emotion = voice.capabilities.emotions[0] || "neutral";
-        }
-        renderClipList();
-      }
-    });
-  });
+  // 音色名点击 → 侧边面板（已通过 onclick 绑定，无需额外处理）
 
   document.querySelectorAll(".clip-text").forEach(ta => {
     ta.addEventListener("input", () => {
@@ -323,6 +487,34 @@ function bindClipEvents() {
     inp.addEventListener("change", () => {
       const clip = clips.find(c => c.id === inp.dataset.clipId);
       if (clip) clip.silence_duration = parseInt(inp.value) || 0;
+    });
+  });
+
+  document.querySelectorAll(".clip-loudness").forEach(inp => {
+    inp.addEventListener("input", () => {
+      const clip = clips.find(c => c.id === inp.dataset.clipId);
+      if (clip) { clip.loudness_rate = parseInt(inp.value); inp.nextElementSibling.textContent = inp.value; }
+    });
+  });
+
+  document.querySelectorAll(".clip-subtitle").forEach(cb => {
+    cb.addEventListener("change", () => {
+      const clip = clips.find(c => c.id === cb.dataset.clipId);
+      if (clip) clip.enable_subtitle = cb.checked;
+    });
+  });
+
+  document.querySelectorAll(".clip-model").forEach(sel => {
+    sel.addEventListener("change", () => {
+      const clip = clips.find(c => c.id === sel.dataset.clipId);
+      if (clip) clip.model = sel.value || null;
+    });
+  });
+
+  document.querySelectorAll(".clip-cot").forEach(inp => {
+    inp.addEventListener("input", () => {
+      const clip = clips.find(c => c.id === inp.dataset.clipId);
+      if (clip) clip.cot_text = inp.value || null;
     });
   });
 
@@ -411,6 +603,8 @@ function deleteClip(clipId) {
 async function generateAll() {
   if (generating) return;
   generating = true;
+  // 重置卡死在 generating 状态的剪辑，防止永久跳过
+  clips.forEach(c => { if (c.status === "generating") c.status = "pending"; });
   const pending = clips.filter(c => c.status !== "done");
   const total = pending.length;
   let completed = 0;
@@ -450,6 +644,11 @@ async function generateClip(clip) {
     emotion_scale: clip.emotion_scale,
     speech_rate: clip.speech_rate,
     silence_duration: clip.silence_duration,
+    loudness_rate: clip.loudness_rate || 0,
+    bit_rate: clip.bit_rate || null,
+    model: clip.model || null,
+    enable_subtitle: clip.enable_subtitle || false,
+    cot_text: clip.cot_text || null,
     expression: clip.expression !== "none" ? clip.expression : null,
   };
 
@@ -465,6 +664,8 @@ async function generateClip(clip) {
       clip.audio_url = result.download_url;
       clip.duration_ms = result.duration_ms;
       clip.file_size = result.size;
+      clip.subtitles = result.subtitles || null;
+      clip.usage = result.usage || null;
     } else {
       clip.status = "error";
     }
@@ -495,14 +696,26 @@ async function importToPR() {
     return;
   }
 
+  // 按剪辑 id 的数字部分从小到大排序
+  doneClips.sort((a, b) => {
+    const numA = parseInt(a.id.replace(/^clip_/, '')) || 0;
+    const numB = parseInt(b.id.replace(/^clip_/, '')) || 0;
+    return numA - numB;
+});
+
   const importAtPlayhead = document.getElementById("set-import-at-playhead")?.checked ?? true;
   const autoFade = document.getElementById("set-auto-fade")?.checked ?? true;
 
+  // 使用正斜杠，避免转义问题
+  const dir = AUDIO_OUTPUT_DIR.replace(/\\/g, "/").replace(/\/+$/, "");
   const items = doneClips.map(c => ({
     id: c.id,
-    path: `${AUDIO_OUTPUT_DIR}/${c.id}.mp3`.replace(/\\/g, "\\\\"),
+    path: `${dir}/${c.id}.mp3`,
     duration_ms: c.duration_ms || 0,
   }));
+
+  // 🔁 将计就计：后端插入逻辑是倒序的，我们先反序，最终得到正序
+  items.reverse();
 
   if (typeof csInterface !== "undefined") {
     const jsonStr = JSON.stringify(items);
@@ -580,6 +793,11 @@ function saveProject() {
       expression: c.expression,
       speech_rate: c.speech_rate,
       silence_duration: c.silence_duration,
+      loudness_rate: c.loudness_rate || 0,
+      bit_rate: c.bit_rate || null,
+      model: c.model || null,
+      enable_subtitle: c.enable_subtitle || false,
+      cot_text: c.cot_text || null,
       _collapsed: c._collapsed,
       status: "pending",
     })),

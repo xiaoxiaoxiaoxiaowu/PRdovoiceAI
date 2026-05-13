@@ -5,12 +5,12 @@
                    ExtensionBundleName="PRdovoiceAI">
 
   <ExtensionList>
-    <Extension Id="com.voicelab.pr.panel" Version="1.0.0"/>
+    <Extension Id="com.voicelab.pr.panel" Version="1.0.1"/>
   </ExtensionList>
 
   <ExecutionEnvironment>
     <HostList>
-      <Host Name="PPRO" Version="14.0"/>
+      <Host Name="PPRO" Version="26.0"/>
     </HostList>
     <LocaleList>
       <Locale Code="All"/>
@@ -24,7 +24,7 @@
     <Extension Id="com.voicelab.pr.panel">
       <DispatchInfo>
         <Resources>
-          <MainPath>./index.html</MainPath>
+          <MainPath>./client/index.html</MainPath>
           <ScriptPath>./host/host.jsx</ScriptPath>
           <CEFCommandLine>
             <Parameter>--allow-file-access</Parameter>

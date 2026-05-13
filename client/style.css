@@ -142,11 +142,18 @@ textarea { resize: vertical; min-height: 36px; }
 .clip-field label { color: var(--text-secondary); font-size: 11px; min-width: 40px; }
 .clip-field select, .clip-field input { flex: 1; min-width: 100px; }
 .clip-field textarea { width: 100%; }
+.clip-voice-name {
+  flex: 1; padding: 4px 8px; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  cursor: pointer; font-size: 12px; color: var(--accent);
+  transition: border-color 0.15s;
+}
+.clip-voice-name:hover { border-color: var(--accent); background: #3a3a3a; }
 
 .clip-tools { display: flex; gap: 4px; margin-bottom: 6px; flex-wrap: wrap; }
 .clip-actions-row { display: flex; gap: 4px; margin: 8px 0 4px; }
 .clip-status { font-size: 11px; color: var(--text-secondary); padding: 4px 0; }
-.scale-val, .rate-val {
+.scale-val, .rate-val, .loudness-val {
   font-size: 11px; color: var(--accent); min-width: 20px; text-align: center;
 }
 
@@ -177,3 +184,68 @@ input[type="checkbox"] { accent-color: var(--accent); margin-right: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* =========== 遮罩层 =========== */
+#overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4); z-index: 100;
+  transition: opacity 0.25s;
+}
+#overlay.hidden { opacity: 0; pointer-events: none; }
+
+/* =========== 侧边音色面板 =========== */
+#voice-panel {
+  position: fixed; top: 0; right: 0; width: 320px; height: 100vh;
+  background: var(--bg-primary); border-left: 1px solid var(--border);
+  z-index: 200; display: flex; flex-direction: column;
+  transform: translateX(0); transition: transform 0.25s ease;
+}
+#voice-panel.hidden { transform: translateX(100%); }
+
+#voice-panel-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+}
+#voice-panel-title { font-weight: bold; font-size: 13px; }
+#voice-panel-search { padding: 8px 12px; }
+#voice-panel-search input { width: 100%; }
+#voice-panel-filters {
+  display: flex; gap: 4px; padding: 0 12px 8px;
+  border-bottom: 1px solid var(--border);
+}
+#voice-panel-filters select { flex: 1; font-size: 10px; }
+#voice-panel-list {
+  flex: 1; overflow-y: auto; padding: 4px 8px;
+}
+
+#voice-panel-list .voice-card {
+  cursor: pointer; padding: 6px 8px; margin-bottom: 2px;
+}
+#voice-panel-list .voice-card:hover { background: #3a3a3a; }
+#voice-panel-list .voice-card.selected {
+  border-left-color: var(--success); background: #2a3a2a;
+}
+#voice-panel-list .voice-card .voice-card-meta { display: none; }
+#voice-panel-list .voice-card .btn-set-default { display: none; }
+
+/* =========== 浮动批量操作按钮 =========== */
+#batch-float {
+  position: fixed; right: 16px; bottom: 16px; z-index: 150;
+  display: flex; gap: 8px; align-items: center;
+  padding: 8px 14px; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  transition: opacity 0.2s;
+}
+#batch-float.hidden { opacity: 0; pointer-events: none; }
+#batch-count { font-size: 11px; color: var(--text-secondary); }
+.hidden { display: none; }
+#overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4); z-index: 999;
+}
+#voice-panel {
+  position: fixed; right: 0; top: 0; width: 320px; height: 100%;
+  background: #1e1e1e; z-index: 1000; overflow-y: auto; padding: 16px;
+}
+.hidden { display: none; }
