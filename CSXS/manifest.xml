@@ -24,7 +24,7 @@
     <Extension Id="com.voicelab.pr.panel">
       <DispatchInfo>
         <Resources>
-          <MainPath>./index.html</MainPath>
+          <MainPath>./client/index.html</MainPath>
           <ScriptPath>./host/host.jsx</ScriptPath>
           <CEFCommandLine>
             <Parameter>--allow-file-access</Parameter>

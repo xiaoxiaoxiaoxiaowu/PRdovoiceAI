@@ -265,6 +265,7 @@ class TTSEngine:
         cot_text: str | None,
         expression: str | None, context_texts: list[str],
         fmt: str, sample_rate: int,
+        category: str = "", 
     ) -> dict:
         payload = {
             "user": {"uid": "voicelab_pr"},

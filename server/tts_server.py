@@ -2,14 +2,26 @@
 PRdovoiceAI FastAPI 后端
 启动: uvicorn tts_server:app --host 0.0.0.0 --port 9527
 """
+import logging
+import traceback
 import json
 import sys
 from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import Response
 from pydantic import BaseModel, Field
 from tts_engine import TTSEngine
+
+# 建议定义一个 logger，方便统一管理
+logger = logging.getLogger("tts_server")
+logger.setLevel(logging.DEBUG)  # 或 INFO，看需要
+# 如果想让日志也输出到控制台（uvicorn 通常会配置，但这样确保一下）
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s"))
+    logger.addHandler(handler)
 
 # ==================== 配置文件加载 ====================
 CONFIG_PATH = Path(__file__).parent / "config.json"
@@ -83,8 +95,10 @@ def synthesize(req: SynthesizeRequest):
             model=req.model, enable_subtitle=req.enable_subtitle,
             cot_text=req.cot_text, expression=req.expression,
         )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except Exception:
+        # 这行会把完整的错误堆栈打印到控制台
+        logger.exception("合成失败")  
+        raise HTTPException(status_code=500, detail="Internal server error")
 
     fname = f"{req.id}.mp3"
     path = OUTPUT_DIR / fname
@@ -105,7 +119,19 @@ def serve_audio(filename: str):
     path = OUTPUT_DIR / filename
     if not path.exists():
         raise HTTPException(status_code=404, detail="音频文件不存在")
-    return FileResponse(path, media_type="audio/mpeg")
+    
+    # 直接读取完整文件，忽略任何 Range 请求头
+    audio_bytes = path.read_bytes()
+    
+    return Response(
+        content=audio_bytes,
+        media_type="audio/mpeg",
+        headers={
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0"
+        }
+    )
 
 @app.delete("/cache")
 def clear_cache():

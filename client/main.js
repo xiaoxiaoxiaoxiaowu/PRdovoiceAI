@@ -113,14 +113,20 @@ document.getElementById("voice-search").addEventListener("input", renderVoiceLis
 
 // ==================== 侧边音色面板 ====================
 function openVoicePanel(clipId) {
-  activePanelClipId = clipId;
-  document.getElementById("overlay").classList.remove("hidden");
-  document.getElementById("voice-panel").classList.remove("hidden");
-  document.getElementById("panel-voice-search").value = "";
-  document.getElementById("panel-filter-version").value = "all";
-  document.getElementById("panel-filter-gender").value = "all";
-  document.getElementById("panel-filter-capability").value = "all";
-  renderPanelVoiceList();
+  if (!voiceLibrary.length) {
+    alert("请先连接后端并加载音色库");
+    return;
+  }
+  function openVoicePanel(clipId) {
+    activePanelClipId = clipId;
+    document.getElementById("overlay").classList.remove("hidden");
+    document.getElementById("voice-panel").classList.remove("hidden");
+    document.getElementById("panel-voice-search").value = "";
+    document.getElementById("panel-filter-version").value = "all";
+    document.getElementById("panel-filter-gender").value = "all";
+    document.getElementById("panel-filter-capability").value = "all";
+    renderPanelVoiceList();
+  }
 }
 
 function closeVoicePanel() {
@@ -217,7 +223,8 @@ toggleSelectClip = function(clipId) {
   updateBatchFloat();
 };
 
-document.getElementById("btn-batch-voice").addEventListener("click", () => {
+document.body.addEventListener("click", function(event) {
+  if (!event.target.matches("#btn-batch-voice")) return;
   if (selectedClips.size === 0) return;
   isBatchMode = true;
   activePanelClipId = "__batch__";
@@ -688,12 +695,21 @@ async function importToPR() {
     return;
   }
 
+  // 按剪辑 id 的数字部分从小到大排序
+  doneClips.sort((a, b) => {
+    const numA = parseInt(a.id.replace(/^clip_/, '')) || 0;
+    const numB = parseInt(b.id.replace(/^clip_/, '')) || 0;
+    return numA - numB;
+  });
+
   const importAtPlayhead = document.getElementById("set-import-at-playhead")?.checked ?? true;
   const autoFade = document.getElementById("set-auto-fade")?.checked ?? true;
 
+  // 使用正斜杠，避免转义问题
+  const dir = AUDIO_OUTPUT_DIR.replace(/\\/g, "/").replace(/\/+$/, "");
   const items = doneClips.map(c => ({
     id: c.id,
-    path: `${AUDIO_OUTPUT_DIR}/${c.id}.mp3`.replace(/\\/g, "\\\\"),
+    path: `${dir}/${c.id}.mp3`,
     duration_ms: c.duration_ms || 0,
   }));
 

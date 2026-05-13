@@ -1,21 +1,92 @@
-MIT License
+PRdovoiceAI Public License v1.0 (PAPL-1.0)
+=============================================
 
-Copyright (c) 2026 Xiaowu2737
+版权所有 (c) 2026 Xiaowu2737 (GitHub @xiaoxiaoxiaoxiaowu)
+Copyright (c) 2026 Xiaowu2737 (GitHub @xiaoxiaoxiaoxiaowu)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+本许可证授予任何获得本软件及相关文档文件（“软件”）副本的人免费使用、复制、修改、合并、出版、分发本软件的权利，但须严格遵循以下条款。
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, and distribute the Software, subject to the following conditions.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+一、基本许可
+1. Basic Permissions
+
+1.1 允许自由使用、修改、分发本软件，无需另行支付费用。
+1.1 You are free to use, modify, and distribute the Software without paying any additional fees.
+
+1.2 所有副本或实质性使用部分必须保留本许可证和版权声明。
+1.2 All copies or substantial portions of the Software must retain this license and the above copyright notice.
+
+
+二、反原样获利条款
+2. Anti-Profiteering Clause
+
+2.1 禁止在未对软件代码做出**实质性修改**的情况下，将本软件或仅经简单封装（如套壳、加安装器、界面换肤等）的衍生品用于任何直接获利行为，包括但不限于：
+2.1 You may NOT engage in direct profiteering from the Software or any derivative work that merely wraps or repackages the Software without making **substantive modifications** to its source code. Prohibited acts include but are not limited to:
+    a) 单独销售或作为付费产品分发；
+    a) selling it as a standalone product or as part of a paid offering;
+    b) 在应用商店、下载站、电商平台等渠道上架并收取费用；
+    b) listing it on app stores, download sites, e-commerce platforms, etc. and charging a fee;
+    c) 作为“会员专属”或“付费解锁”的内容；
+    c) making it exclusive to paid memberships or pay‑to‑unlock content;
+    d) 以“知识付费”“资源下载”或任何其他名义，对软件源代码、二进制包或文档的下载权限进行收费，但未提供与其收费金额相匹配的实质性人工知识服务（如深度教程、一对一指导等）。
+    d) charging for access to the source code, binary packages, or documentation under the guise of "paid knowledge" or "resource downloads" without providing commensurate, genuine human knowledge services (such as in‑depth tutorials, one‑on‑one guidance, etc.).
+
+    【特别说明】仅对用户界面进行个性化设计（如更换主题、皮肤）不被视为本条所禁止的“简单封装”，作者允许此类修改后的软件用于商业用途。
+    Special Note: Customizing only the user interface (e.g., changing themes, skins) is NOT considered "mere wrapping" under this clause. The author allows such modified software to be used commercially.
+
+2.2 下列行为不受第2.1条限制，视为允许：
+2.2 The following activities are NOT restricted by Section 2.1 and are explicitly allowed:
+    a) 将本软件与您的其他软件/服务深度整合，且整合后整体功能发生了实质性增改；
+    a) deeply integrating the Software with your other software/services where the overall functionality has been substantially enhanced;
+    b) 仅收回介质、带宽或下载成本，不以盈利为目的；
+    b) recovering only the cost of media, bandwidth, or downloading, without profit intent;
+    c) 在开源社区或公益渠道免费分发（含自愿捐赠）；
+    c) free distribution through open source communities or public welfare channels (including voluntary donations);
+    d) 对软件用户界面进行了个性化设计并保留原始版权声明；
+    d) personalizing the user interface while retaining the original copyright notice;
+    e) 以收取服务费为目的，向用户提供与软件相关的人工技术支持、安装指导、定制配置等真实人力服务，且软件本身不单独收费。
+    e) charging service fees for genuine human technical support, installation guidance, custom configuration, etc., where the Software itself is not sold separately.
+
+
+三、实质性修改的定义
+3. Definition of Substantive Modification
+
+3.1 “实质性修改”指对软件核心功能、算法、架构或业务逻辑进行了显著增删或重构，且这种修改体现在最终用户使用的功能上。以下行为不属于实质性修改：
+3.1 "Substantive modification" means significant additions, deletions, or restructuring of the Software's core functionality, algorithms, architecture, or business logic, which are reflected in the features exposed to end users. The following shall NOT be considered substantive modifications:
+    a) 仅修改文本字符串（如名称、描述）或品牌标识；
+    a) only modifying text strings (e.g., names, descriptions) or branding;
+    b) 仅添加安装程序、解压包、下载器或任何形式的打包行为；
+    b) only adding an installer, unpacker, downloader, or any form of packaging;
+    c) 仅更改默认配置参数或环境变量。
+    c) only changing default configuration parameters or environment variables.
+
+3.2 对于某一修改是否构成“实质性修改”存在争议时，应通过本项目在 GitHub 上的 Issue 或 Discussion 板块提交社区讨论。社区达成多数共识的判断结果即为最终决定。若社区未能达成明确共识，则该修改默认不视为实质性修改。
+3.2 If a dispute arises as to whether a modification constitutes a "substantive modification," it shall be submitted for community discussion via the project's GitHub Issues or Discussions. The determination reached by majority consensus of the community shall be final. If the community fails to reach a clear consensus, the modification shall be deemed non‑substantive by default.
+
+
+四、修改后自由商用
+4. Commercial Use After Modification
+
+4.1 一旦您对软件做出了符合第三条规定之实质性修改，或者进行了第二条所允许的界面个性化设计，即可将修改后的软件自由用于任何商业或非商业目的，包括但不限于销售、上架商店、提供付费服务等，无需征求原始作者同意。
+4.1 Once you have made a substantive modification as defined in Section 3, or have performed the allowed user interface personalization described in Section 2, you are free to use the modified Software for any commercial or non‑commercial purposes, including but not limited to selling, listing on stores, providing paid services, etc., without seeking the original author's consent.
+
+
+五、免责声明与责任限制
+5. Disclaimer of Warranty and Limitation of Liability
+
+5.1 本软件“按原样”提供，不包含任何明示或暗示的担保，包括但不限于适销性、特定用途适用性及非侵权性的担保。
+5.1 The Software is provided "AS IS", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non‑infringement.
+
+5.2 在任何情况下，作者或版权持有人均不对因使用本软件或与本软件有关而产生的任何索赔、损害或其他责任负责，无论是基于合同、侵权或其他法律理论。
+5.2 In no event shall the author or copyright holder be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the Software or the use or other dealings in the Software.
+
+
+六、附加说明
+6. Additional Notes
+
+6.1 本许可证是特定项目（PRdovoiceAI）的定制条款，不构成通用开源许可证。作者保留在未来版本中修改许可证的权利，但已发布版本按原条款继续有效。
+6.1 This license is a custom license for the specific project (PRdovoiceAI) and does not constitute a generic open source license. The author reserves the right to modify this license in future versions, but already released versions continue to be governed by their original terms.
+
+6.2 若本许可证中的任何条款被法院或主管机关认定为无效，其余条款仍然完全有效。
+6.2 If any provision of this license is held to be invalid or unenforceable by a court or competent authority, the remaining provisions shall remain in full force and effect.
