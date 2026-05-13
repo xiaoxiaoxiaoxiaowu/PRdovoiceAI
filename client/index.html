@@ -130,37 +130,39 @@
     </section>
     <!-- 侧边音色选择面板 -->
     <div id="overlay" class="hidden" onclick="closeVoicePanel()"></div>
-    <div id="voice-panel" class="hidden">
-      <div id="voice-panel-header">
-        <span id="voice-panel-title">选择音色</span>
-        <button id="btn-close-voice-panel" onclick="closeVoicePanel()">✕</button>
+      <div id="voice-panel" class="hidden">
+        <div id="voice-panel-header">
+          <span id="voice-panel-title">选择音色</span>
+          <button id="btn-close-panel" class="btn btn-sm" onclick="closeVoicePanel()">✕</button>
+        </div>
+        <!-- 筛选条件（版本/性别/能力）放在上面 -->
+        <div id="voice-panel-filters">
+          <select id="panel-filter-version">
+            <option value="all">全部版本</option>
+            <option value="2.0">2.0</option>
+            <option value="1.0">1.0</option>
+          </select>
+          <select id="panel-filter-gender">
+            <option value="all">全部性别</option>
+            <option value="female">女声</option>
+            <option value="male">男声</option>
+          </select>
+          <select id="panel-filter-capability">
+            <option value="all">全部能力</option>
+            <option value="emotion">情感变化</option>
+            <option value="context_texts">指令遵循</option>
+            <option value="asmr">ASMR</option>
+          </select>
+        </div>
+        <!-- 搜索框放在下面 -->
+        <div id="voice-panel-search">
+          <input id="panel-voice-search" type="text" placeholder="🔍 搜索 457 个音色...">
+        </div>
+          <div id="voice-panel-list"></div>
+        </div>
       </div>
-      <div id="voice-panel-filters">
-        <label>版本:</label>
-        <select id="panel-filter-version">
-          <option value="all">全部</option>
-          <option value="2.0">2.0</option>
-          <option value="1.0">1.0</option>
-        </select>
-        <label>性别:</label>
-        <select id="panel-filter-gender">
-          <option value="all">全部</option>
-          <option value="female">女声</option>
-          <option value="male">男声</option>
-        </select>
-        <label>能力:</label>
-        <select id="panel-filter-capability">
-          <option value="all">全部</option>
-          <option value="emotion">情感变化</option>
-          <option value="context_texts">指令遵循</option>
-          <option value="asmr">ASMR</option>
-        </select>
-        <input id="panel-voice-search" type="text" placeholder="🔍 搜索音色...">
-      </div>
-      <div id="voice-panel-list"></div>
     </div>
   </div>
-  
   <script src="main.js"></script>
 </body>
 </html>

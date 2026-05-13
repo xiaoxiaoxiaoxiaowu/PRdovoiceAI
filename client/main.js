@@ -117,16 +117,17 @@ function openVoicePanel(clipId) {
     alert("请先连接后端并加载音色库");
     return;
   }
-  function openVoicePanel(clipId) {
-    activePanelClipId = clipId;
-    document.getElementById("overlay").classList.remove("hidden");
-    document.getElementById("voice-panel").classList.remove("hidden");
-    document.getElementById("panel-voice-search").value = "";
-    document.getElementById("panel-filter-version").value = "all";
-    document.getElementById("panel-filter-gender").value = "all";
-    document.getElementById("panel-filter-capability").value = "all";
-    renderPanelVoiceList();
-  }
+  // 单独修改模式：不是批量
+  isBatchMode = false;
+  activePanelClipId = clipId;
+  document.getElementById("overlay").classList.remove("hidden");
+  document.getElementById("voice-panel").classList.remove("hidden");
+  document.getElementById("voice-panel-title").textContent = "选择音色";
+  document.getElementById("panel-voice-search").value = "";
+  document.getElementById("panel-filter-version").value = "all";
+  document.getElementById("panel-filter-gender").value = "all";
+  document.getElementById("panel-filter-capability").value = "all";
+  renderPanelVoiceList();
 }
 
 function closeVoicePanel() {
