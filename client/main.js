@@ -205,23 +205,70 @@ document.addEventListener("keydown", (e) => {
 });
 
 // ==================== 浮动批量操作 ====================
-function updateBatchFloat() {
-  const btn = document.getElementById("batch-float");
-  const span = document.getElementById("batch-count");
+function updateBatchButtons() {
   const count = selectedClips.size;
-  if (count > 0) {
-    btn.classList.remove("hidden");
-    span.textContent = `${count} 个已选`;
-  } else {
-    btn.classList.add("hidden");
+  const total = clips.length;
+  const btnSelectAll = document.getElementById("btn-select-all");
+  const btnBatchDelete = document.getElementById("btn-batch-delete");
+
+  if (btnSelectAll) {
+    btnSelectAll.textContent = (count === total && total > 0) ? "☑ 取消全选" : "☐ 全选";
+  }
+  if (btnBatchDelete) {
+    btnBatchDelete.disabled = count === 0;
+    btnBatchDelete.textContent = count > 0 ? `🗑 批量删除 (${count})` : "🗑 批量删除";
+  }
+
+  // 兼容旧的浮动按钮
+  const floatBtn = document.getElementById("batch-float");
+  const floatSpan = document.getElementById("batch-count");
+  if (floatBtn && floatSpan) {
+    if (count > 0) {
+      floatBtn.classList.remove("hidden");
+      floatSpan.textContent = `${count} 个已选`;
+    } else {
+      floatBtn.classList.add("hidden");
+    }
   }
 }
 
-// 覆盖原有 toggleSelectClip，接入更新浮动按钮
+function toggleSelectAll() {
+  if (selectedClips.size === clips.length && clips.length > 0) {
+    selectedClips.clear();
+  } else {
+    clips.forEach(c => selectedClips.add(c.id));
+  }
+  renderClipList();
+  updateBatchButtons();
+}
+
+function openDeleteModal() {
+  const count = selectedClips.size;
+  if (count === 0) return;
+  document.getElementById("delete-count").textContent = count;
+  document.getElementById("delete-overlay").classList.remove("hidden");
+  document.getElementById("delete-modal").classList.remove("hidden");
+}
+
+function closeDeleteModal() {
+  document.getElementById("delete-overlay").classList.add("hidden");
+  document.getElementById("delete-modal").classList.add("hidden");
+}
+
+function confirmBatchDelete() {
+  const ids = [...selectedClips];
+  clips = clips.filter(c => !selectedClips.has(c.id));
+  ids.forEach(id => selectedClips.delete(id));
+  closeDeleteModal();
+  renderClipList();
+  updateBatchButtons();
+}
+
+// 覆盖原有 toggleSelectClip，接入更新工具栏按钮
 const _origToggleSelect = toggleSelectClip;
 toggleSelectClip = function(clipId) {
   _origToggleSelect(clipId);
-  updateBatchFloat();
+  updateBatchButtons();
 };
 
 document.body.addEventListener("click", function(event) {
@@ -415,6 +462,7 @@ function renderClipList() {
   }).join("");
 
   bindClipEvents();
+  updateBatchButtons();
 }
 
 function statusIcon(s) {
@@ -857,6 +905,10 @@ document.getElementById("btn-save-project").addEventListener("click", saveProjec
 document.getElementById("btn-load-project").addEventListener("click", openProject);
 document.getElementById("btn-add-clip").addEventListener("click", () => addClip());
 document.getElementById("btn-import-srt").addEventListener("click", importSRT);
+document.getElementById("btn-select-all").addEventListener("click", toggleSelectAll);
+document.getElementById("btn-batch-delete").addEventListener("click", openDeleteModal);
+document.getElementById("btn-delete-cancel").addEventListener("click", closeDeleteModal);
+document.getElementById("btn-delete-confirm").addEventListener("click", confirmBatchDelete);
 document.getElementById("btn-generate-all").addEventListener("click", generateAll);
 document.getElementById("btn-generate-selected").addEventListener("click", generateSelected);
 document.getElementById("btn-import-pr").addEventListener("click", importToPR);
