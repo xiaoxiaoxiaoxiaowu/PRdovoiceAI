@@ -212,7 +212,7 @@ function updateBatchButtons() {
   const btnBatchDelete = document.getElementById("btn-batch-delete");
 
   if (btnSelectAll) {
-    btnSelectAll.textContent = (count === total && total > 0) ? "☑ 取消全选" : "☐ 全选";
+    btnSelectAll.textContent = (count === total && total > 0) ? "取消全选" : "全选";
   }
   if (btnBatchDelete) {
     btnBatchDelete.disabled = count === 0;
