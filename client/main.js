@@ -101,7 +101,11 @@ function renderVoiceList() {
 
   container.querySelectorAll(".btn-set-default").forEach(btn => {
     btn.addEventListener("click", () => {
-      document.getElementById("set-default-voice").value = btn.dataset.voiceId;
+      const voiceId = btn.dataset.voiceId;
+      const voice = voiceLibrary.find(v => v.id === voiceId);
+      document.getElementById("set-default-voice").value = voiceId;
+      const nameSpan = document.getElementById("default-voice-name");
+      if (nameSpan) nameSpan.textContent = voice ? voice.name : voiceId;
     });
   });
 }
@@ -117,12 +121,12 @@ function openVoicePanel(clipId) {
     alert("请先连接后端并加载音色库");
     return;
   }
-  // 单独修改模式：不是批量
   isBatchMode = false;
   activePanelClipId = clipId;
   document.getElementById("overlay").classList.remove("hidden");
   document.getElementById("voice-panel").classList.remove("hidden");
-  document.getElementById("voice-panel-title").textContent = "选择音色";
+  document.getElementById("voice-panel-title").textContent =
+    clipId === "__default__" ? "设置默认音色" : "选择音色";
   document.getElementById("panel-voice-search").value = "";
   document.getElementById("panel-filter-version").value = "all";
   document.getElementById("panel-filter-gender").value = "all";
@@ -144,7 +148,9 @@ function renderPanelVoiceList() {
   const capFilter = document.getElementById("panel-filter-capability").value;
   const search = document.getElementById("panel-voice-search").value.toLowerCase();
   const clip = clips.find(c => c.id === activePanelClipId);
-  const currentVoiceId = clip ? clip.voice_id : null;
+  const currentVoiceId = activePanelClipId === "__default__"
+    ? document.getElementById("set-default-voice").value
+    : (clip ? clip.voice_id : null);
 
   let filtered = voiceLibrary.filter(v => {
     if (versionFilter !== "all" && v.category !== versionFilter && v.version !== versionFilter) return false;
@@ -172,6 +178,14 @@ function renderPanelVoiceList() {
 }
 
 function selectPanelVoice(voiceId) {
+  if (activePanelClipId === "__default__") {
+    const voice = voiceLibrary.find(v => v.id === voiceId);
+    document.getElementById("set-default-voice").value = voiceId;
+    const nameSpan = document.getElementById("default-voice-name");
+    if (nameSpan) nameSpan.textContent = voice ? voice.name : voiceId;
+    closeVoicePanel();
+    return;
+  }
   if (isBatchMode) {
     selectedClips.forEach(cid => {
       const clip = clips.find(c => c.id === cid);
@@ -287,10 +301,15 @@ document.body.addEventListener("click", function(event) {
 });
 
 function updateDefaultVoiceSelect() {
-  const sel = document.getElementById("set-default-voice");
-  sel.innerHTML = voiceLibrary.map(v =>
-    `<option value="${v.id}">${v.name} [${v.version}]</option>`
-  ).join("");
+  const voiceId = document.getElementById("set-default-voice").value;
+  const voice = voiceLibrary.find(v => v.id === voiceId);
+  const nameSpan = document.getElementById("default-voice-name");
+  if (nameSpan) {
+    nameSpan.textContent = voice ? voice.name : "未设置";
+    nameSpan.style.cursor = "pointer";
+  }
+  const btn = document.getElementById("btn-set-default-voice");
+  if (btn) btn.addEventListener("click", () => openVoicePanel("__default__"));
 }
 
 // ==================== 剪辑列表 ====================
