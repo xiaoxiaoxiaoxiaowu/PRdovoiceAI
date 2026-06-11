@@ -57,6 +57,30 @@ async function loadVoices() {
   }
 }
 
+async function clearCache() {
+  const button = document.getElementById("btn-clear-cache");
+  const info = document.getElementById("cache-info");
+
+  button.disabled = true;
+  info.textContent = "清理中...";
+  info.className = "status-connecting";
+
+  try {
+    const resp = await fetch(`${backendUrl}/cache`, { method: "DELETE" });
+    const data = await resp.json();
+    if (!resp.ok) {
+      throw new Error(data.detail || data.message || `HTTP ${resp.status}`);
+    }
+    info.textContent = data.message || "缓存已清空";
+    info.className = "status-online";
+  } catch (e) {
+    info.textContent = `清理失败: ${e.message}`;
+    info.className = "status-offline";
+  } finally {
+    button.disabled = false;
+  }
+}
+
 // ==================== 音色库渲染 ====================
 function renderVoiceList() {
   const container = document.getElementById("voice-list");
@@ -932,6 +956,7 @@ document.getElementById("btn-generate-all").addEventListener("click", generateAl
 document.getElementById("btn-generate-selected").addEventListener("click", generateSelected);
 document.getElementById("btn-import-pr").addEventListener("click", importToPR);
 document.getElementById("btn-test-conn").addEventListener("click", connect);
+document.getElementById("btn-clear-cache").addEventListener("click", clearCache);
 
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
