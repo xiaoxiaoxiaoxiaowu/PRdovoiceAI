@@ -20,9 +20,14 @@ let selectedClips = new Set();
 let generating = false;
 
 // ==================== 连接 ====================
-async function connect() {
-  const ip = document.getElementById("ip-input").value;
-  const port = document.getElementById("port-input").value;
+async function connect(ipInputId = "ip-input", portInputId = "port-input") {
+  const ip = document.getElementById(ipInputId).value.trim();
+  const port = document.getElementById(portInputId).value.trim();
+
+  document.getElementById("ip-input").value = ip;
+  document.getElementById("port-input").value = port;
+  document.getElementById("set-ip").value = ip;
+  document.getElementById("set-port").value = port;
   backendUrl = `http://${ip}:${port}`;
 
   const statusEl = document.getElementById("status-indicator");
@@ -918,7 +923,7 @@ document.getElementById("set-default-rate").addEventListener("input", function()
 });
 
 // ==================== 主事件绑定 ====================
-document.getElementById("btn-connect").addEventListener("click", connect);
+document.getElementById("btn-connect").addEventListener("click", () => connect());
 document.getElementById("btn-new-project").addEventListener("click", newProject);
 document.getElementById("btn-save-project").addEventListener("click", saveProject);
 document.getElementById("btn-load-project").addEventListener("click", openProject);
@@ -931,7 +936,7 @@ document.getElementById("btn-delete-confirm").addEventListener("click", confirmB
 document.getElementById("btn-generate-all").addEventListener("click", generateAll);
 document.getElementById("btn-generate-selected").addEventListener("click", generateSelected);
 document.getElementById("btn-import-pr").addEventListener("click", importToPR);
-document.getElementById("btn-test-conn").addEventListener("click", connect);
+document.getElementById("btn-test-conn").addEventListener("click", () => connect("set-ip", "set-port"));
 
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
@@ -955,6 +960,8 @@ try {
     const state = JSON.parse(saved);
     document.getElementById("ip-input").value = state.ip || "127.0.0.1";
     document.getElementById("port-input").value = state.port || "9527";
+    document.getElementById("set-ip").value = state.ip || "127.0.0.1";
+    document.getElementById("set-port").value = state.port || "9527";
     if (state.output_dir) {
       AUDIO_OUTPUT_DIR = state.output_dir;
       document.getElementById("set-output-dir").value = state.output_dir;
