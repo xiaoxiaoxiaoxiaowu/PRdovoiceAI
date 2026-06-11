@@ -30,6 +30,11 @@ body {
 }
 #connection-bar input { width: 100px; }
 #connection-bar input:first-of-type { width: 90px; }
+#connection-bar .btn { flex-shrink: 0; white-space: nowrap; }
+#status-indicator {
+  min-width: 0; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+}
 
 input, select, textarea {
   background: var(--bg-card); color: var(--text-primary);
@@ -199,7 +204,7 @@ input[type="checkbox"] { accent-color: var(--accent); margin-right: 4px; }
 
 /* =========== 侧边音色面板 =========== */
 #voice-panel {
-  position: fixed; top: 0; right: 0; width: 320px; height: 100vh;
+  position: fixed; top: 0; right: 0; width: min(320px, 100vw); height: 100vh;
   background: var(--bg-primary); border-left: 1px solid var(--border);
   z-index: 200; display: flex; flex-direction: column;
   transform: translateX(0); transition: transform 0.25s ease;
@@ -210,14 +215,20 @@ input[type="checkbox"] { accent-color: var(--accent); margin-right: 4px; }
   display: flex; justify-content: space-between; align-items: center;
   padding: 10px 12px; border-bottom: 1px solid var(--border);
 }
-#voice-panel-title { font-weight: bold; font-size: 13px; }
+#voice-panel-title {
+  min-width: 0; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; font-weight: bold; font-size: 13px;
+}
+#btn-close-panel { flex-shrink: 0; }
 #voice-panel-search { padding: 8px 12px; }
 #voice-panel-search input { width: 100%; }
 #voice-panel-filters {
   display: flex; gap: 4px; padding: 0 12px 8px;
   border-bottom: 1px solid var(--border);
 }
-#voice-panel-filters select { flex: 1; font-size: 10px; }
+#voice-panel-filters select {
+  flex: 1 1 0; width: 0; min-width: 0; font-size: 10px;
+}
 #voice-panel-list {
   flex: 1; overflow-y: auto; padding: 4px 8px;
 }
@@ -231,6 +242,19 @@ input[type="checkbox"] { accent-color: var(--accent); margin-right: 4px; }
 }
 #voice-panel-list .voice-card .voice-card-meta { display: none; }
 #voice-panel-list .voice-card .btn-set-default { display: none; }
+
+@media (max-width: 460px) {
+  #connection-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 68px auto;
+  }
+  #connection-bar input,
+  #connection-bar input:first-of-type {
+    width: 100%;
+    min-width: 0;
+  }
+  #status-indicator { grid-column: 1 / -1; }
+}
 
 /* =========== 浮动批量操作按钮 =========== */
 #batch-float {
