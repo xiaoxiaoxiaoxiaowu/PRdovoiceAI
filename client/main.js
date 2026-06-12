@@ -11,6 +11,20 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+function getFirstVoiceInstruction(text) {
+  const match = String(text || "").match(/\[#([^\]]+)\]/);
+  return match ? match[0] : "";
+}
+
+function updateInstructionPreview(clipId, text) {
+  const preview = document.querySelector(`.clip-instruction-preview[data-clip-id="${clipId}"]`);
+  if (!preview) return;
+
+  const instruction = getFirstVoiceInstruction(text);
+  preview.hidden = !instruction;
+  preview.querySelector(".clip-instruction-text").textContent = instruction;
+}
+
 // ==================== 全局状态 ====================
 var csInterface = new CSInterface();
 let backendUrl = "http://127.0.0.1:9527";
@@ -414,6 +428,7 @@ function renderClipList() {
     const emotions = voice?.capabilities?.emotions || ["neutral"];
     const hasContextTexts = voice?.capabilities?.context_texts || false;
     const isCollapsed = clip._collapsed !== false;
+    const voiceInstruction = getFirstVoiceInstruction(clip.text);
 
     return `
       <div class="clip-item ${clip.status} ${selectedClips.has(clip.id) ? 'selected' : ''}">
@@ -435,6 +450,11 @@ function renderClipList() {
           <div class="clip-field">
             <label>文本:</label>
             <textarea class="clip-text" data-clip-id="${clip.id}" rows="2">${escapeHtml(clip.text)}</textarea>
+          </div>
+
+          <div class="clip-instruction-preview" data-clip-id="${clip.id}" ${voiceInstruction ? "" : "hidden"}>
+            <span class="clip-instruction-label">语音指令</span>
+            <span class="clip-instruction-text">${escapeHtml(voiceInstruction)}</span>
           </div>
 
           <div class="clip-tools">
@@ -573,7 +593,10 @@ function bindClipEvents() {
   document.querySelectorAll(".clip-text").forEach(ta => {
     ta.addEventListener("input", () => {
       const clip = clips.find(c => c.id === ta.dataset.clipId);
-      if (clip) clip.text = ta.value;
+      if (clip) {
+        clip.text = ta.value;
+        updateInstructionPreview(clip.id, clip.text);
+      }
     });
   });
 
@@ -673,7 +696,10 @@ function insertInstruction(clipId) {
       const pos = ta.selectionStart;
       ta.value = ta.value.substring(0, pos) + `[#${instruction}]` + ta.value.substring(pos);
       const clip = clips.find(c => c.id === clipId);
-      if (clip) clip.text = ta.value;
+      if (clip) {
+        clip.text = ta.value;
+        updateInstructionPreview(clip.id, clip.text);
+      }
     }
   }
 }
