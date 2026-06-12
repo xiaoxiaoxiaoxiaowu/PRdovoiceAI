@@ -20,9 +20,14 @@ let selectedClips = new Set();
 let generating = false;
 
 // ==================== 连接 ====================
-async function connect() {
-  const ip = document.getElementById("ip-input").value;
-  const port = document.getElementById("port-input").value;
+async function connect(ipInputId = "ip-input", portInputId = "port-input") {
+  const ip = document.getElementById(ipInputId).value.trim();
+  const port = document.getElementById(portInputId).value.trim();
+
+  document.getElementById("ip-input").value = ip;
+  document.getElementById("port-input").value = port;
+  document.getElementById("set-ip").value = ip;
+  document.getElementById("set-port").value = port;
   backendUrl = `http://${ip}:${port}`;
 
   const statusEl = document.getElementById("status-indicator");
@@ -57,6 +62,20 @@ async function loadVoices() {
   }
 }
 
+function getVoiceCapabilitySummary(voice) {
+  const caps = voice.capabilities || {};
+  const emotions = caps.emotions || ["neutral"];
+  const parts = [
+    emotions.length > 1 ? `${emotions.length} 种情感` : emotions[0],
+  ];
+
+  if (caps.context_texts) parts.push("指令遵循");
+  if (caps.voice_instruction) parts.push("[#指令]");
+  if (caps.asmr) parts.push("ASMR");
+
+  return parts.filter(Boolean).join(" · ");
+}
+
 // ==================== 音色库渲染 ====================
 function renderVoiceList() {
   const container = document.getElementById("voice-list");
@@ -78,26 +97,38 @@ function renderVoiceList() {
     return true;
   });
 
-  container.innerHTML = filtered.map(v => `
-    <div class="voice-card ${v.version === '2.0' ? 'v20' : 'v10'}">
-      <div class="voice-card-header">
-        <span class="voice-name">${escapeHtml(v.name)}</span>
-        <span class="voice-badge gender">${v.gender === 'female' ? '女' : '男'}</span>
-        <span class="voice-badge version">${v.category || v.version}</span>
-      </div>
-      <div class="voice-card-meta">
-        <div>voice_type: <code>${v.voice_type}</code></div>
-        <div>情感: ${(v.capabilities.emotions || ['neutral']).join(' ')}</div>
-        <div>
-          ${v.capabilities.context_texts ? '✅ 指令遵循 ' : ''}
-          ${v.capabilities.voice_instruction ? '✅ [#指令] ' : ''}
-          ${v.capabilities.asmr ? '✅ ASMR ' : ''}
+  container.innerHTML = filtered.map(v => {
+    const caps = v.capabilities || {};
+    const emotions = caps.emotions || ["neutral"];
+    const rateMin = caps.speech_rate_range?.[0] ?? -50;
+    const rateMax = caps.speech_rate_range?.[1] ?? 100;
+
+    return `
+      <div class="voice-card ${v.version === '2.0' ? 'v20' : 'v10'}">
+        <div class="voice-card-header">
+          <span class="voice-name">${escapeHtml(v.name)}</span>
+          <span class="voice-badge gender">${v.gender === 'female' ? '女' : '男'}</span>
+          <span class="voice-badge version">${escapeHtml(v.category || v.version)}</span>
+          <button class="btn btn-xs btn-set-default" data-voice-id="${escapeHtml(v.id)}">设为默认</button>
         </div>
-        <div>语速: ${v.capabilities.speech_rate_range?.[0] || -50} ~ ${v.capabilities.speech_rate_range?.[1] || 100}</div>
+        <details class="voice-card-details">
+          <summary>
+            <code class="voice-type">${escapeHtml(v.voice_type)}</code>
+            <span class="voice-capability-summary">${escapeHtml(getVoiceCapabilitySummary(v))}</span>
+          </summary>
+          <div class="voice-card-meta">
+            <div>情感: ${emotions.map(escapeHtml).join(" ")}</div>
+            <div>
+              ${caps.context_texts ? '✅ 指令遵循 ' : ''}
+              ${caps.voice_instruction ? '✅ [#指令] ' : ''}
+              ${caps.asmr ? '✅ ASMR ' : ''}
+            </div>
+            <div>语速: ${rateMin} ~ ${rateMax}</div>
+          </div>
+        </details>
       </div>
-      <button class="btn btn-sm btn-set-default" data-voice-id="${v.id}">设为默认</button>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 
   container.querySelectorAll(".btn-set-default").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -918,7 +949,7 @@ document.getElementById("set-default-rate").addEventListener("input", function()
 });
 
 // ==================== 主事件绑定 ====================
-document.getElementById("btn-connect").addEventListener("click", connect);
+document.getElementById("btn-connect").addEventListener("click", () => connect());
 document.getElementById("btn-new-project").addEventListener("click", newProject);
 document.getElementById("btn-save-project").addEventListener("click", saveProject);
 document.getElementById("btn-load-project").addEventListener("click", openProject);
@@ -931,7 +962,7 @@ document.getElementById("btn-delete-confirm").addEventListener("click", confirmB
 document.getElementById("btn-generate-all").addEventListener("click", generateAll);
 document.getElementById("btn-generate-selected").addEventListener("click", generateSelected);
 document.getElementById("btn-import-pr").addEventListener("click", importToPR);
-document.getElementById("btn-test-conn").addEventListener("click", connect);
+document.getElementById("btn-test-conn").addEventListener("click", () => connect("set-ip", "set-port"));
 
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
@@ -955,6 +986,8 @@ try {
     const state = JSON.parse(saved);
     document.getElementById("ip-input").value = state.ip || "127.0.0.1";
     document.getElementById("port-input").value = state.port || "9527";
+    document.getElementById("set-ip").value = state.ip || "127.0.0.1";
+    document.getElementById("set-port").value = state.port || "9527";
     if (state.output_dir) {
       AUDIO_OUTPUT_DIR = state.output_dir;
       document.getElementById("set-output-dir").value = state.output_dir;

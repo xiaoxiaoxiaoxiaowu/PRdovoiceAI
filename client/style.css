@@ -95,16 +95,20 @@ textarea { resize: vertical; min-height: 36px; }
 #voice-list { max-height: 500px; overflow-y: auto; }
 
 .voice-card {
-  padding: 8px 10px; margin-bottom: 4px;
+  padding: 6px 8px; margin-bottom: 3px;
   background: var(--bg-card); border-radius: var(--radius);
   border-left: 3px solid var(--border);
 }
 .voice-card.v20 { border-left-color: var(--accent); }
 .voice-card.v10 { border-left-color: var(--text-secondary); }
 .voice-card-header {
-  display: flex; gap: 6px; align-items: center; margin-bottom: 4px;
+  display: flex; gap: 5px; align-items: center;
 }
-.voice-name { font-weight: bold; font-size: 13px; }
+.voice-name {
+  min-width: 0; flex: 1; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+  font-weight: bold; font-size: 13px;
+}
 .voice-badge { font-size: 10px; padding: 1px 5px; border-radius: 3px; }
 .voice-badge.gender { background: #444; }
 .voice-badge.version { background: var(--accent); color: #fff; }
@@ -113,7 +117,26 @@ textarea { resize: vertical; min-height: 36px; }
 .voice-card-meta code {
   background: #444; padding: 1px 4px; border-radius: 2px; font-size: 10px;
 }
-.voice-card .btn-set-default { margin-top: 4px; }
+.voice-card .btn-set-default { flex-shrink: 0; margin-left: 2px; }
+.voice-card-details { margin-top: 3px; color: var(--text-secondary); }
+.voice-card-details summary {
+  display: flex; gap: 8px; align-items: center;
+  min-width: 0; cursor: pointer; list-style: none;
+  font-size: 10px;
+}
+.voice-card-details summary::-webkit-details-marker { display: none; }
+.voice-card-details summary::before {
+  content: "›"; color: var(--accent); font-size: 13px;
+  transition: transform 0.15s;
+}
+.voice-card-details[open] summary::before { transform: rotate(90deg); }
+.voice-card-details[open] summary { margin-bottom: 3px; }
+.voice-type {
+  min-width: 0; flex: 1; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+  color: var(--text-secondary);
+}
+.voice-capability-summary { flex-shrink: 0; white-space: nowrap; }
 
 #project-bar {
   display: flex; gap: 6px; align-items: center;
