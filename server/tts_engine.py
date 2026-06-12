@@ -237,9 +237,10 @@ class TTSEngine:
             elif RE_VOICE_TAG.search(text):
                 speech_mode = "voice_tag"
 
-        if speech_mode != "voice_instruction":
-            cot_text = None
-        if speech_mode != "reference_text":
+        # V3 HTTP 中语音指令和引用上文都通过 additions.context_texts 传递。
+        if speech_mode == "voice_instruction" and cot_text:
+            request_context_texts = [cot_text]
+        elif speech_mode not in ("voice_instruction", "reference_text"):
             request_context_texts = []
 
         # 2.0: 兼容旧项目中的 [#语音指令] 分段
@@ -267,9 +268,12 @@ class TTSEngine:
                         loudness_rate=loudness_rate,
                         bit_rate=bit_rate,
                         enable_subtitle=enable_subtitle,
-                        cot_text=seg.get("voice_instruction") or cot_text,
                         expression=expression,
-                        context_texts=request_context_texts,
+                        context_texts=(
+                            [seg["voice_instruction"]]
+                            if seg.get("voice_instruction")
+                            else request_context_texts
+                        ),
                         use_tag_parser=False,
                         fmt=format,
                         sample_rate=sample_rate,
@@ -309,7 +313,6 @@ class TTSEngine:
             loudness_rate=loudness_rate,
             bit_rate=bit_rate,
             enable_subtitle=enable_subtitle,
-            cot_text=cot_text,
             expression=expression,
             context_texts=request_context_texts,
             use_tag_parser=use_tag_parser,
@@ -323,7 +326,6 @@ class TTSEngine:
         model: str | None,
         emotion: str, emotion_scale: int, speech_rate: int, silence_duration: int,
         loudness_rate: int, bit_rate: int | None, enable_subtitle: bool,
-        cot_text: str | None,
         expression: str | None, context_texts: list[str],
         use_tag_parser: bool,
         fmt: str, sample_rate: int,
@@ -388,10 +390,6 @@ class TTSEngine:
         # --- additions ---
         if additions_dict:
             payload["req_params"]["additions"] = json.dumps(additions_dict, ensure_ascii=False)
-
-        # --- CoT (Chain of Thought) — 仅 expressive 模型支持 ---
-        if cot_text and model == "seed-tts-2.0-expressive":
-            payload["req_params"]["cot"] = {"text": cot_text}
 
         # --- 请求头 ---
         request_id = str(uuid.uuid4())

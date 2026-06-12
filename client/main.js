@@ -865,12 +865,12 @@ async function generateClip(clip) {
     model: clip.model || null,
     enable_subtitle: clip.enable_subtitle || false,
     speech_mode: speechMode,
-    cot_text: speechMode === "voice_instruction"
-      ? (clip.voice_instruction || clip.cot_text || null)
-      : null,
-    context_texts: speechMode === "reference_text" && clip.reference_text?.trim()
-      ? [clip.reference_text.trim()]
-      : [],
+    // V3 HTTP 使用同一个 context_texts 字段承载语音指令和引用上文。
+    context_texts: speechMode === "voice_instruction"
+      ? [clip.voice_instruction || clip.cot_text || ""].filter(Boolean)
+      : speechMode === "reference_text" && clip.reference_text?.trim()
+        ? [clip.reference_text.trim()]
+        : [],
     expression: clip.expression !== "none" ? clip.expression : null,
   };
 

@@ -96,8 +96,9 @@ def synthesize(req: SynthesizeRequest):
             speech_rate=req.speech_rate, silence_duration=req.silence_duration,
             loudness_rate=req.loudness_rate, bit_rate=req.bit_rate,
             model=req.model, enable_subtitle=req.enable_subtitle,
-            speech_mode=req.speech_mode, cot_text=req.cot_text,
+            speech_mode=req.speech_mode,
             context_texts=req.context_texts,
+            cot_text=req.cot_text,
             expression=req.expression,
         )
     except Exception:
