@@ -182,6 +182,16 @@ textarea { resize: vertical; min-height: 36px; }
 .clip-voice-name:hover { border-color: var(--accent); background: #3a3a3a; }
 
 .clip-tools { display: flex; gap: 4px; margin-bottom: 6px; flex-wrap: wrap; }
+.clip-mode-panel {
+  margin: 0 0 8px; padding: 8px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--bg-card);
+}
+.clip-mode-panel .clip-field:last-child { margin-bottom: 0; }
+.clip-mode-help {
+  margin-bottom: 6px; color: var(--text-secondary);
+  font-size: 11px; line-height: 1.5;
+}
 .clip-actions-row { display: flex; gap: 4px; margin: 8px 0 4px; }
 .clip-status { font-size: 11px; color: var(--text-secondary); padding: 4px 0; }
 .scale-val, .rate-val, .loudness-val {

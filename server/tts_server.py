@@ -7,6 +7,7 @@ import traceback
 import json
 import sys
 from pathlib import Path
+from typing import Literal
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -66,7 +67,9 @@ class SynthesizeRequest(BaseModel):
     bit_rate: int | None = None
     model: str | None = None
     enable_subtitle: bool = False
+    speech_mode: Literal["voice_instruction", "reference_text", "voice_tag"] | None = None
     cot_text: str | None = None
+    context_texts: list[str] = Field(default_factory=list)
     expression: str | None = None
 
 @app.get("/health")
@@ -93,7 +96,9 @@ def synthesize(req: SynthesizeRequest):
             speech_rate=req.speech_rate, silence_duration=req.silence_duration,
             loudness_rate=req.loudness_rate, bit_rate=req.bit_rate,
             model=req.model, enable_subtitle=req.enable_subtitle,
-            cot_text=req.cot_text, expression=req.expression,
+            speech_mode=req.speech_mode, cot_text=req.cot_text,
+            context_texts=req.context_texts,
+            expression=req.expression,
         )
     except Exception:
         # 这行会把完整的错误堆栈打印到控制台

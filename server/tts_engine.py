@@ -7,13 +7,15 @@ import json
 import re
 import uuid
 import base64
+import html
 import requests
 from pathlib import Path
 
 LIB_PATH = Path(__file__).parent / "voice_library.json"
 
 RE_VOICE_INSTRUCTION = re.compile(r'\[#([^\]]+)\]')
-RE_VOICE_TAG = re.compile(r'【([^】]+)】')
+RE_VOICE_TAG = re.compile(r'\[([^#\]][^\]]*)\]|【([^】]+)】')
+RE_SENTENCE_END = re.compile(r'[。！？!?；;.\n]+')
 RE_ADDITIONS_TAG = re.compile(r'\{\{"additions":[^}]+\}\s*\}\}')
 
 # 1.0: 清理面板可能误塞的内联 JSON 标记（预防性移除，防止被 TTS 念出来）
@@ -101,21 +103,13 @@ class TTSEngine:
             raise ValueError(f"音色 '{voice_id}' 不存在")
         return v
 
-    # ============ 2.0: 提取 [#指令] / 【标签】/ {{"additions":...}} → context_texts ============
-    def _parse_20_instructions(self, text: str) -> tuple[str, list[str]]:
+    # ============ 旧格式兼容 ============
+    def _extract_legacy_context_texts(self, text: str) -> tuple[str, list[str]]:
         context_texts: list[str] = []
-
-        for m in RE_VOICE_INSTRUCTION.finditer(text):
-            context_texts.append(m.group(1).strip())
-        text = RE_VOICE_INSTRUCTION.sub('', text)
-
-        for m in RE_VOICE_TAG.finditer(text):
-            context_texts.append(m.group(1).strip())
-        text = RE_VOICE_TAG.sub('', text)
 
         for m in RE_ADDITIONS_TAG.finditer(text):
             try:
-                obj = json.loads(m.group())
+                obj = json.loads(m.group()[1:-1])
                 ctx = obj.get("additions", {}).get("context_texts", [])
                 context_texts.extend(ctx if isinstance(ctx, list) else [ctx])
             except json.JSONDecodeError:
@@ -125,38 +119,79 @@ class TTSEngine:
         return re.sub(r'\s+', ' ', text).strip(), context_texts
 
     def _split_20_segments(self, text: str) -> list[dict]:
-        """按 [#指令]/【标签】/{{"additions"}} 拆分文本"""
+        """兼容旧项目：按 [#语音指令] 为不同文本段设置语音指令。"""
         markers = []
         for m in RE_VOICE_INSTRUCTION.finditer(text):
-            markers.append({"pos": m.start(), "end": m.end(), "ctx": [m.group(1).strip()]})
-        for m in RE_VOICE_TAG.finditer(text):
-            markers.append({"pos": m.start(), "end": m.end(), "ctx": [m.group(1).strip()]})
-        for m in RE_ADDITIONS_TAG.finditer(text):
-            try:
-                obj = json.loads(m.group())
-                ctx = obj.get("additions", {}).get("context_texts", [])
-                markers.append({"pos": m.start(), "end": m.end(),
-                                "ctx": ctx if isinstance(ctx, list) else [ctx]})
-            except json.JSONDecodeError:
-                pass
+            markers.append({
+                "pos": m.start(),
+                "end": m.end(),
+                "voice_instruction": m.group(1).strip(),
+            })
 
         if not markers:
-            return [{"text": text.strip(), "context_texts": []}]
+            return [{"text": text.strip(), "voice_instruction": None}]
 
         markers.sort(key=lambda x: x["pos"])
         segments = []
-        current_ctx = []
+        current_instruction = None
         pos = 0
         for mk in markers:
             seg_text = text[pos:mk["pos"]].strip()
             if seg_text:
-                segments.append({"text": seg_text, "context_texts": list(current_ctx)})
-            current_ctx = mk["ctx"]
+                segments.append({
+                    "text": seg_text,
+                    "voice_instruction": current_instruction,
+                })
+            current_instruction = mk["voice_instruction"]
             pos = mk["end"]
         remaining = text[pos:].strip()
         if remaining:
-            segments.append({"text": remaining, "context_texts": list(current_ctx)})
-        return segments or [{"text": text.strip(), "context_texts": []}]
+            segments.append({
+                "text": remaining,
+                "voice_instruction": current_instruction,
+            })
+        return segments or [{"text": text.strip(), "voice_instruction": None}]
+
+    def _compile_voice_tags(self, text: str) -> tuple[str, bool]:
+        """将句前 [描写] 转成接口支持的单句 <cot> 标签。"""
+        markers = list(RE_VOICE_TAG.finditer(text))
+        if not markers:
+            return text, False
+
+        parts = []
+        pos = 0
+        compiled = False
+        for index, marker in enumerate(markers):
+            if marker.start() < pos:
+                continue
+
+            parts.append(text[pos:marker.start()])
+            body_start = marker.end()
+            next_marker_start = (
+                markers[index + 1].start()
+                if index + 1 < len(markers)
+                else len(text)
+            )
+            candidate = text[body_start:next_marker_start]
+            sentence_end = RE_SENTENCE_END.search(candidate)
+            body_end = (
+                body_start + sentence_end.end()
+                if sentence_end
+                else next_marker_start
+            )
+            sentence = text[body_start:body_end]
+            description = (marker.group(1) or marker.group(2) or "").strip()
+
+            if description and sentence.strip():
+                escaped_description = html.escape(description, quote=True)
+                parts.append(f'<cot text="{escaped_description}">{sentence}</cot>')
+                compiled = True
+            else:
+                parts.append(marker.group(0))
+            pos = body_end
+
+        parts.append(text[pos:])
+        return "".join(parts), compiled
 
     # ============ 1.0: 移除误塞的 JSON 标记 ============
     def _clean_json_tags(self, text: str) -> str:
@@ -172,30 +207,54 @@ class TTSEngine:
         bit_rate: int | None = None,
         model: str | None = None,
         enable_subtitle: bool = False,
+        speech_mode: str | None = None,
         cot_text: str | None = None,
+        context_texts: list[str] | None = None,
         expression: str | None = None,
         format: str = "mp3", sample_rate: int = 24000,
     ) -> dict:
         voice = self.get_voice(voice_id)
         version = voice["version"]
         caps = voice.get("capabilities", {})
+        request_context_texts = [
+            item.strip()
+            for item in (context_texts or [])
+            if isinstance(item, str) and item.strip()
+        ]
 
         # 1.0: 清理杂标，文本原样发，情感走请求参数
         if version == "1.0":
             text = self._clean_json_tags(text)
+        else:
+            text, legacy_context_texts = self._extract_legacy_context_texts(text)
+            request_context_texts.extend(legacy_context_texts)
 
-        # 2.0: 解析 [#指令] 分段
-        if version == "2.0":
+        if speech_mode is None:
+            if cot_text or RE_VOICE_INSTRUCTION.search(text):
+                speech_mode = "voice_instruction"
+            elif request_context_texts:
+                speech_mode = "reference_text"
+            elif RE_VOICE_TAG.search(text):
+                speech_mode = "voice_tag"
+
+        if speech_mode != "voice_instruction":
+            cot_text = None
+        if speech_mode != "reference_text":
+            request_context_texts = []
+
+        # 2.0: 兼容旧项目中的 [#语音指令] 分段
+        if version == "2.0" and speech_mode == "voice_instruction":
             segments = self._split_20_segments(text)
-            if len(segments) > 1 or (segments and segments[0].get("context_texts")):
+            if len(segments) > 1 or (segments and segments[0].get("voice_instruction")):
                 all_audio = []
                 all_subtitles = []
                 total_usage = 0
                 for seg in segments:
                     if not seg["text"]:
                         continue
+                    segment_text = seg["text"]
                     result = self._call_api(
-                        text=seg["text"],
+                        text=segment_text,
                         voice_type=voice["voice_type"],
                         resource_id="seed-tts-2.0",
                         caps=caps,
@@ -208,17 +267,19 @@ class TTSEngine:
                         loudness_rate=loudness_rate,
                         bit_rate=bit_rate,
                         enable_subtitle=enable_subtitle,
-                        cot_text=cot_text if seg == segments[0] else None,
+                        cot_text=seg.get("voice_instruction") or cot_text,
                         expression=expression,
-                        context_texts=seg.get("context_texts", []),
+                        context_texts=request_context_texts,
+                        use_tag_parser=False,
                         fmt=format,
                         sample_rate=sample_rate,
                     )
                     all_audio.append(result["audio_bytes"])
                     if result.get("subtitles"):
                         all_subtitles.extend(result["subtitles"])
-                    if result.get("usage", 0) > 0:
-                        total_usage += result["usage"]
+                    segment_usage = result.get("usage") or 0
+                    if segment_usage > 0:
+                        total_usage += segment_usage
                 full_audio = b"".join(all_audio)
                 out = {
                     "audio_bytes": full_audio,
@@ -230,10 +291,9 @@ class TTSEngine:
                 }
                 return out
 
-        # 单段
-        context_texts = []
-        if version == "2.0":
-            text, context_texts = self._parse_20_instructions(text)
+        use_tag_parser = False
+        if version == "2.0" and speech_mode == "voice_tag" and caps.get("voice_tag"):
+            text, use_tag_parser = self._compile_voice_tags(text)
 
         return self._call_api(
             text=text,
@@ -251,7 +311,8 @@ class TTSEngine:
             enable_subtitle=enable_subtitle,
             cot_text=cot_text,
             expression=expression,
-            context_texts=context_texts,
+            context_texts=request_context_texts,
+            use_tag_parser=use_tag_parser,
             fmt=format,
             sample_rate=sample_rate,
         )
@@ -264,6 +325,7 @@ class TTSEngine:
         loudness_rate: int, bit_rate: int | None, enable_subtitle: bool,
         cot_text: str | None,
         expression: str | None, context_texts: list[str],
+        use_tag_parser: bool,
         fmt: str, sample_rate: int,
         category: str = "", 
     ) -> dict:
@@ -314,6 +376,10 @@ class TTSEngine:
         # --- context_texts → additions ---
         if context_texts and caps.get("context_texts"):
             additions_dict["context_texts"] = context_texts
+
+        # --- 语音标签 → 单句 CoT 解析 ---
+        if use_tag_parser and caps.get("voice_tag"):
+            additions_dict["use_tag_parser"] = True
 
         # --- silence_duration → additions ---
         if silence_duration > 0:

@@ -93,8 +93,9 @@ function getVoiceCapabilitySummary(voice) {
     emotions.length > 1 ? `${emotions.length} 种情感` : emotions[0],
   ];
 
-  if (caps.context_texts) parts.push("指令遵循");
-  if (caps.voice_instruction) parts.push("[#指令]");
+  if (caps.context_texts) parts.push("引用上文");
+  if (caps.voice_instruction) parts.push("语音指令");
+  if (caps.voice_tag) parts.push("语音标签");
   if (caps.asmr) parts.push("ASMR");
 
   return parts.filter(Boolean).join(" · ");
@@ -115,6 +116,8 @@ function renderVoiceList() {
       const caps = v.capabilities;
       if (capFilter === "emotion" && (!caps.emotions || caps.emotions.length <= 1)) return false;
       if (capFilter === "context_texts" && !caps.context_texts) return false;
+      if (capFilter === "voice_instruction" && !caps.voice_instruction) return false;
+      if (capFilter === "voice_tag" && !caps.voice_tag) return false;
       if (capFilter === "asmr" && !caps.asmr) return false;
     }
     if (search && !v.name.toLowerCase().includes(search) && !v.voice_type.toLowerCase().includes(search)) return false;
@@ -143,8 +146,9 @@ function renderVoiceList() {
           <div class="voice-card-meta">
             <div>情感: ${emotions.map(escapeHtml).join(" ")}</div>
             <div>
-              ${caps.context_texts ? '✅ 指令遵循 ' : ''}
-              ${caps.voice_instruction ? '✅ [#指令] ' : ''}
+              ${caps.context_texts ? '✅ 引用上文 ' : ''}
+              ${caps.voice_instruction ? '✅ 语音指令 ' : ''}
+              ${caps.voice_tag ? '✅ 语音标签 ' : ''}
               ${caps.asmr ? '✅ ASMR ' : ''}
             </div>
             <div>语速: ${rateMin} ~ ${rateMax}</div>
@@ -214,6 +218,8 @@ function renderPanelVoiceList() {
       const caps = v.capabilities;
       if (capFilter === "emotion" && (!caps.emotions || caps.emotions.length <= 1)) return false;
       if (capFilter === "context_texts" && !caps.context_texts) return false;
+      if (capFilter === "voice_instruction" && !caps.voice_instruction) return false;
+      if (capFilter === "voice_tag" && !caps.voice_tag) return false;
       if (capFilter === "asmr" && !caps.asmr) return false;
     }
     if (search && !v.name.toLowerCase().includes(search) && !v.voice_type.toLowerCase().includes(search)) return false;
@@ -370,6 +376,39 @@ function updateDefaultVoiceSelect() {
 // ==================== 剪辑列表 ====================
 let clipCounter = 1;
 
+const SPEECH_MODE_LABELS = {
+  voice_instruction: "语音指令",
+  reference_text: "引用上文",
+  voice_tag: "语音标签",
+};
+
+function getSupportedSpeechModes(voice) {
+  const caps = voice?.capabilities || {};
+  return Object.keys(SPEECH_MODE_LABELS).filter(mode => {
+    if (mode === "reference_text") return caps.context_texts;
+    return caps[mode];
+  });
+}
+
+function getClipSpeechMode(clip, voice) {
+  const supported = getSupportedSpeechModes(voice);
+  if (supported.includes(clip.speech_mode)) return clip.speech_mode;
+  if (clip.reference_text?.trim() && supported.includes("reference_text")) return "reference_text";
+  if (
+    (clip.voice_instruction || clip.cot_text || /\[#([^\]]+)\]/.test(clip.text || "")) &&
+    supported.includes("voice_instruction")
+  ) {
+    return "voice_instruction";
+  }
+  if (
+    /\[([^#\]][^\]]*)\]|【([^】]+)】/.test(clip.text || "") &&
+    supported.includes("voice_tag")
+  ) {
+    return "voice_tag";
+  }
+  return supported[0] || null;
+}
+
 function addClip(initialText = "", initialVoice = null, initialEmotion = "neutral") {
   const defaultVoice = initialVoice || document.getElementById("set-default-voice").value || (voiceLibrary[0]?.id);
   const defaultEmotion = initialEmotion || document.getElementById("set-default-emotion").value;
@@ -389,7 +428,9 @@ function addClip(initialText = "", initialVoice = null, initialEmotion = "neutra
     bit_rate: null,
     model: null,
     enable_subtitle: false,
-    cot_text: null,
+    speech_mode: null,
+    voice_instruction: null,
+    reference_text: "",
     status: "pending",
     audio_url: null,
     duration_ms: null,
@@ -413,6 +454,9 @@ function renderClipList() {
     const hasEmotion = is20 || is10Multi;
     const emotions = voice?.capabilities?.emotions || ["neutral"];
     const hasContextTexts = voice?.capabilities?.context_texts || false;
+    const speechModes = getSupportedSpeechModes(voice);
+    const speechMode = getClipSpeechMode(clip, voice);
+    clip.speech_mode = speechMode;
     const isCollapsed = clip._collapsed !== false;
 
     return `
@@ -438,8 +482,6 @@ function renderClipList() {
           </div>
 
           <div class="clip-tools">
-            ${voice?.capabilities?.voice_instruction ? `
-            <button class="btn btn-xs btn-insert-instruction" data-clip-id="${clip.id}">[#指令]</button>` : ''}
             ${is20 ? `
             <button class="btn btn-xs btn-insert-json20" data-clip-id="${clip.id}">{{2.0}}</button>` : ''}
           </div>
@@ -454,12 +496,42 @@ function renderClipList() {
             </select>
           </div>
 
+          ${speechModes.length ? `
           <div class="clip-field">
-            <label>CoT:</label>
-            <input type="text" class="clip-cot" data-clip-id="${clip.id}"
-                   value="${clip.cot_text || ''}" placeholder="思维链引导文本 (仅expressive模型)"
-                   style="width:100%">
+            <label>模式:</label>
+            <select class="clip-speech-mode" data-clip-id="${clip.id}">
+              ${speechModes.map(mode => `
+                <option value="${mode}" ${speechMode === mode ? 'selected' : ''}>${SPEECH_MODE_LABELS[mode]}</option>
+              `).join("")}
+            </select>
           </div>
+
+          <div class="clip-mode-panel">
+            ${speechMode === "voice_instruction" ? `
+              <div class="clip-field">
+                <label>语音指令:</label>
+                <input type="text" class="clip-voice-instruction" data-clip-id="${clip.id}"
+                       value="${escapeHtml(clip.voice_instruction || clip.cot_text || '')}"
+                       placeholder="控制整段情绪、方言、语气、语速或音调">
+              </div>
+            ` : ''}
+
+            ${speechMode === "reference_text" ? `
+              <div class="clip-field">
+              <label>引用上文:</label>
+              <textarea class="clip-reference-text" data-clip-id="${clip.id}" rows="2"
+                        placeholder="提供不会被合成的上文，帮助当前文本衔接语境">${escapeHtml(clip.reference_text || '')}</textarea>
+              </div>
+            ` : ''}
+
+            ${speechMode === "voice_tag" ? `
+              <div class="clip-mode-help">语音标签直接写入正文，用来描述下一句的心理、表情、动作或语气。</div>
+              <button class="btn btn-xs btn-insert-voice-tag" data-clip-id="${clip.id}">
+                插入 [语音标签]
+              </button>
+            ` : ''}
+          </div>
+          ` : ''}
           ` : ''}
 
           ${hasEmotion ? `
@@ -633,15 +705,32 @@ function bindClipEvents() {
     });
   });
 
-  document.querySelectorAll(".clip-cot").forEach(inp => {
-    inp.addEventListener("input", () => {
-      const clip = clips.find(c => c.id === inp.dataset.clipId);
-      if (clip) clip.cot_text = inp.value || null;
+  document.querySelectorAll(".clip-speech-mode").forEach(sel => {
+    sel.addEventListener("change", () => {
+      const clip = clips.find(c => c.id === sel.dataset.clipId);
+      if (clip) {
+        clip.speech_mode = sel.value;
+        renderClipList();
+      }
     });
   });
 
-  document.querySelectorAll(".btn-insert-instruction").forEach(btn => {
-    btn.addEventListener("click", () => insertInstruction(btn.dataset.clipId));
+  document.querySelectorAll(".clip-voice-instruction").forEach(inp => {
+    inp.addEventListener("input", () => {
+      const clip = clips.find(c => c.id === inp.dataset.clipId);
+      if (clip) clip.voice_instruction = inp.value || null;
+    });
+  });
+
+  document.querySelectorAll(".clip-reference-text").forEach(inp => {
+    inp.addEventListener("input", () => {
+      const clip = clips.find(c => c.id === inp.dataset.clipId);
+      if (clip) clip.reference_text = inp.value;
+    });
+  });
+
+  document.querySelectorAll(".btn-insert-voice-tag").forEach(btn => {
+    btn.addEventListener("click", () => insertVoiceTag(btn.dataset.clipId));
   });
   document.querySelectorAll(".btn-insert-json20").forEach(btn => {
     btn.addEventListener("click", () => insertJson20(btn.dataset.clipId));
@@ -665,13 +754,16 @@ function bindClipEvents() {
 }
 
 // ==================== 文本工具 ====================
-function insertInstruction(clipId) {
-  const instruction = prompt("输入语音指令 (不含方括号):", "用颤抖沙哑、带着崩溃与绝望的哭腔说");
-  if (instruction) {
+function insertVoiceTag(clipId) {
+  const description = prompt(
+    "输入句前语音标签（心理、表情、动作或语气描写，不含方括号）:",
+    "平稳叙述，音量适中，语速自然，咬字清楚；只表现文字本身，不额外煽情"
+  );
+  if (description) {
     const ta = document.querySelector(`.clip-text[data-clip-id="${clipId}"]`);
     if (ta) {
       const pos = ta.selectionStart;
-      ta.value = ta.value.substring(0, pos) + `[#${instruction}]` + ta.value.substring(pos);
+      ta.value = ta.value.substring(0, pos) + `[${description}]` + ta.value.substring(pos);
       const clip = clips.find(c => c.id === clipId);
       if (clip) clip.text = ta.value;
     }
@@ -758,6 +850,8 @@ async function generateSelected() {
 }
 
 async function generateClip(clip) {
+  const voice = voiceLibrary.find(v => v.id === clip.voice_id);
+  const speechMode = getClipSpeechMode(clip, voice);
   const payload = {
     id: clip.id,
     text: clip.text,
@@ -770,7 +864,13 @@ async function generateClip(clip) {
     bit_rate: clip.bit_rate || null,
     model: clip.model || null,
     enable_subtitle: clip.enable_subtitle || false,
-    cot_text: clip.cot_text || null,
+    speech_mode: speechMode,
+    cot_text: speechMode === "voice_instruction"
+      ? (clip.voice_instruction || clip.cot_text || null)
+      : null,
+    context_texts: speechMode === "reference_text" && clip.reference_text?.trim()
+      ? [clip.reference_text.trim()]
+      : [],
     expression: clip.expression !== "none" ? clip.expression : null,
   };
 
@@ -919,7 +1019,9 @@ function saveProject() {
       bit_rate: c.bit_rate || null,
       model: c.model || null,
       enable_subtitle: c.enable_subtitle || false,
-      cot_text: c.cot_text || null,
+      speech_mode: c.speech_mode || null,
+      voice_instruction: c.voice_instruction || c.cot_text || null,
+      reference_text: c.reference_text || "",
       _collapsed: c._collapsed,
       status: "pending",
     })),
@@ -942,6 +1044,9 @@ function openProject() {
       const data = JSON.parse(result);
       clips = (data.clips || []).map(c => ({
         ...c,
+        speech_mode: c.speech_mode || null,
+        voice_instruction: c.voice_instruction || c.cot_text || null,
+        reference_text: c.reference_text || "",
         status: c.status || "pending",
         audio_url: null,
         duration_ms: null,
