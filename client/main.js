@@ -440,8 +440,6 @@ function renderClipList() {
           <div class="clip-tools">
             ${voice?.capabilities?.voice_instruction ? `
             <button class="btn btn-xs btn-insert-instruction" data-clip-id="${clip.id}">[#指令]</button>` : ''}
-            ${is20 ? `
-            <button class="btn btn-xs btn-insert-json20" data-clip-id="${clip.id}">{{2.0}}</button>` : ''}
           </div>
 
           ${is20 ? `
@@ -643,9 +641,6 @@ function bindClipEvents() {
   document.querySelectorAll(".btn-insert-instruction").forEach(btn => {
     btn.addEventListener("click", () => insertInstruction(btn.dataset.clipId));
   });
-  document.querySelectorAll(".btn-insert-json20").forEach(btn => {
-    btn.addEventListener("click", () => insertJson20(btn.dataset.clipId));
-  });
   document.querySelectorAll(".btn-insert-json10").forEach(btn => {
     btn.addEventListener("click", () => insertJson10(btn.dataset.clipId));
   });
@@ -672,19 +667,6 @@ function insertInstruction(clipId) {
     if (ta) {
       const pos = ta.selectionStart;
       ta.value = ta.value.substring(0, pos) + `[#${instruction}]` + ta.value.substring(pos);
-      const clip = clips.find(c => c.id === clipId);
-      if (clip) clip.text = ta.value;
-    }
-  }
-}
-
-function insertJson20(clipId) {
-  const ctx = prompt("输入 context_texts 指令:", "语气变得非常兴奋，充满期待");
-  if (ctx) {
-    const ta = document.querySelector(`.clip-text[data-clip-id="${clipId}"]`);
-    if (ta) {
-      const pos = ta.selectionStart;
-      ta.value = ta.value.substring(0, pos) + `{{"additions":{"context_texts":["${ctx}"]} }}` + ta.value.substring(pos);
       const clip = clips.find(c => c.id === clipId);
       if (clip) clip.text = ta.value;
     }
